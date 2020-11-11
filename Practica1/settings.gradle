@@ -1,0 +1,7 @@
+include ':AndroidEngine'
+include ':DesktopGame'
+include ':DesktopEngine'
+include ':OffTheLineLogic'
+include ':Engine'
+include ':app'
+rootProject.name = "Practica1"
