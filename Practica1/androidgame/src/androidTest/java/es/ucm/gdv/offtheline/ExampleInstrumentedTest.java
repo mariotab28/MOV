@@ -1,4 +1,4 @@
-package es.ucm.gdv.practica1;
+package es.ucm.gdv.offtheline;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("es.ucm.gdv.practica1", appContext.getPackageName());
+        assertEquals("es.ucm.gdv.offtheline", appContext.getPackageName());
     }
 }

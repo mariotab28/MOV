@@ -5,7 +5,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "es.ucm.gdv.practica1"
+        applicationId "es.ucm.gdv.offtheline"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
@@ -23,9 +23,6 @@ android {
 }
 
 dependencies {
-    api project(path: ':AndroidEngine')
-    api project(path: ':OffTheLineLogic')
-    api project(path: ':Engine')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'

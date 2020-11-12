@@ -3,11 +3,18 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidEngine/AndroidEngine.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidEngine/AndroidEngine.iml" group="Practica1/AndroidEngine" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidGame/AndroidGame.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidGame/AndroidGame.iml" group="Practica1/AndroidGame" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/DesktopEngine/DesktopEngine.iml" filepath="$PROJECT_DIR$/.idea/modules/DesktopEngine/DesktopEngine.iml" group="Practica1/DesktopEngine" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktopGame/DesktopGame.iml" filepath="$PROJECT_DIR$/.idea/modules/desktopGame/DesktopGame.iml" group="Practica1/DesktopGame" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Engine/Engine.iml" filepath="$PROJECT_DIR$/.idea/modules/Engine/Engine.iml" group="Practica1/Engine" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MOV-Practica1.iml" filepath="$PROJECT_DIR$/.idea/modules/MOV-Practica1.iml" group="Practica1" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/OffTheLineLogic/OffTheLineLogic.iml" filepath="$PROJECT_DIR$/.idea/modules/OffTheLineLogic/OffTheLineLogic.iml" group="Practica1/OffTheLineLogic" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Practica1.iml" filepath="$PROJECT_DIR$/.idea/modules/Practica1.iml" group="Practica1" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidEngine/Practica1-AndroidEngine.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidEngine/Practica1-AndroidEngine.iml" group="Practica1/AndroidEngine" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DesktopEngine/Practica1-DesktopEngine.iml" filepath="$PROJECT_DIR$/.idea/modules/DesktopEngine/Practica1-DesktopEngine.iml" group="Practica1/DesktopEngine" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktopGame/Practica1-DesktopGame.iml" filepath="$PROJECT_DIR$/.idea/modules/desktopGame/Practica1-DesktopGame.iml" group="Practica1/DesktopGame" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Engine/Practica1-Engine.iml" filepath="$PROJECT_DIR$/.idea/modules/Engine/Practica1-Engine.iml" group="Practica1/Engine" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OffTheLineLogic/Practica1-OffTheLineLogic.iml" filepath="$PROJECT_DIR$/.idea/modules/OffTheLineLogic/Practica1-OffTheLineLogic.iml" group="Practica1/OffTheLineLogic" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="Practica1/app" />
     </modules>
   </component>
