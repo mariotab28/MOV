@@ -5,7 +5,11 @@
       <module name="DesktopEngine" target="1.7" />
       <module name="DesktopGame" target="1.7" />
       <module name="desktopGame" target="1.7" />
+      <module name="desktopGame-DesktopGame" target="1.7" />
       <module name="Engine" target="1.7" />
+      <module name="MOV-Practica1-DesktopEngine" target="1.7" />
+      <module name="MOV-Practica1-Engine" target="1.7" />
+      <module name="MOV-Practica1-OffTheLineLogic" target="1.7" />
       <module name="OffTheLineLogic" target="1.7" />
       <module name="Practica1-DesktopEngine" target="1.7" />
       <module name="Practica1-DesktopGame" target="1.7" />

@@ -28,7 +28,7 @@ public interface Graphics {
     //  Métodos de control de la transformación sobre el canvas
     //------------------------------------------------------------
 
-    void translate(float x, float y);
+    void translate(int x, int y);
     void scale(float x, float y);
     void rotate(float angle);
     void save();
@@ -50,7 +50,7 @@ public interface Graphics {
      * @param x2
      * @param y2
      */
-    void drawLine(float x1, float y1, float x2, float y2);
+    void drawLine(int x1, int y1, int x2, int y2);
 
     /**
      * Dibuja un rectángulo relleno.
@@ -59,7 +59,7 @@ public interface Graphics {
      * @param x2
      * @param y2
      */
-    void fillRect(float x1, float y1, float x2, float y2);
+    void fillRect(int x1, int y1, int x2, int y2);
 
     /**
      * Escribe el texto con la fuente y color activos.
@@ -67,7 +67,7 @@ public interface Graphics {
      * @param x
      * @param y
      */
-    void drawText(String text, float x, float y);
+    void drawText(String text, int x, int y);
 
     /**
      * Devuelven el tamaño de la ventana.

@@ -1,9 +1,106 @@
 package es.ucm.gdv.engine.desktop;
 
+
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Color;
+
+
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+
+
+import javax.swing.JFrame;
+
+
+
 import es.ucm.gdv.engine.Font;
 
 public class Graphics implements es.ucm.gdv.engine.Graphics {
 
+    private JFrame frame;
+    private java.awt.Graphics g;
+    private BufferStrategy bs;
+    private Canvas canvas;
+
+
+    private float savedX=0,savedY=0;
+    private float savedScaleX=0,savedScaleY=0;
+    private float savedRot=0;
+    private Color savedColor=Color.BLACK;
+
+    private Color actualColor;
+
+    private int width, height;
+    private float transX=0f,transY=0f;
+    private float scaleX=1f,scaleY=1f;
+    private float rotation=0;
+    private String title ="newWindow";
+
+    public Graphics(int _width,int _height) {
+        width = _width;
+        height = _height;
+
+
+        canvas=new Canvas();
+        Dimension s=new Dimension(width,height);
+        canvas.setMinimumSize(s);
+        canvas.setMaximumSize(s);
+        canvas.setPreferredSize(s);
+
+        frame = new JFrame(title);
+       // frame.setSize((int) (width * scale), (int) (height * scale));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setIgnoreRepaint(true);
+        frame.setVisible(true);
+        frame.setLayout(new BorderLayout());
+        frame.add(canvas,BorderLayout.CENTER);
+        frame.pack();
+
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(true);
+
+        int intentos = 100;
+        while(intentos-- > 0) {
+            try {
+                canvas.createBufferStrategy(2);
+                break;
+            }
+            catch(Exception e) {
+            }
+        } // while pidiendo la creación de la buffeStrategy
+        if (intentos == 0) {
+            System.err.println("No pude crear la BufferStrategy");
+            return;
+        }
+
+        bs=canvas.getBufferStrategy();
+
+
+    }
+    public void update()
+    {
+
+        do {
+            do {
+                g = bs.getDrawGraphics();
+                try {
+
+                }
+                finally {
+                    g.dispose();
+                }
+            } while(bs.contentsRestored());
+            bs.show();
+        } while(bs.contentsLost());
+
+        g=bs.getDrawGraphics();
+        //g.dispose();
+        //frame.paint(g);
+        //bs.show();
+    }
     /**
      *  Crea una nueva fuente del tamaño especificado a partir de un fichero .ttf. Se indica si se desea o no fuente
      * en negrita.
@@ -22,6 +119,13 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param color
      */
     public void clear(float[] color) {
+        g=bs.getDrawGraphics();
+        Color c=new Color(color[0],color[1],color[2]);
+       // g.clearRect(0,0,width,height);
+        g.setColor(c);
+        g.fillRect(0,0,width,height);
+
+
 
     }
 
@@ -29,23 +133,49 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
     //  Métodos de control de la transformación sobre el canvas
     //------------------------------------------------------------
 
-    public void translate(float x, float y) {
-
+    public void translate(int x, int y) {
+        transX+=x;
+        transY+=y;
+        //g.translate(x,y);
+        g.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
     }
 
     public void scale(float x, float y) {
+        //canvas.setSize(x,y);
+        scaleX=x;
+        scaleY=y;
+        g=bs.getDrawGraphics();
+        ((Graphics2D)g).scale(x,y);
+        g.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
 
     }
 
     public void rotate(float angle) {
+        rotation=angle;
+        // g=bs.getDrawGraphics();
+        // ((Graphics2D)g).rotate(angle);
 
     }
 
     public void save() {
+        savedColor=actualColor;
+        savedRot=rotation;
+        savedScaleX=scaleX;
+        savedScaleY=scaleY;
+        savedX=transX;
+        savedY=transY;
 
     }
 
     public void restore() {
+        actualColor=savedColor;
+        rotation=savedRot;
+        scaleX=savedScaleX;
+        scaleY=savedScaleY;
+        transX=savedX;
+        transY=savedY;
+        g.setColor(actualColor);
+        scale(scaleX,scaleY);
 
     }
 
@@ -57,7 +187,8 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param color
      */
     public void setColor(float[] color) {
-
+        actualColor=new Color(color[0],color[1],color[2]);
+        g.setColor(actualColor);
     }
 
     /**
@@ -67,7 +198,18 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param x2
      * @param y2
      */
-    public void drawLine(float x1, float y1, float x2, float y2) {
+    public void drawLine(int x1, int y1, int x2, int y2) {
+       // g.translate(0,0);
+        g.setColor(actualColor);
+
+
+
+        int nX1=((int)(((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))*1));
+
+        int nY1=((int)(((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))*1));
+        int nX2=((int)(((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
+        int nY2=((int)(((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))*1));
+        g.drawLine(nX1,nY1,nX2,nY2);
 
     }
 
@@ -78,7 +220,15 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param x2
      * @param y2
      */
-    public void fillRect(float x1, float y1, float x2, float y2) {
+    public void fillRect(int x1, int y1, int x2, int y2) {
+
+        g.setColor(actualColor);
+        int nX1=((int)(((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))*1));
+
+        int nY1=((int)(((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))*1));
+        int nX2=((int)(((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
+        int nY2=((int)(((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))*1));
+        g.fillRect(nX1,nY1,nX2,nY2);
 
     }
 
@@ -88,7 +238,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param x
      * @param y
      */
-    public void drawText(String text, float x, float y) {
+    public void drawText(String text, int x, int y) {
 
     }
 
@@ -97,10 +247,10 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @return
      */
     public int getWidth() {
-        return 0;
+        return width;
     }
     public int getHeight() {
-        return 0;
+        return height;
     }
 
 }
