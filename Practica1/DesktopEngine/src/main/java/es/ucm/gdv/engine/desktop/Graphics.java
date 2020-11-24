@@ -5,18 +5,17 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 
-
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
 
 
 import javax.swing.JFrame;
 
-
-
-import es.ucm.gdv.engine.Font;
+import es.ucm.gdv.engine.desktop.Font;
 
 public class Graphics implements es.ucm.gdv.engine.Graphics {
 
@@ -109,8 +108,10 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param isBold
      * @return
      */
-    public Font newFont(String filename, int size, boolean isBold) {
-        return null;
+    public Font newFont(InputStream filename, int size, boolean isBold) {
+        Font baseFont=new Font(filename,size,isBold, g);
+
+        return baseFont;
     }
 
     /**
@@ -142,8 +143,8 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
 
     public void scale(float x, float y) {
         //canvas.setSize(x,y);
-        scaleX=x;
-        scaleY=y;
+        scaleX*=x;
+        scaleY*=y;
         g=bs.getDrawGraphics();
         ((Graphics2D)g).scale(x,y);
         g.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
@@ -239,6 +240,10 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param y
      */
     public void drawText(String text, int x, int y) {
+        g.setColor(actualColor);
+
+
+        g.drawString(text, x, y);
 
     }
 
