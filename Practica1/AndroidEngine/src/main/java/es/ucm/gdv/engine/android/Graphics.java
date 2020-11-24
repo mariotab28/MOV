@@ -28,7 +28,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
     //  Métodos de control de la transformación sobre el canvas
     //------------------------------------------------------------
 
-    public void translate(int x, int y) {
+    public void translate(float x, float y) {
 
     }
 
@@ -66,7 +66,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param x2
      * @param y2
      */
-    public void drawLine(int x1, int y1, int x2, int y2) {
+    public void drawLine(float x1, float y1, float x2, float y2) {
 
     }
 
@@ -77,7 +77,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param x2
      * @param y2
      */
-    public void fillRect(int x1, int y1, int x2, int y2) {
+    public void fillRect(float x1, float y1, float x2, float y2) {
 
     }
 
@@ -87,7 +87,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param x
      * @param y
      */
-    public void drawText(String text, int x, int y) {
+    public void drawText(String text, float x, float y) {
 
     }
 
