@@ -1,16 +1,11 @@
 package es.ucm.gdv.engine;
 
-import java.io.InputStream;
-import es.ucm.gdv.engine.Font;
-
-
 /**
  * Interfaz para el motor gráfico.
  * Proporciona las funcionalidades gráficas mínimas sobre la ventana de la aplicación.
  * TODO:  independizar la lógica de la resolución del dispositivo
  */
 public interface Graphics {
-
 
     /**
      *  Crea una nueva fuente del tamaño especificado a partir de un fichero .ttf. Se indica si se desea o no fuente
@@ -20,8 +15,7 @@ public interface Graphics {
      * @param isBold
      * @return
      */
-    Font newFont(InputStream filename, int size, boolean isBold);
-
+    Font newFont(String filename, int size, boolean isBold);
 
     /**
      * Borra el contenido completo de la ventana, rellenándolo
