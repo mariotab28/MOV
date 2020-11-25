@@ -9,6 +9,11 @@ public interface Input {
      *     desplazamiento), la posición y el identificador del dedo (o botón).
      */
     class TouchEvent {
+       public int type;
+
+        public int posX,posY;
+
+        public int id;
 
     }
 

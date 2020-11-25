@@ -1,8 +1,12 @@
 package es.ucm.gdv.offtheline;
 
+import java.awt.Canvas;
 import java.awt.Color;
+import java.util.List;
+
 
 import es.ucm.gdv.engine.desktop.Graphics;
+import es.ucm.gdv.engine.desktop.Input;
 
 /**
  *
@@ -12,6 +16,7 @@ public class Main {
     {
 
         Graphics g=new Graphics(640,480);
+        Input i =new Input(g.getCanvas());
 
        // g.update();
         System.out.println("Hola buenas");
@@ -23,6 +28,8 @@ public class Main {
         g.clear(c);
         float angle=0;
         float scale=1;
+        //g.scale(1.0f,1.0f);
+        //g.save();
       
         while(true) {
             angle+=(float)Math.PI/10000;
@@ -45,7 +52,7 @@ public class Main {
            // g.scale(6.0f,1.0f);
             g.rotate(angle);
             g.translate(400,100);
-            //g.save();
+           // g.save();
             g.scale(scale,scale);
 
 
@@ -81,6 +88,14 @@ public class Main {
 
             g.restore();
             g.update();
+
+            List<es.ucm.gdv.engine.Input.TouchEvent> ev= i.getTouchEvents();
+            for (es.ucm.gdv.engine.Input.TouchEvent e:ev)
+            {
+                System.out.println(e.type);
+
+            }
+            ev.clear();
 
 
         }

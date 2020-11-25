@@ -26,7 +26,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
 
 
     private float savedX=0,savedY=0;
-    private float savedScaleX=0,savedScaleY=0;
+    private float savedScaleX=1,savedScaleY=1;
     private float savedRot=0;
     private Color savedColor=Color.BLACK;
 
@@ -78,6 +78,10 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
         bs=canvas.getBufferStrategy();
 
 
+    }
+    public Canvas getCanvas()
+    {
+        return canvas;
     }
     public void update()
     {
