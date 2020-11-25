@@ -1,6 +1,8 @@
 package es.ucm.gdv.engine.desktop;
 
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -18,9 +20,25 @@ import javax.swing.JFrame;
 import es.ucm.gdv.engine.desktop.Font;
 
 public class Graphics implements es.ucm.gdv.engine.Graphics {
-
+    static Graphics instance=null;
     private JFrame frame;
     private java.awt.Graphics g;
+
+    public void GraphDispose() {
+
+        g.dispose();
+    }
+    public void Show() {
+
+        bs.show();
+    }
+    public boolean BsRestore() {
+        return bs.contentsRestored();
+    }
+    public boolean BsContentLost() {
+        return bs.contentsLost();
+    }
+
     private BufferStrategy bs;
     private Canvas canvas;
 
@@ -38,7 +56,14 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
     private float rotation=0;
     private String title ="newWindow";
 
-    public Graphics(int _width,int _height) {
+    public static Graphics GetGraphics(int _width,int _height)
+    {
+        if(instance==null)
+            instance=new Graphics( _width, _height);
+        return instance;
+    }
+
+    private Graphics(int _width,int _height) {
         width = _width;
         height = _height;
 
@@ -83,21 +108,9 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
     {
         return canvas;
     }
-    public void update()
+    public void updateG()
     {
 
-        do {
-            do {
-                g = bs.getDrawGraphics();
-                try {
-
-                }
-                finally {
-                    g.dispose();
-                }
-            } while(bs.contentsRestored());
-            bs.show();
-        } while(bs.contentsLost());
 
         g=bs.getDrawGraphics();
         //g.dispose();

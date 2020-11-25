@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Input  implements es.ucm.gdv.engine.Input , MouseListener, MouseMotionListener {
-
+    static Input instance=null;
     private final int NUM_BUTTONS=5;
     //private boolean[] buttons =new boolean[NUM_BUTTONS];
     //private boolean[] buttonsLast =new boolean[NUM_BUTTONS];
@@ -17,7 +17,14 @@ public class Input  implements es.ucm.gdv.engine.Input , MouseListener, MouseMot
     private int mouseX,mouseY;
     private List<TouchEvent> events;
 
-    public Input(Canvas canvas)
+    public static Input GetInput(Canvas canvas)
+        {
+        if(instance==null)
+            instance=new Input(canvas);
+        return instance;
+    }
+
+    private Input(Canvas canvas)
     {
         mouseX=0;
         mouseY=0;

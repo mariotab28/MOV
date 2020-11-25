@@ -15,8 +15,7 @@ public class Main {
     public static void main (String[] args)
     {
 
-        Graphics g=new Graphics(640,480);
-        Input i =new Input(g.getCanvas());
+
 
        // g.update();
         System.out.println("Hola buenas");
@@ -30,7 +29,7 @@ public class Main {
         float scale=1;
         //g.scale(1.0f,1.0f);
         //g.save();
-      
+
         while(true) {
             angle+=(float)Math.PI/10000;
             //if(scale<10f)
