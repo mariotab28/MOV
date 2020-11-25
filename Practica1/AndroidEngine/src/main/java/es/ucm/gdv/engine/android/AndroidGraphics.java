@@ -1,8 +1,20 @@
 package es.ucm.gdv.engine.android;
 
-import es.ucm.gdv.engine.Font;
+import android.content.res.AssetManager;
+import android.graphics.Canvas;
 
-public class Graphics implements es.ucm.gdv.engine.Graphics {
+import es.ucm.gdv.engine.Font;
+import es.ucm.gdv.engine.Graphics;
+
+public class AndroidGraphics implements Graphics {
+    AssetManager assets;
+
+    public AndroidGraphics(AssetManager assets) {
+        this.assets = assets;
+        //this.canvas = new Canvas(frameBuffer);
+    }
+
+
     /**
      *  Crea una nueva fuente del tamaño especificado a partir de un fichero .ttf. Se indica si se desea o no fuente
      * en negrita.
@@ -28,7 +40,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
     //  Métodos de control de la transformación sobre el canvas
     //------------------------------------------------------------
 
-    public void translate(float x, float y) {
+    public void translate(int x, int y) {
 
     }
 
@@ -66,7 +78,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param x2
      * @param y2
      */
-    public void drawLine(float x1, float y1, float x2, float y2) {
+    public void drawLine(int x1, int y1, int x2, int y2) {
 
     }
 
@@ -77,7 +89,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param x2
      * @param y2
      */
-    public void fillRect(float x1, float y1, float x2, float y2) {
+    public void fillRect(int x1, int y1, int x2, int y2) {
 
     }
 
@@ -87,7 +99,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param x
      * @param y
      */
-    public void drawText(String text, float x, float y) {
+    public void drawText(String text, int x, int y) {
 
     }
 
