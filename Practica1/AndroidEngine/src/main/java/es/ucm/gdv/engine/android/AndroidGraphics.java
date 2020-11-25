@@ -2,12 +2,17 @@ package es.ucm.gdv.engine.android;
 
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+
+import java.io.InputStream;
 
 import es.ucm.gdv.engine.Font;
 import es.ucm.gdv.engine.Graphics;
 
 public class AndroidGraphics implements Graphics {
     AssetManager assets;
+    Canvas canvas;
+    Paint paint;
 
     public AndroidGraphics(AssetManager assets) {
         this.assets = assets;
@@ -23,7 +28,7 @@ public class AndroidGraphics implements Graphics {
      * @param isBold
      * @return
      */
-    public Font newFont(String filename, int size, boolean isBold) {
+    public Font newFont(InputStream filename, int size, boolean isBold) {
         return null;
     }
 
@@ -32,8 +37,8 @@ public class AndroidGraphics implements Graphics {
      * con un color recibido como parámetro.
      * @param color
      */
-    public void clear(float[] color) {
-
+    public void clear(int[] color) {
+        canvas.drawRGB(color[0], color[1], color[2]);
     }
 
     //------------------------------------------------------------
@@ -67,8 +72,8 @@ public class AndroidGraphics implements Graphics {
      * dibujado posteriores.
      * @param color
      */
-    public void setColor(float[] color) {
-
+    public void setColor(int[] color) {
+        paint.setARGB(255, color[0], color[1], color[2]);
     }
 
     /**
@@ -79,18 +84,19 @@ public class AndroidGraphics implements Graphics {
      * @param y2
      */
     public void drawLine(int x1, int y1, int x2, int y2) {
-
+        canvas.drawLine(x1, y2, x2, y2, paint);
     }
 
     /**
      * Dibuja un rectángulo relleno.
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
+     * @param x1 Left
+     * @param y1 Top
+     * @param x2 Right
+     * @param y2 Bottom
      */
     public void fillRect(int x1, int y1, int x2, int y2) {
-
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawRect(x1, y1, x2, y2, paint);
     }
 
     /**

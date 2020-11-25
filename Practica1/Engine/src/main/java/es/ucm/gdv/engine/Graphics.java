@@ -28,7 +28,7 @@ public interface Graphics {
      * con un color recibido como parámetro.
      * @param color
      */
-    void clear(float[] color);
+    void clear(int[] color);
 
     //------------------------------------------------------------
     //  Métodos de control de la transformación sobre el canvas
@@ -47,7 +47,7 @@ public interface Graphics {
      * dibujado posteriores.
      * @param color
      */
-    void setColor(float[] color);
+    void setColor(int[] color);
 
     /**
      * Dibuja una línea en patalla

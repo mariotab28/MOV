@@ -9,19 +9,16 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
-import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
 
 import javax.swing.JFrame;
 
-import es.ucm.gdv.engine.desktop.Font;
-
 public class Graphics implements es.ucm.gdv.engine.Graphics {
 
     private JFrame frame;
-    private java.awt.Graphics g;
-    private BufferStrategy bs;
+    private java.awt.Graphics graphics;
+    private BufferStrategy bufferStrategy;
     private Canvas canvas;
 
 
@@ -69,13 +66,13 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
             }
             catch(Exception e) {
             }
-        } // while pidiendo la creación de la buffeStrategy
+        } // while pidiendo la creación de la bufferStrategy
         if (intentos == 0) {
             System.err.println("No pude crear la BufferStrategy");
             return;
         }
 
-        bs=canvas.getBufferStrategy();
+        bufferStrategy = canvas.getBufferStrategy();
 
 
     }
@@ -84,18 +81,18 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
 
         do {
             do {
-                g = bs.getDrawGraphics();
+                graphics = bufferStrategy.getDrawGraphics();
                 try {
 
                 }
                 finally {
-                    g.dispose();
+                    graphics.dispose();
                 }
-            } while(bs.contentsRestored());
-            bs.show();
-        } while(bs.contentsLost());
+            } while(bufferStrategy.contentsRestored());
+            bufferStrategy.show();
+        } while(bufferStrategy.contentsLost());
 
-        g=bs.getDrawGraphics();
+        graphics = bufferStrategy.getDrawGraphics();
         //g.dispose();
         //frame.paint(g);
         //bs.show();
@@ -109,7 +106,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @return
      */
     public Font newFont(InputStream filename, int size, boolean isBold) {
-        Font baseFont=new Font(filename,size,isBold, g);
+        Font baseFont=new Font(filename,size,isBold, graphics);
 
         return baseFont;
     }
@@ -119,15 +116,17 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * con un color recibido como parámetro.
      * @param color
      */
-    public void clear(float[] color) {
-        g=bs.getDrawGraphics();
+    public void clear(int[] color) {
+        graphics = bufferStrategy.getDrawGraphics();
         Color c=new Color(color[0],color[1],color[2]);
        // g.clearRect(0,0,width,height);
-        g.setColor(c);
-        g.fillRect(0,0,width,height);
+        graphics.setColor(c);
+        graphics.fillRect(0,0,width,height);
+    }
 
-
-
+    public void clear(float[] color) {
+        int[] auxColor = {(int)color[0]*255, (int)color[1]*255, (int)color[2]*255};
+        clear(auxColor);
     }
 
     //------------------------------------------------------------
@@ -138,16 +137,16 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
         transX+=x;
         transY+=y;
         //g.translate(x,y);
-        g.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
+        graphics.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
     }
 
     public void scale(float x, float y) {
         //canvas.setSize(x,y);
         scaleX*=x;
         scaleY*=y;
-        g=bs.getDrawGraphics();
-        ((Graphics2D)g).scale(x,y);
-        g.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
+        graphics = bufferStrategy.getDrawGraphics();
+        ((Graphics2D) graphics).scale(x,y);
+        graphics.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
 
     }
 
@@ -175,7 +174,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
         scaleY=savedScaleY;
         transX=savedX;
         transY=savedY;
-        g.setColor(actualColor);
+        graphics.setColor(actualColor);
         scale(scaleX,scaleY);
 
     }
@@ -187,9 +186,14 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * dibujado posteriores.
      * @param color
      */
-    public void setColor(float[] color) {
+    public void setColor(int[] color) {
         actualColor=new Color(color[0],color[1],color[2]);
-        g.setColor(actualColor);
+        graphics.setColor(actualColor);
+    }
+
+    public void setColor(float[] color) {
+        int[] auxColor = {(int)color[0]*255, (int)color[1]*255, (int)color[2]*255};
+        setColor(auxColor);
     }
 
     /**
@@ -201,7 +205,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      */
     public void drawLine(int x1, int y1, int x2, int y2) {
        // g.translate(0,0);
-        g.setColor(actualColor);
+        graphics.setColor(actualColor);
 
 
 
@@ -210,7 +214,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
         int nY1=((int)(((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))*1));
         int nX2=((int)(((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
         int nY2=((int)(((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))*1));
-        g.drawLine(nX1,nY1,nX2,nY2);
+        graphics.drawLine(nX1,nY1,nX2,nY2);
 
     }
 
@@ -223,13 +227,13 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      */
     public void fillRect(int x1, int y1, int x2, int y2) {
 
-        g.setColor(actualColor);
+        graphics.setColor(actualColor);
         int nX1=((int)(((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))*1));
 
         int nY1=((int)(((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))*1));
         int nX2=((int)(((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
         int nY2=((int)(((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))*1));
-        g.fillRect(nX1,nY1,nX2,nY2);
+        graphics.fillRect(nX1,nY1,nX2,nY2);
 
     }
 
@@ -240,10 +244,10 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param y
      */
     public void drawText(String text, int x, int y) {
-        g.setColor(actualColor);
+        graphics.setColor(actualColor);
 
 
-        g.drawString(text, x, y);
+        graphics.drawString(text, x, y);
 
     }
 
