@@ -1,6 +1,8 @@
 package es.ucm.gdv.engine.desktop;
 
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -15,15 +17,31 @@ import java.io.InputStream;
 import javax.swing.JFrame;
 
 public class Graphics implements es.ucm.gdv.engine.Graphics {
-
+    static Graphics instance=null;
     private JFrame frame;
-    private java.awt.Graphics graphics;
-    private BufferStrategy bufferStrategy;
+    private java.awt.Graphics g;
+
+    public void GraphDispose() {
+
+        g.dispose();
+    }
+    public void Show() {
+
+        bs.show();
+    }
+    public boolean BsRestore() {
+        return bs.contentsRestored();
+    }
+    public boolean BsContentLost() {
+        return bs.contentsLost();
+    }
+
+    private BufferStrategy bs;
     private Canvas canvas;
 
 
     private float savedX=0,savedY=0;
-    private float savedScaleX=0,savedScaleY=0;
+    private float savedScaleX=1,savedScaleY=1;
     private float savedRot=0;
     private Color savedColor=Color.BLACK;
 
@@ -35,7 +53,14 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
     private float rotation=0;
     private String title ="newWindow";
 
-    public Graphics(int _width,int _height) {
+    public static Graphics GetGraphics(int _width,int _height)
+    {
+        if(instance==null)
+            instance=new Graphics( _width, _height);
+        return instance;
+    }
+
+    private Graphics(int _width,int _height) {
         width = _width;
         height = _height;
 
@@ -76,21 +101,13 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
 
 
     }
-    public void update()
+    public Canvas getCanvas()
+    {
+        return canvas;
+    }
+    public void updateG()
     {
 
-        do {
-            do {
-                graphics = bufferStrategy.getDrawGraphics();
-                try {
-
-                }
-                finally {
-                    graphics.dispose();
-                }
-            } while(bufferStrategy.contentsRestored());
-            bufferStrategy.show();
-        } while(bufferStrategy.contentsLost());
 
         graphics = bufferStrategy.getDrawGraphics();
         //g.dispose();
