@@ -28,6 +28,7 @@ public class Input  implements es.ucm.gdv.engine.Input , MouseListener, MouseMot
     {
         mouseX=0;
         mouseY=0;
+
         events= new LinkedList<TouchEvent>();
         canvas.addMouseListener(this);
         canvas.addMouseMotionListener(this);

@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import es.ucm.gdv.engine.Game;
 import es.ucm.gdv.engine.Graphics;
 import es.ucm.gdv.engine.Input;
 
@@ -11,7 +12,8 @@ import es.ucm.gdv.engine.Input;
 public class Engine implements es.ucm.gdv.engine.Engine{
     es.ucm.gdv.engine.desktop.Graphics g=null;
     es.ucm.gdv.engine.desktop.Input in=null;
-    
+    Game game=null;
+
     /**
      * Devuelve la instancia del motor gráfico.
      * @return
@@ -21,18 +23,25 @@ public class Engine implements es.ucm.gdv.engine.Engine{
         g= es.ucm.gdv.engine.desktop.Graphics.GetGraphics(640,480);
         in =es.ucm.gdv.engine.desktop.Input.GetInput(g.getCanvas());
 
+
+    }
+
+    public void setGame(Game game)
+    {
+        this.game=game;
     }
 
     public void UpdateEngine()
     {
         while(true) {
             //deltaTime = calcularDeltaTime;
+            game.update(0.0f);
             //update(deltaTime);
             do {
                 do {
                     g.updateG();
                     try {
-                        //render
+                        game.render();
                     } finally {
                        g.GraphDispose();
                     }
