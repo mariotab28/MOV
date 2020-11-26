@@ -3,6 +3,7 @@ apply plugin: 'java-library'
 dependencies {
     api project(path: ':Engine')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation files('..\\json-simple-1.1.1.jar')
 }
 
 sourceCompatibility = "1.7"
