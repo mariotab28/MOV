@@ -37,32 +37,32 @@ public class AndroidGraphics implements Graphics {
      * con un color recibido como parámetro.
      * @param color
      */
-    public void clear(int[] color) {
-        canvas.drawRGB(color[0], color[1], color[2]);
+    public void clear(float[] color) {
+        canvas.drawRGB((int)(color[0] * 255), (int)(color[1] * 255), (int)(color[2] * 255));
     }
 
     //------------------------------------------------------------
     //  Métodos de control de la transformación sobre el canvas
     //------------------------------------------------------------
 
-    public void translate(int x, int y) {
-
+    public void translate(float x, float y) {
+        canvas.translate(x, y);
     }
 
     public void scale(float x, float y) {
-
+        canvas.scale(x, y);
     }
 
     public void rotate(float angle) {
-
+        canvas.rotate(angle);
     }
 
     public void save() {
-
+        canvas.save();
     }
 
     public void restore() {
-
+        canvas.restore();
     }
 
     //------------------------------------------------------------
@@ -114,9 +114,19 @@ public class AndroidGraphics implements Graphics {
      * @return
      */
     public int getWidth() {
-        return 0;
+        return canvas.getWidth();
     }
     public int getHeight() {
-        return 0;
+        return canvas.getHeight();
     }
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    public void setCanvas(Canvas canvas) {
+        this.canvas = canvas;
+    }
+
+
 }

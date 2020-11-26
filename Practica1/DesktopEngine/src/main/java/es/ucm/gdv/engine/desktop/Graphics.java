@@ -133,7 +133,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
     //  Métodos de control de la transformación sobre el canvas
     //------------------------------------------------------------
 
-    public void translate(int x, int y) {
+    public void translate(float x, float y) {
         transX+=x;
         transY+=y;
         //g.translate(x,y);

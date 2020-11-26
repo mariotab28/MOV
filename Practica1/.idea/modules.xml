@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Engine/Engine.iml" filepath="$PROJECT_DIR$/.idea/modules/Engine/Engine.iml" group="Practica1/Engine" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MOV-Practica1.iml" filepath="$PROJECT_DIR$/.idea/modules/MOV-Practica1.iml" group="Practica1" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidEngine/MOV-Practica1-AndroidEngine.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidEngine/MOV-Practica1-AndroidEngine.iml" group="Practica1/AndroidEngine" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidGame/MOV-Practica1-AndroidGame.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidGame/MOV-Practica1-AndroidGame.iml" group="Practica1/AndroidGame" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/DesktopEngine/MOV-Practica1-DesktopEngine.iml" filepath="$PROJECT_DIR$/.idea/modules/DesktopEngine/MOV-Practica1-DesktopEngine.iml" group="Practica1/DesktopEngine" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Engine/MOV-Practica1-Engine.iml" filepath="$PROJECT_DIR$/.idea/modules/Engine/MOV-Practica1-Engine.iml" group="Practica1/Engine" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/OffTheLineLogic/MOV-Practica1-OffTheLineLogic.iml" filepath="$PROJECT_DIR$/.idea/modules/OffTheLineLogic/MOV-Practica1-OffTheLineLogic.iml" group="Practica1/OffTheLineLogic" />
@@ -20,9 +21,15 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktopGame/Practica1-DesktopGame.iml" filepath="$PROJECT_DIR$/.idea/modules/desktopGame/Practica1-DesktopGame.iml" group="Practica1/DesktopGame" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Engine/Practica1-Engine.iml" filepath="$PROJECT_DIR$/.idea/modules/Engine/Practica1-Engine.iml" group="Practica1/Engine" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/OffTheLineLogic/Practica1-OffTheLineLogic.iml" filepath="$PROJECT_DIR$/.idea/modules/OffTheLineLogic/Practica1-OffTheLineLogic.iml" group="Practica1/OffTheLineLogic" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktopGame/Practica1-desktopGame-DesktopGame.iml" filepath="$PROJECT_DIR$/.idea/modules/desktopGame/Practica1-desktopGame-DesktopGame.iml" group="Practica1/DesktopGame" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="Practica1/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktopGame/desktopGame-DesktopGame.iml" filepath="$PROJECT_DIR$/.idea/modules/desktopGame/desktopGame-DesktopGame.iml" group="Practica1/DesktopGame" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/github-MOV-Practica1.iml" filepath="$PROJECT_DIR$/.idea/modules/github-MOV-Practica1.iml" group="Practica1" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hlocal-MOV-Practica1.iml" filepath="$PROJECT_DIR$/.idea/modules/hlocal-MOV-Practica1.iml" group="Practica1" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidEngine/hlocal-MOV-Practica1-AndroidEngine.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidEngine/hlocal-MOV-Practica1-AndroidEngine.iml" group="Practica1/AndroidEngine" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DesktopEngine/hlocal-MOV-Practica1-DesktopEngine.iml" filepath="$PROJECT_DIR$/.idea/modules/DesktopEngine/hlocal-MOV-Practica1-DesktopEngine.iml" group="Practica1/DesktopEngine" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Engine/hlocal-MOV-Practica1-Engine.iml" filepath="$PROJECT_DIR$/.idea/modules/Engine/hlocal-MOV-Practica1-Engine.iml" group="Practica1/Engine" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OffTheLineLogic/hlocal-MOV-Practica1-OffTheLineLogic.iml" filepath="$PROJECT_DIR$/.idea/modules/OffTheLineLogic/hlocal-MOV-Practica1-OffTheLineLogic.iml" group="Practica1/OffTheLineLogic" />
     </modules>
   </component>
 </project>
