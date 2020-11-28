@@ -8,6 +8,11 @@ public class LineObject extends  GameObject {
     {
         super( eng,  id);
     }
+
+    public LineObject(Engine eng,int id,int posX,int posY)
+    {
+        super( eng,  id,posX,posY);
+    }
     public void render ()
     {
         if(isActive)
@@ -18,8 +23,11 @@ public class LineObject extends  GameObject {
                     engine.getGraphics().scale(transform.getScaleX(),transform.getScaleY());
                     engine.getGraphics().rotate(transform.getRotation());
                     engine.getGraphics().setColor(color);
-                    for (int i = 0; i < vertexX.length - 1; i++) {
-                        engine.getGraphics().drawLine(vertexX[i], vertexY[i], vertexX[i + 1], vertexY[i + 1]);
+                    for (int i = 0; i < vertexX.length ; i++) {
+                        if(i+1>=vertexX.length)
+                            engine.getGraphics().drawLine(vertexX[i], vertexY[i], vertexX[0], vertexY[0]);
+                        else
+                            engine.getGraphics().drawLine(vertexX[i], vertexY[i], vertexX[i + 1], vertexY[i + 1]);
                     }
                     engine.getGraphics().restore();
                 }

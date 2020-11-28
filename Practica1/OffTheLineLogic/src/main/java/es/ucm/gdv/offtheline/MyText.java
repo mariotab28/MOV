@@ -16,6 +16,7 @@ public class MyText extends  GameObject {
         offSetx=0;
         offSetY=0;
 
+
     }
 
     public void render ()

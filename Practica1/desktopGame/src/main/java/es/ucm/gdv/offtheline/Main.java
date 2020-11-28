@@ -15,11 +15,16 @@ import es.ucm.gdv.engine.desktop.Input;
 public class Main {
     public static void main (String[] args)
     {
+        boolean ok=false;
         Engine engine=new Engine();
         OffTheLineLogic logic=new OffTheLineLogic(engine);
         engine.setGame(logic);
+        logic.loadFont();
         while(true)
         {
+
+            engine.UpdateEngine();
+
 
         }
 

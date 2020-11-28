@@ -56,6 +56,25 @@ public interface Graphics {
      * @param x2
      * @param y2
      */
+    void drawLine(double x1, double y1, double x2, double y2);
+
+    /**
+     * Dibuja un rectángulo relleno.
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     */
+    void fillRect(double x1, double y1, double x2, double y2);
+
+    /**
+     * Dibuja una línea en patalla
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     */
+
     void drawLine(int x1, int y1, int x2, int y2);
 
     /**

@@ -23,7 +23,7 @@ public class Font  implements es.ucm.gdv.engine.Font{
         _size=size;
 
         if(bold)
-            g.setFont( baseFont.deriveFont(java.awt.Font.BOLD, _size));
+            g.setFont(baseFont.deriveFont(java.awt.Font.BOLD, _size));
         else
             g.setFont(baseFont.deriveFont(java.awt.Font.PLAIN, _size));
 
