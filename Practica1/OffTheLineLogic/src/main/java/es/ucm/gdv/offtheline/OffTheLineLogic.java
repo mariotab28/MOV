@@ -39,7 +39,7 @@ public class OffTheLineLogic implements Game {
             e.printStackTrace();
         }
 
-        objectsInScene=loadLevel(2);
+        objectsInScene=loadLevel(4);
 
 
     }
@@ -59,45 +59,64 @@ public class OffTheLineLogic implements Game {
 
                 JSONObject level=(JSONObject)levels.get(i);
                 JSONArray walls=(JSONArray)level.get("paths");
-                for(int j=0;j< walls.size();j++)
-                {
-                   JSONArray vertices= (JSONArray)((JSONObject)walls.get(j)).get("vertices");
-                    double[] verteX=new double[vertices.size()];
-                    double[] verteY=new double[vertices.size()];
-                   for(int vert=0;vert<vertices.size();vert++)
-                   {
+                if(walls!=null) {
+                    for (int j = 0; j < walls.size(); j++) {
+                        JSONArray vertices = (JSONArray) ((JSONObject) walls.get(j)).get("vertices");
+                        double[] verteX = new double[vertices.size()];
+                        double[] verteY = new double[vertices.size()];
+                        for (int vert = 0; vert < vertices.size(); vert++) {
 
-                       double x=((Number)((JSONObject)vertices.get(vert)).get("x")).doubleValue();
-                       double y=((Number)((JSONObject)vertices.get(vert)).get("y")).doubleValue();
-                       verteX[vert]=x+320;
-                       verteY[vert]=(-y)+240;
-                   }
-                   /////Falta tambien las direcciones
-                   LevelBorder wall =new LevelBorder(engine,0);
-                   wall.setVertex(verteX,verteY);
-                   objects.add(wall);
-                   //////////////////////////////////// Coger los vertices y crear el objeto ahora
+                            double x = ((Number) ((JSONObject) vertices.get(vert)).get("x")).doubleValue();
+                            double y = ((Number) ((JSONObject) vertices.get(vert)).get("y")).doubleValue();
+                            verteX[vert] = x + 320;
+                            verteY[vert] = (-y) + 240;
+                        }
+                        /////Falta tambien las direcciones
+                        LevelBorder wall = new LevelBorder(engine, 0);
+                        wall.setVertex(verteX, verteY);
+                        objects.add(wall);
+                        //////////////////////////////////// Coger los vertices y crear el objeto ahora
 
 
+                    }
                 }
 
                 JSONArray items=(JSONArray)level.get("items");
-                for(int it =0 ; it < items.size();it++)
-                {
-                    int x=((Number)((JSONObject)items.get(it)).get("x")).intValue();
-                    int y=((Number)((JSONObject)items.get(it)).get("y")).intValue();
-                    Coins coin=new Coins(engine,1,x+320,(-y)+240);
+                if(items!=null) {
+                    for (int it = 0; it < items.size(); it++) {
+                        int x = ((Number) ((JSONObject) items.get(it)).get("x")).intValue();
+                        int y = ((Number) ((JSONObject) items.get(it)).get("y")).intValue();
+                        Coins coin = new Coins(engine, 1, x + 320, (-y) + 240);
 
-                    if(((JSONObject)items.get(it)).get("angle")!=null)
-                        coin.setAngle(((Number)((JSONObject)items.get(it)).get("angle")).doubleValue());
-                    if(((JSONObject)items.get(it)).get("radius")!=null)
-                    coin.setRadius(((Number)((JSONObject)items.get(it)).get("radius")).doubleValue());
-                    if(((JSONObject)items.get(it)).get("speed")!=null)
-                    coin.setSpeed(((Number)((JSONObject)items.get(it)).get("speed")).doubleValue());
-                    coin.updateVertex();
-                    objects.add(coin);
+                        if (((JSONObject) items.get(it)).get("angle") != null)
+                            coin.setAngle(((Number) ((JSONObject) items.get(it)).get("angle")).doubleValue());
+                        if (((JSONObject) items.get(it)).get("radius") != null)
+                            coin.setRadius(((Number) ((JSONObject) items.get(it)).get("radius")).doubleValue());
+                        if (((JSONObject) items.get(it)).get("speed") != null)
+                            coin.setSpeed(((Number) ((JSONObject) items.get(it)).get("speed")).doubleValue());
+                       // coin.updateVertex();
+                        objects.add(coin);
+                    }
                 }
                 /////
+
+                JSONArray enemies=(JSONArray)level.get("enemies");
+                if(enemies!=null) {
+                    for (int it = 0; it < enemies.size(); it++) {
+                        int x = ((Number) ((JSONObject) enemies.get(it)).get("x")).intValue();
+                        int y = ((Number) ((JSONObject) enemies.get(it)).get("y")).intValue();
+                        Enemy enemy = new Enemy(engine, 2, x + 320, (-y) + 240);
+
+                        if (((JSONObject) enemies.get(it)).get("angle") != null)
+                            enemy.setAngle(((Number) ((JSONObject) enemies.get(it)).get("angle")).doubleValue());
+                        if (((JSONObject) enemies.get(it)).get("length") != null)
+                            enemy.setLength(((Number) ((JSONObject) enemies.get(it)).get("length")).doubleValue());
+                        if (((JSONObject) enemies.get(it)).get("speed") != null)
+                            enemy.setSpeed(((Number) ((JSONObject) enemies.get(it)).get("speed")).doubleValue());
+                        enemy.updateVertex();
+                        objects.add(enemy);
+                    }
+                }
                 //////AQUI TIENEN QUE ESTAR LOS ENEMIGOS
                 String name=(String)level.get("name");
                 name= "Level "+ (i+1) + "- "+name;
