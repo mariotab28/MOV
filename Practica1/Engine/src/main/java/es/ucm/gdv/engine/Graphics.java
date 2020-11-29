@@ -35,6 +35,7 @@ public interface Graphics {
     //------------------------------------------------------------
 
     void translate(int x, int y);
+    void translate(double x, double y);
     void scale(float x, float y);
     void rotate(float angle);
     void save();

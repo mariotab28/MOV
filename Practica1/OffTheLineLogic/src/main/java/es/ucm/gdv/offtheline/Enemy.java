@@ -52,7 +52,7 @@ public class Enemy extends  LineObject {
         for(int i =0; i< verX.length;i++)
         {
             verX[i]=verX[i]*((length/2)*Math.cos((angle/180)*Math.PI));
-            verY[i]=verY[i]*((length/2)*Math.sin((angle/180)*Math.PI));
+            verY[i]=verY[i]*((length/2)*Math.sin((-angle/180)*Math.PI));
         }
         setVertex(verX,verY);
     }
@@ -61,19 +61,10 @@ public class Enemy extends  LineObject {
     public void update(float deltaTime) {
 
         if(isActive) {
-            angle= angle+speed*deltaTime;
-            transform.setRotation((float)((angle/180)*Math.PI));
+            double rot= speed*deltaTime;
+            transform.setRotation((float)((rot/180.0)*Math.PI));
 
-            engine.getGraphics().rotate(transform.getRotation());
 
-            if (collision) {
-                acumScale = acumScale + 1 * deltaTime;
-                transform.setScaleX(transform.getScaleX() * acumScale);
-            }
-            if(acumScale==2)
-            {
-                isActive=false;
-            }
         }
     }
 

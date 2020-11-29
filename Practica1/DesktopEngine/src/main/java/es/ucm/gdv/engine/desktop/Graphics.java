@@ -164,6 +164,13 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
         //g.translate(x,y);
         g.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
     }
+    public void translate(double x, double y) {
+        transX+=x;
+        transY+=y;
+        //g.translate(x,y);
+        g.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
+        ((Graphics2D)g).translate((transX*1/scaleX),(transY*1/scaleY));
+    }
 
     public void scale(float x, float y) {
         //canvas.setSize(x,y);
@@ -229,7 +236,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
 
 
 
-        int nX1=((int)(((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))*1));
+        double nX1=((((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))*1));
 
         double nY1=((((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))*1));
         double nX2=((((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
@@ -275,7 +282,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
 
 
 
-        int nX1=((int)(((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))*1));
+        double nX1=((((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))*1));
 
         double nY1=((((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))*1));
         double nX2=((((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
