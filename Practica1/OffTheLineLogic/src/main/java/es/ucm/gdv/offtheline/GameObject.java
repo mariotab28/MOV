@@ -10,8 +10,8 @@ public class GameObject {
     float[] color;
     boolean isActive;
 
-    int[] vertexX;
-    int[] vertexY;
+    double[] vertexX;
+    double[] vertexY;
 
 
 
@@ -88,7 +88,7 @@ public class GameObject {
     public GameObject(Engine eng,int id)
     {
         transform=new MyTransform();
-        float[] c={0.0f,0.0f,0.0f};
+        float[] c={1.0f,1.0f,1.0f};
 
         color=c;
         engine=eng;
@@ -127,17 +127,17 @@ public class GameObject {
         isActive = active;
     }
 
-    public void setVertex(int[] vertexX,int[]vertexY)
+    public void setVertex(double[] vertexX,double[]vertexY)
     {
         this.vertexX=vertexX;
         this.vertexY=vertexY;
     }
 
-    public int[] getVertexX() {
+    public double[] getVertexX() {
         return vertexX;
     }
 
-    public int[] getVertexY() {
+    public double[] getVertexY() {
         return vertexY;
     }
 }

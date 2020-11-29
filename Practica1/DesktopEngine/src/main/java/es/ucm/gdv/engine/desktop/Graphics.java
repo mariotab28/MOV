@@ -1,14 +1,17 @@
 package es.ucm.gdv.engine.desktop;
 
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
+
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 
 import java.io.InputStream;
@@ -98,6 +101,10 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
         }
 
         bufferStrategy = canvas.getBufferStrategy();
+
+        g=bs.getDrawGraphics();
+
+
 
 
     }
@@ -220,6 +227,52 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param x2
      * @param y2
      */
+    public void drawLine(double x1, double y1, double x2, double y2) {
+        // g.translate(0,0);
+        g.setColor(actualColor);
+
+
+
+        int nX1=((int)(((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))*1));
+
+        double nY1=((((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))*1));
+        double nX2=((((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
+        double nY2=((((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))*1));
+
+        ((Graphics2D)g).setStroke(new BasicStroke(2));
+        ((Graphics2D)g).draw(new Line2D.Double(nX1,nY1,nX2,nY2));
+        //g.drawLine(nX1,nY1,nX2,nY2);
+
+        //g.drawRect();
+
+    }
+
+    /**
+     * Dibuja un rectángulo relleno.
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     */
+    public void fillRect(double x1, double y1, double x2, double y2) {
+
+        g.setColor(actualColor);
+        double nX1=((((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))*1));
+
+        double nY1=((((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))*1));
+        double nX2=((((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
+        double nY2=((((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))*1));
+        //g.fillRect(nX1,nY1,nX2,nY2);
+        ((Graphics2D)g).fill(new Rectangle2D.Double(nX1,nY1,nX2,nY2));
+
+    }
+    /**
+     * Dibuja una línea en patalla
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     */
     public void drawLine(int x1, int y1, int x2, int y2) {
        // g.translate(0,0);
         graphics.setColor(actualColor);
@@ -228,10 +281,15 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
 
         int nX1=((int)(((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))*1));
 
-        int nY1=((int)(((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))*1));
-        int nX2=((int)(((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
-        int nY2=((int)(((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))*1));
-        graphics.drawLine(nX1,nY1,nX2,nY2);
+        double nY1=((((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))*1));
+        double nX2=((((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
+        double nY2=((((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))*1));
+
+        ((Graphics2D)g).setStroke(new BasicStroke(2));
+        ((Graphics2D)g).draw(new Line2D.Double(nX1,nY1,nX2,nY2));
+        //g.drawLine(nX1,nY1,nX2,nY2);
+
+        //g.drawRect();
 
     }
 

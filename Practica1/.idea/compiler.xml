@@ -7,9 +7,9 @@
       <module name="desktopGame" target="1.7" />
       <module name="desktopGame-DesktopGame" target="1.7" />
       <module name="Engine" target="1.7" />
-      <module name="hlocal-MOV-Practica1-DesktopEngine" target="1.7" />
-      <module name="hlocal-MOV-Practica1-Engine" target="1.7" />
-      <module name="hlocal-MOV-Practica1-OffTheLineLogic" target="1.7" />
+      <module name="GitHub-MOV-Practica1-DesktopEngine" target="1.7" />
+      <module name="GitHub-MOV-Practica1-Engine" target="1.7" />
+      <module name="GitHub-MOV-Practica1-OffTheLineLogic" target="1.7" />
       <module name="MOV-Practica1-DesktopEngine" target="1.7" />
       <module name="MOV-Practica1-Engine" target="1.7" />
       <module name="MOV-Practica1-OffTheLineLogic" target="1.7" />
