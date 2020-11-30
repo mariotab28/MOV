@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
         engine.setGame(logic);
 
         // Creación del motor y la lógica del juego
-        AndroidEngine engine = new AndroidEngine();
-        OffTheLineLogic logic = new OffTheLineLogic(engine);
+        engine = new AndroidEngine(this);
+        logic = new OffTheLineLogic(engine);
         engine.setGame(logic);
 
         // Preparamos el contenido de la actividad.
