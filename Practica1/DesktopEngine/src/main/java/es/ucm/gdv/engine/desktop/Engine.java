@@ -34,11 +34,13 @@ public class Engine implements es.ucm.gdv.engine.Engine{
 
     public void UpdateEngine()
     {
+        float deltaTime = getDeltaTime()/1000;
         while(true) {
-            float deltaTime = getDeltaTime()/1000;
+            deltaTime = getDeltaTime()/1000;
 
 
             game.update(deltaTime);
+
             //update(deltaTime);
             do {
                 do {

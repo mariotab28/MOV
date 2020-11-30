@@ -28,13 +28,13 @@ public interface Graphics {
      * con un color recibido como parámetro.
      * @param color
      */
-    void clear(float[] color);
+    void clear(int color);
 
     //------------------------------------------------------------
     //  Métodos de control de la transformación sobre el canvas
     //------------------------------------------------------------
 
-    void translate(float x, float y);
+    void translate(double x, double y);
     void scale(float x, float y);
     void rotate(float angle);
     void save();
@@ -47,7 +47,7 @@ public interface Graphics {
      * dibujado posteriores.
      * @param color
      */
-    void setColor(int[] color);
+    void setColor(int color);
 
     /**
      * Dibuja una línea en patalla

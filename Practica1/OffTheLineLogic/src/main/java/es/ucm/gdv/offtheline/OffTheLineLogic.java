@@ -23,6 +23,11 @@ public class OffTheLineLogic implements Game {
     Engine engine=null;
     JSONArray levels=null;
     Vector<GameObject> objectsInScene;
+    int coinsInLevel;
+    int levelIndex;
+    double timer;
+
+    Player player=null;
     public OffTheLineLogic(Engine engine)
     {
         this.engine=engine;
@@ -38,8 +43,10 @@ public class OffTheLineLogic implements Game {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        timer=0;
+        levelIndex=8;
+        objectsInScene=loadLevel(levelIndex);
 
-        objectsInScene=loadLevel(4);
 
 
     }
@@ -47,7 +54,7 @@ public class OffTheLineLogic implements Game {
     public  Vector<GameObject> loadLevel(int i)
     {
 
-        Vector<GameObject> objects=new Vector<GameObject>();
+        Vector<GameObject> objects=new Vector<>();
         GameObject[] objectsA=new  GameObject[100];
 
 
@@ -72,8 +79,26 @@ public class OffTheLineLogic implements Game {
                             verteY[vert] = (-y) + 240;
                         }
                         /////Falta tambien las direcciones
+                        JSONArray directions = (JSONArray) ((JSONObject) walls.get(j)).get("directions");
+                        double[] dirX=null;
+                        double[] dirY=null;
+                        if(directions!=null) {
+                            dirX= new double[directions.size()];
+                            dirY= new double[directions.size()];
+                            for (int dir = 0; dir < directions.size(); dir++) {
+
+                                double x = ((Number) ((JSONObject) directions.get(dir)).get("x")).doubleValue();
+                                double y = ((Number) ((JSONObject) directions.get(dir)).get("y")).doubleValue();
+                                dirX[dir] = x;
+                                dirY[dir] = -y;
+                            }
+                        }
                         LevelBorder wall = new LevelBorder(engine, 0);
                         wall.setVertex(verteX, verteY);
+
+                        wall.setDirectionsX(dirX);
+                        wall.setDirectionsY(dirY);
+
                         objects.add(wall);
                         //////////////////////////////////// Coger los vertices y crear el objeto ahora
 
@@ -81,6 +106,10 @@ public class OffTheLineLogic implements Game {
                     }
                 }
 
+                player=new Player(engine,3,(LevelBorder)objects.get(0));
+                player.setSpeed(50);
+                objects.add(player);
+                coinsInLevel=0;
                 JSONArray items=(JSONArray)level.get("items");
                 if(items!=null) {
                     for (int it = 0; it < items.size(); it++) {
@@ -96,6 +125,7 @@ public class OffTheLineLogic implements Game {
                             coin.setSpeed(((Number) ((JSONObject) items.get(it)).get("speed")).doubleValue());
                        // coin.updateVertex();
                         objects.add(coin);
+                        coinsInLevel++;
                     }
                 }
                 /////
@@ -143,6 +173,28 @@ public class OffTheLineLogic implements Game {
             for(int i =0;i<objectsInScene.size();i++)
             {
                 objectsInScene.get(i).update(deltaTime);
+            }
+            player.ManageCollisions(objectsInScene);
+            engine.getInput().getTouchEvents().clear();
+            if(coinsInLevel==player.getCoinsCollected()) {
+                timer+=deltaTime;
+                if(timer>1) {
+                    levelIndex++;
+                    objectsInScene.clear();
+                    objectsInScene = loadLevel(levelIndex);
+                    timer=0;
+                }
+            }
+
+            if(!player.isActive())
+            {
+                timer+=deltaTime;
+                if(timer>2) {
+                    objectsInScene.clear();
+                    objectsInScene = loadLevel(levelIndex);
+                    timer = 0;
+                }
+
             }
     }
     public void render()

@@ -23,8 +23,8 @@ public class Coins extends  LineObject {
 
 
 
-        double[] verX= {-8,8,8,-8};
-        double[] verY= {8,8,-8,-8};
+        double[] verX= {-4,4,4,-4};
+        double[] verY= {4,4,-4,-4};
 
         setVertex(verX,verY);
     }
@@ -42,8 +42,8 @@ public class Coins extends  LineObject {
         acumScale=1;
         collision=false;
 
-        double[] verX= {-8,8,8,-8};
-        double[] verY= {8,8,-8,-8};
+        double[] verX= {-4,4,4,-4};
+        double[] verY= {4,4,-4,-4};
 
         setVertex(verX,verY);
 
@@ -63,18 +63,20 @@ public class Coins extends  LineObject {
 
         if(isActive) {
             angle= angle+speed*deltaTime;
-            transform.setPosX((int)(posiniX +radius*Math.sin((angle/180)*Math.PI)));
-            transform.setPosY((int)(posiniY +radius*Math.cos((angle/180)*Math.PI)));
+            transform.setPosX((posiniX +radius*Math.sin((angle/180)*Math.PI)));
+            transform.setPosY((posiniY +radius*Math.cos((angle/180)*Math.PI)));
 
             transform.setRotation(transform.getRotation() + ((float) Math.PI ) * deltaTime);
 
             engine.getGraphics().rotate(transform.getRotation());
 
             if (collision) {
-                acumScale = acumScale + 1 * deltaTime;
+                acumScale = acumScale + 0.005f* deltaTime;
                 transform.setScaleX(transform.getScaleX() * acumScale);
+                transform.setScaleY(transform.getScaleY() * acumScale);
+
             }
-            if(acumScale==2)
+            if(transform.getScaleX()>=4)
             {
                 isActive=false;
             }
