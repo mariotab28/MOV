@@ -14,18 +14,17 @@ import es.ucm.gdv.engine.Game;
 import es.ucm.gdv.engine.Graphics;
 
 public class AndroidGraphics extends SurfaceView implements Graphics {
-    AssetManager assets;
     Canvas canvas;
-    Paint paint;
-    /**
-     * Manejador de la superficie para poder acceder a su contenido.
-     */
+    Paint paint = new Paint();
+    // Manejador de la superficie para poder acceder a su contenido.
     private final SurfaceHolder _holder;
+    // Indica si se ha hecho un save() antes de un restore()
+    boolean stateIsSaved = false;
 
-    public AndroidGraphics(AssetManager assets, Context context) {
+
+    public AndroidGraphics(Context context) {
         super(context);
         _holder = getHolder();
-        this.assets = assets;
         //this.canvas = new Canvas(frameBuffer);
     }
 
@@ -68,15 +67,23 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
     }
 
     public void rotate(float angle) {
-        canvas.rotate(angle);
+        //TODO: ROTATE
+        //canvas.rotate(angle);
     }
 
     public void save() {
         canvas.save();
+        stateIsSaved = true;
     }
 
     public void restore() {
-        canvas.restore();
+        if(stateIsSaved) {
+            canvas.restore();
+            stateIsSaved = false;
+        } else {
+            //System.out.println("Aviso: Intento de restaurar canvas sin guardar primero.\n");
+        }
+
     }
 
     //------------------------------------------------------------
@@ -164,15 +171,20 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
         while (!_holder.getSurface().isValid())
             ;
         canvas = _holder.lockCanvas();
-        game.render(); //render(canvas);
+        try {
+            game.render(); //render(canvas);
+        }
+        catch (java.lang.IllegalStateException exception) {
+            if (exception.getMessage() != null && (//
+                    exception.getMessage().contains("Underflow in restore") || //
+                            exception.getCause().getMessage().contains("Underflow in restore"))) { //
+                System.out.println("ERROR: Canvas underflow in restore() (java.lang.IllegalStateException: Underflow in restore)");
+            }
+            else {
+                throw exception; // No es un underflow
+            }
+        }
         _holder.unlockCanvasAndPost(canvas);
-                /*
-                // Posibilidad: cedemos algo de tiempo. es una medida conflictiva...
-                try {
-                    Thread.sleep(1);
-                }
-                catch(Exception e) {}
-    			*/
     }
 
 }

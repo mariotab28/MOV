@@ -89,6 +89,8 @@ public class Engine implements es.ucm.gdv.engine.Engine{
     public InputStream openInputStream(String filename)
     {
         InputStream is=null;
+        filename = "Resources/" + filename; // Añade "Resources/" a la ruta
+
         try {
            is = new FileInputStream(filename);
         } catch (FileNotFoundException e) {

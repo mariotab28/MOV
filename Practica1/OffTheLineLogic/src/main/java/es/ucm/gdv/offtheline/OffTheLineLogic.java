@@ -33,7 +33,7 @@ public class OffTheLineLogic implements Game {
     {
         this.engine=engine;
 
-        InputStream is=engine.openInputStream("Resources/levels.json");
+        InputStream is=engine.openInputStream("levels.json");
         InputStreamReader isr=new InputStreamReader(is);
         JSONParser jsonParser=new JSONParser();
 
@@ -178,7 +178,7 @@ public class OffTheLineLogic implements Game {
 
     public void loadFont()
     {
-        InputStream font= engine.openInputStream("Resources/Bungee-Regular.ttf");
+        InputStream font= engine.openInputStream("Bungee-Regular.ttf");
         engine.getGraphics().newFont(font,80,true);
     }
     public void update(float deltaTime){

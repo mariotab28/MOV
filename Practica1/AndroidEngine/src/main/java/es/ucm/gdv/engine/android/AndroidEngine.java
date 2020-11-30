@@ -1,7 +1,12 @@
 package es.ucm.gdv.engine.android;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Canvas;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import es.ucm.gdv.engine.Engine;
@@ -13,46 +18,45 @@ public class AndroidEngine implements Engine, Runnable {
     AndroidGraphics graphics = null;
     AndroidInput input = null;
     Game game = null;
+    Context _context;
+    AssetManager assets;
     private boolean _running = false;
     private Thread _thread;
 
-    public AndroidEngine()
+    public AndroidEngine(Context context)
     {
-
-    }
+        this._context = context;
+        // Creación de Graphics
+        graphics = new AndroidGraphics(context);
+        input = new AndroidInput(graphics, graphics.getScaleX(), graphics.getScaleY());
+        assets = context.getAssets();
+    } //AndroidEngine
 
     public void setGame(Game game)
     {
         this.game = game;
     }
 
-
-    public void mainLoop()
-    {
-
-        // Bucle principal
-
-        while(true) {
-
-
-            game.update(0.0f);
-            game.render();
-        }
-    }
-
     @Override
     public Graphics getGraphics() {
-        return null;
+        return graphics;
     }
 
     @Override
     public Input getInput() {
-        return null;
+        return input;
     }
 
     @Override
     public InputStream openInputStream(String filename) {
-        return null;
+
+        InputStream is = null;
+        try {
+            is = assets.open(filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return is;
     }
 
     //- - - - - - - - - - - - - R U N - - - - - - - - - - - - - - - -
