@@ -26,7 +26,8 @@ public class OffTheLineLogic implements Game {
     int coinsInLevel;
     int levelIndex;
     double timer;
-
+    int numLives=0;
+    int maxLives=10;
     Player player=null;
     public OffTheLineLogic(Engine engine)
     {
@@ -45,6 +46,7 @@ public class OffTheLineLogic implements Game {
         }
         timer=0;
         levelIndex=0;
+        numLives=10;
         objectsInScene=loadLevel(levelIndex);
 
 
@@ -143,6 +145,15 @@ public class OffTheLineLogic implements Game {
                             enemy.setLength(((Number) ((JSONObject) enemies.get(it)).get("length")).doubleValue());
                         if (((JSONObject) enemies.get(it)).get("speed") != null)
                             enemy.setSpeed(((Number) ((JSONObject) enemies.get(it)).get("speed")).doubleValue());
+                        if (((JSONObject) enemies.get(it)).get("offset") != null)
+                            {
+                                enemy.setOffsetX(((Number)(((JSONObject) ((JSONObject) enemies.get(it)).get("offset")).get("x"))).doubleValue());
+                                enemy.setOffsetY(-((Number)(((JSONObject) ((JSONObject) enemies.get(it)).get("offset")).get("y"))).doubleValue());
+                            }
+                        if (((JSONObject) enemies.get(it)).get("time1") != null)
+                            enemy.setTime1(((Number) ((JSONObject) enemies.get(it)).get("time1")).doubleValue());
+                        if (((JSONObject) enemies.get(it)).get("time2") != null)
+                            enemy.setTime2(((Number) ((JSONObject) enemies.get(it)).get("time2")).doubleValue());
                         enemy.updateVertex();
                         objects.add(enemy);
                     }
@@ -157,6 +168,8 @@ public class OffTheLineLogic implements Game {
 
                 objects.add(text);
 
+                LifeController lives =new LifeController(maxLives,numLives,engine, 320+100,20);
+                objects.add(lives);
             }
         }
 
@@ -191,7 +204,12 @@ public class OffTheLineLogic implements Game {
                 timer+=deltaTime;
                 if(timer>2) {
                     objectsInScene.clear();
+                    numLives--;
+                    if(numLives<0)
+                        numLives=0;
+
                     objectsInScene = loadLevel(levelIndex);
+
                     timer = 0;
                 }
 

@@ -14,6 +14,7 @@ public class Enemy extends  LineObject {
     double offsetY=0;
     double time1=0;
     double time2=0;
+    boolean moving=true;
 
     int direction=1;
 
@@ -33,7 +34,7 @@ public class Enemy extends  LineObject {
         setVertex(verX,verY);
     }
 
-    public Enemy(Engine eng,int id,int posX,int posY)
+    public Enemy(Engine eng,int id,double posX,double posY)
     {
 
         super( eng,  id,posX,posY);
@@ -44,7 +45,7 @@ public class Enemy extends  LineObject {
 
         double[] verX= {-5,5,5,-5};
         double[] verY= {5,5,-5,-5};
-
+        counter=0;
         setVertex(verX,verY);
 
     }
@@ -68,10 +69,24 @@ public class Enemy extends  LineObject {
         if(isActive) {
             double rot= speed*deltaTime;
             transform.setRotation(transform.getRotation()+(float)((rot/180.0)*Math.PI));
-            /*if(counter<time1)
+            if(counter<time1 && moving)
+            {
                 transform.setPosX(transform.getPosX()+offsetX * direction*deltaTime);
-            */
+                transform.setPosY(transform.getPosY()+offsetY * direction*deltaTime);
 
+            }
+            else if(counter>= time1&& moving) {
+                counter=0;
+                moving = false;
+            }
+            if(counter>=time2 && !moving)
+            {
+                moving=true;
+                counter=0;
+                direction=-direction;
+            }
+
+            counter+=deltaTime;
         }
     }
 

@@ -9,7 +9,7 @@ public class LineObject extends  GameObject {
         super( eng,  id);
     }
 
-    public LineObject(Engine eng,int id,int posX,int posY)
+    public LineObject(Engine eng,int id,double posX,double posY)
     {
         super( eng,  id,posX,posY);
     }

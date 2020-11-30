@@ -27,7 +27,7 @@ public class Coins extends  LineObject {
         setVertex(verX,verY);
     }
 
-    public Coins(Engine eng,int id,int posX,int posY)
+    public Coins(Engine eng,int id,double posX,double posY)
     {
 
         super( eng,  id,posX,posY);
