@@ -168,7 +168,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
         transX+=x;
         transY+=y;
         //g.translate(x,y);
-        g.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
+
         ((Graphics2D)g).translate((transX*1/scaleX),(transY*1/scaleY));
     }
 

@@ -9,6 +9,15 @@ public class Enemy extends  LineObject {
     double angle=0;
     double speed=0;
     double length=0;
+
+    double offsetX=0;
+    double offsetY=0;
+    double time1=0;
+    double time2=0;
+
+    int direction=1;
+
+    double counter=0;
     public Enemy(Engine eng, int id )
     {
         super( eng,  id);
@@ -62,8 +71,10 @@ public class Enemy extends  LineObject {
 
         if(isActive) {
             double rot= speed*deltaTime;
-            transform.setRotation((float)((rot/180.0)*Math.PI));
-
+            transform.setRotation(transform.getRotation()+(float)((rot/180.0)*Math.PI));
+            /*if(counter<time1)
+                transform.setPosX(transform.getPosX()+offsetX * direction*deltaTime);
+            */
 
         }
     }
@@ -91,5 +102,21 @@ public class Enemy extends  LineObject {
 
     public void setLength(double length) {
         this.length = length;
+    }
+
+    public void setOffsetX(double offsetX) {
+        this.offsetX = offsetX;
+    }
+
+    public void setOffsetY(double offsetY) {
+        this.offsetY = offsetY;
+    }
+
+    public void setTime1(double time1) {
+        this.time1 = time1;
+    }
+
+    public void setTime2(double time2) {
+        this.time2 = time2;
     }
 }
