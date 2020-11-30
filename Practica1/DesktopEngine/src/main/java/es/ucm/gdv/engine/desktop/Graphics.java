@@ -142,11 +142,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      */
     public void clear(int color) {
         graphics = bufferStrategy.getDrawGraphics();
-        Color c=new Color(
-                (color & 0xFF0000) >> 16,
-                (color & 0xFF00) >> 8,
-                color & 0xFF
-        );
+        Color c=new Color(color);
        // g.clearRect(0,0,width,height);
         graphics.setColor(c);
         graphics.fillRect(0,0,width,height);
@@ -159,8 +155,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
     public void translate(double x, double y) {
         transX+=x;
         transY+=y;
-        //g.translate(x,y);
-        graphics.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
+
         ((Graphics2D)graphics).translate((transX*1/scaleX),(transY*1/scaleY));
     }
 
@@ -211,11 +206,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param color
      */
     public void setColor(int color) {
-        actualColor = new Color(
-                (color & 0xFF0000) >> 16,
-                (color & 0xFF00) >> 8,
-                color & 0xFF
-        );
+        actualColor = new Color(color);
         graphics.setColor(actualColor);
     }
 
