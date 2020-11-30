@@ -7,7 +7,7 @@ public class GameObject {
     MyTransform transform;
     Engine engine;
     int id;
-    float[] color;
+    int color;
     boolean isActive;
 
     double[] vertexX;
@@ -88,7 +88,7 @@ public class GameObject {
     public GameObject(Engine eng,int id)
     {
         transform=new MyTransform();
-        float[] c={1.0f,1.0f,1.0f};
+        int c = 0xFFFFFF;
 
         color=c;
         engine=eng;
@@ -101,11 +101,8 @@ public class GameObject {
         transform=new MyTransform();
         transform.posX=posX;
         transform.posY=posY;
-        float[] c=new float[3];
-        c[0]=0.0f;
-        c[1]=0.0f;
-        c[2]=0.0f;
-        color=c;
+        int c = 0x000000;
+        color = c;
         engine=eng;
         this.id=id;
         isActive=true;
@@ -115,7 +112,7 @@ public class GameObject {
         this.engine = engine;
     }
 
-    public void setColor(float[] color) {
+    public void setColor(int color) {
         this.color = color;
     }
 

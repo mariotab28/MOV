@@ -47,16 +47,20 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
      * con un color recibido como parámetro.
      * @param color
      */
-    public void clear(float[] color) {
-        canvas.drawRGB((int)(color[0] * 255), (int)(color[1] * 255), (int)(color[2] * 255));
+    public void clear(int color) {
+        canvas.drawRGB(
+                (color & 0xFF0000) >> 16,
+                (color & 0xFF00) >> 8,
+                color & 0xFF
+        );
     }
 
     //------------------------------------------------------------
     //  Métodos de control de la transformación sobre el canvas
     //------------------------------------------------------------
 
-    public void translate(float x, float y) {
-        canvas.translate(x, y);
+    public void translate(double x, double y) {
+        canvas.translate((float)x, (float)y);
     }
 
     public void scale(float x, float y) {
@@ -82,8 +86,12 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
      * dibujado posteriores.
      * @param color
      */
-    public void setColor(int[] color) {
-        paint.setARGB(255, color[0], color[1], color[2]);
+    public void setColor(int color) {
+        paint.setARGB(255,
+                (color & 0xFF0000) >> 16,
+                (color & 0xFF00) >> 8,
+                color & 0xFF
+        );
     }
 
     @Override

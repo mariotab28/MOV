@@ -140,35 +140,28 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * con un color recibido como parámetro.
      * @param color
      */
-    public void clear(int[] color) {
+    public void clear(int color) {
         graphics = bufferStrategy.getDrawGraphics();
-        Color c=new Color(color[0],color[1],color[2]);
+        Color c=new Color(
+                (color & 0xFF0000) >> 16,
+                (color & 0xFF00) >> 8,
+                color & 0xFF
+        );
        // g.clearRect(0,0,width,height);
         graphics.setColor(c);
         graphics.fillRect(0,0,width,height);
-    }
-
-    public void clear(float[] color) {
-        int[] auxColor = {(int)color[0]*255, (int)color[1]*255, (int)color[2]*255};
-        clear(auxColor);
     }
 
     //------------------------------------------------------------
     //  Métodos de control de la transformación sobre el canvas
     //------------------------------------------------------------
 
-    public void translate(float x, float y) {
-        transX+=x;
-        transY+=y;
-        //g.translate(x,y);
-        graphics.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
-    }
     public void translate(double x, double y) {
         transX+=x;
         transY+=y;
         //g.translate(x,y);
-        g.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
-        ((Graphics2D)g).translate((transX*1/scaleX),(transY*1/scaleY));
+        graphics.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
+        ((Graphics2D)graphics).translate((transX*1/scaleX),(transY*1/scaleY));
     }
 
     public void scale(float x, float y) {
@@ -217,14 +210,13 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * dibujado posteriores.
      * @param color
      */
-    public void setColor(int[] color) {
-        actualColor=new Color(color[0],color[1],color[2]);
+    public void setColor(int color) {
+        actualColor = new Color(
+                (color & 0xFF0000) >> 16,
+                (color & 0xFF00) >> 8,
+                color & 0xFF
+        );
         graphics.setColor(actualColor);
-    }
-
-    public void setColor(float[] color) {
-        int[] auxColor = {(int)color[0]*255, (int)color[1]*255, (int)color[2]*255};
-        setColor(auxColor);
     }
 
     /**

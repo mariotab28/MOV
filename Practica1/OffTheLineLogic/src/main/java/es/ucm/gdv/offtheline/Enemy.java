@@ -12,9 +12,7 @@ public class Enemy extends  LineObject {
     public Enemy(Engine eng, int id )
     {
         super( eng,  id);
-        color[0]=1.0f;
-        color[1]=0.0f;
-        color[2]=0.0f;
+        color = 0xFF0000;
         acumScale=1;
         collision=false;
 
@@ -31,9 +29,7 @@ public class Enemy extends  LineObject {
 
         super( eng,  id,posX,posY);
 
-        color[0]=1.0f;
-        color[1]=0.0f;
-        color[2]=0.0f;
+        color = 0xFF0000;
         acumScale=1;
         collision=false;
 

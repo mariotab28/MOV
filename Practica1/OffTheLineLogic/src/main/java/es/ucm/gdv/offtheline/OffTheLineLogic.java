@@ -199,9 +199,7 @@ public class OffTheLineLogic implements Game {
     }
     public void render()
     {
-        float[] colorBlack={0.0f,0.0f,0.0f};
-
-        engine.getGraphics().clear(colorBlack);
+        engine.getGraphics().clear(0x000000);
         for(int i =0;i<objectsInScene.size();i++)
         {
             objectsInScene.get(i).render();

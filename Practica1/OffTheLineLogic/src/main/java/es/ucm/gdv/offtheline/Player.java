@@ -30,9 +30,7 @@ public class Player extends  LineObject {
         transform.setPosX(path.getVertexX()[0]);
         transform.setPosY(path.getVertexY()[0]);
 
-        color[0]=0.0f;
-        color[1]=0.5f;
-        color[2]=1.0f;
+        color = 0x007FFF;
 
 
         double[] verX= {-6,6,6,-6};

@@ -8,9 +8,7 @@ public class Life extends  LineObject {
     public Life(Engine eng, int id )
     {
         super( eng,  id);
-        color[0]=0.0f;
-        color[1]=0.0f;
-        color[2]=1.0f;
+        color = 0x0000FF;
 
     }
 
