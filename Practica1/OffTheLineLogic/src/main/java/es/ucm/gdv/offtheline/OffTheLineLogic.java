@@ -44,7 +44,7 @@ public class OffTheLineLogic implements Game {
             e.printStackTrace();
         }
         timer=0;
-        levelIndex=8;
+        levelIndex=0;
         objectsInScene=loadLevel(levelIndex);
 
 
@@ -107,7 +107,7 @@ public class OffTheLineLogic implements Game {
                 }
 
                 player=new Player(engine,3,(LevelBorder)objects.get(0));
-                player.setSpeed(50);
+                player.setSpeed(100);
                 objects.add(player);
                 coinsInLevel=0;
                 JSONArray items=(JSONArray)level.get("items");
