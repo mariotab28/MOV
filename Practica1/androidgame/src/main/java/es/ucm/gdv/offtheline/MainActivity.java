@@ -37,14 +37,13 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
         //TODO: FONT
-        _font = Typeface.createFromAsset(this.getAssets(), "Bangers-Regular.ttf");
+        //_font = Typeface.createFromAsset(this.getAssets(), "Bangers-Regular.ttf");
 
         // Creación del motor y la lógica del juego
-        AndroidEngine engine = new AndroidEngine();
+        engine = new AndroidEngine(this);
         OffTheLineLogic logic = new OffTheLineLogic(engine);
         engine.setGame(logic);
 
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView((View) engine.getGraphics());
 
         // Inicio del bucle principal del motor
-        engine.mainLoop();
+        //engine.mainLoop();
     } // onCreate
 
     /**
@@ -101,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
      * Fuente usada para escribir el texto que se muestra moviéndose de lado a lado.
      * Se carga en el onCreate y se usa en MySurfaceView.
      */
-    protected Typeface _font;
+    //protected Typeface _font;
 
     /*
             if (_font != null) {
