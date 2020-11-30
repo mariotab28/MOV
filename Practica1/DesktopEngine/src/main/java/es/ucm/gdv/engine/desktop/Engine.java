@@ -3,7 +3,6 @@ package es.ucm.gdv.engine.desktop;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.sql.Time;
 
 import es.ucm.gdv.engine.Game;
 import es.ucm.gdv.engine.Graphics;
@@ -36,7 +35,7 @@ public class Engine implements es.ucm.gdv.engine.Engine{
     public void UpdateEngine()
     {
         while(true) {
-            float deltaTime = calcularDeltaTime()/1000;
+            float deltaTime = getDeltaTime()/1000;
 
 
             game.update(deltaTime);
@@ -55,7 +54,7 @@ public class Engine implements es.ucm.gdv.engine.Engine{
         }
     }
 
-    private float calcularDeltaTime()
+    private float getDeltaTime()
     {
         java.util.Date time= new  java.util.Date();
         long newTime=time.getTime();

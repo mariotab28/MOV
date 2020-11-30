@@ -22,24 +22,24 @@ import javax.swing.JFrame;
 public class Graphics implements es.ucm.gdv.engine.Graphics {
     static Graphics instance=null;
     private JFrame frame;
-    private java.awt.Graphics g;
+    private java.awt.Graphics graphics;
 
     public void GraphDispose() {
 
-        g.dispose();
+        graphics.dispose();
     }
     public void Show() {
 
-        bs.show();
+        bufferStrategy.show();
     }
     public boolean BsRestore() {
-        return bs.contentsRestored();
+        return bufferStrategy.contentsRestored();
     }
     public boolean BsContentLost() {
-        return bs.contentsLost();
+        return bufferStrategy.contentsLost();
     }
 
-    private BufferStrategy bs;
+    private BufferStrategy bufferStrategy;
     private Canvas canvas;
 
 
@@ -102,7 +102,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
 
         bufferStrategy = canvas.getBufferStrategy();
 
-        g=bs.getDrawGraphics();
+        graphics = bufferStrategy.getDrawGraphics();
 
 
 
@@ -229,7 +229,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      */
     public void drawLine(double x1, double y1, double x2, double y2) {
         // g.translate(0,0);
-        g.setColor(actualColor);
+        graphics.setColor(actualColor);
 
 
 
@@ -239,8 +239,8 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
         double nX2=((((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
         double nY2=((((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))*1));
 
-        ((Graphics2D)g).setStroke(new BasicStroke(2));
-        ((Graphics2D)g).draw(new Line2D.Double(nX1,nY1,nX2,nY2));
+        ((Graphics2D)graphics).setStroke(new BasicStroke(2));
+        ((Graphics2D)graphics).draw(new Line2D.Double(nX1,nY1,nX2,nY2));
         //g.drawLine(nX1,nY1,nX2,nY2);
 
         //g.drawRect();
@@ -256,14 +256,14 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      */
     public void fillRect(double x1, double y1, double x2, double y2) {
 
-        g.setColor(actualColor);
+        graphics.setColor(actualColor);
         double nX1=((((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))*1));
 
         double nY1=((((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))*1));
         double nX2=((((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
         double nY2=((((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))*1));
         //g.fillRect(nX1,nY1,nX2,nY2);
-        ((Graphics2D)g).fill(new Rectangle2D.Double(nX1,nY1,nX2,nY2));
+        ((Graphics2D)graphics).fill(new Rectangle2D.Double(nX1,nY1,nX2,nY2));
 
     }
     /**
@@ -285,8 +285,8 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
         double nX2=((((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
         double nY2=((((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))*1));
 
-        ((Graphics2D)g).setStroke(new BasicStroke(2));
-        ((Graphics2D)g).draw(new Line2D.Double(nX1,nY1,nX2,nY2));
+        ((Graphics2D)graphics).setStroke(new BasicStroke(2));
+        ((Graphics2D)graphics).draw(new Line2D.Double(nX1,nY1,nX2,nY2));
         //g.drawLine(nX1,nY1,nX2,nY2);
 
         //g.drawRect();

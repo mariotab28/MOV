@@ -22,7 +22,7 @@ public class LineObject extends  GameObject {
                     engine.getGraphics().translate(transform.getPosX(),transform.getPosY());
                     engine.getGraphics().scale(transform.getScaleX(),transform.getScaleY());
                     engine.getGraphics().rotate(transform.getRotation());
-                    engine.getGraphics().setColor(color);
+                    //engine.getGraphics().setColor(color);
                     for (int i = 0; i < vertexX.length ; i++) {
                         if(i+1>=vertexX.length)
                             engine.getGraphics().drawLine(vertexX[i], vertexY[i], vertexX[0], vertexY[0]);
