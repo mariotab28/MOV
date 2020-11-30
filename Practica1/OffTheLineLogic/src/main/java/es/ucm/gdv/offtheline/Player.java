@@ -7,9 +7,10 @@ import es.ucm.gdv.engine.Engine;
 public class Player extends  LineObject {
 
     double speed=0;
-    double flyingSpeed=300;
+    double flyingSpeed=1500;
     double flyingDirX,flyingDirY;
     int multiplier=1;
+    int wallDir=1;
     double xDir,yDir;
     boolean onWall=true;
     double lastPosX,lastPosY;
@@ -18,7 +19,7 @@ public class Player extends  LineObject {
     double nextVertexX,nextVertexY;
     int idVertex;
     int coinsCollected;
-    boolean  alive;
+
 
     Utils util;
 
@@ -45,7 +46,7 @@ public class Player extends  LineObject {
         nextVertexY=path.getVertexY()[idVertex];
         util=new Utils();
         coinsCollected=0;
-        alive=true;
+
     }
 
     @Override
@@ -61,7 +62,7 @@ public class Player extends  LineObject {
 
             if(onWall) {
                 if (differX<2 && differY<2) {
-                    idVertex+=1*multiplier;
+                    idVertex+=1*wallDir;
                     if(idVertex>=path.getVertexX().length)
                         idVertex=0;
                     if(idVertex<0)
@@ -95,6 +96,10 @@ public class Player extends  LineObject {
             transform.setRotation(transform.getRotation() + ((float) Math.PI ) * deltaTime);
 
             engine.getGraphics().rotate(transform.getRotation());
+
+
+            if(transform.getPosX()<0 || transform.getPosX()>engine.getGraphics().getWidth()||transform.getPosY()<0||transform.getPosY()>engine.getGraphics().getHeight())
+                isActive=false;
 
 
         }
@@ -184,9 +189,46 @@ public class Player extends  LineObject {
                         transform.setPosX(result.x);
                         transform.setPosY(result.y);
 
+                        double magnitude= 0;
+                        int help=0;
+                        double dir1x=result.x-gO.get(i).getVertexX()[wall];
+                        double dir1y=result.y-gO.get(i).getVertexY()[wall];
+                         magnitude= Math.sqrt(Math.pow(dir1x,2)+ Math.pow(dir1y,2));
+                         dir1x=dir1x/magnitude;
+                         dir1y=dir1y/magnitude;
+
+                        if(wall < gO.get(i).getVertexX().length-1) {
+                            help=wall +1;
+
+                        }
+                        double dir2y=result.y-gO.get(i).getVertexY()[help];
+                        double dir2x=result.x-gO.get(i).getVertexX()[help];
+                        magnitude= Math.sqrt(Math.pow(dir2x,2)+ Math.pow(dir2y,2));
+                        dir2x=dir2x/magnitude;
+                        dir2y=dir2y/magnitude;
+
+
+
+                        if((Math.abs(dir1x-xDir)+Math.abs(dir1y-yDir)) <(Math.abs(dir2x-xDir)+Math.abs(dir2y-yDir)))
+                        {
+                            wallDir=+1;
+                            lastVertexX = gO.get(i).getVertexX()[wall];
+                            lastVertexY = gO.get(i).getVertexY()[wall];
+                            nextVertexX=gO.get(i).getVertexX()[help];
+                            nextVertexY=gO.get(i).getVertexY()[help];
+                        }
+                        else {
+                            lastVertexX = gO.get(i).getVertexX()[help];
+                            lastVertexY = gO.get(i).getVertexY()[help];
+                            nextVertexX=gO.get(i).getVertexX()[wall];
+                            nextVertexY=gO.get(i).getVertexY()[wall];
+                            wallDir = -1;
+                        }
+
 
                         onWall = true;
                         idVertex = wall;
+                        /*
                         if (multiplier == -1) {
                             int help = wall;
                             if (wall + 1 >= gO.get(i).getVertexX().length) {
@@ -212,6 +254,8 @@ public class Player extends  LineObject {
 
                         nextVertexX = gO.get(i).getVertexX()[wall];
                         nextVertexY = gO.get(i).getVertexY()[wall];
+
+                         */
 
                         path = (LevelBorder) gO.get(i);
                     }

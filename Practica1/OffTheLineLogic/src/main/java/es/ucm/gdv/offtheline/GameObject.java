@@ -96,7 +96,7 @@ public class GameObject {
         isActive=true;
     }
 
-    public GameObject(Engine eng,int id,int posX,int posY)
+    public GameObject(Engine eng,int id,double posX,double posY)
     {
         transform=new MyTransform();
         transform.posX=posX;
