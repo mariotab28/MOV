@@ -15,9 +15,7 @@ public class Coins extends  LineObject {
     public Coins(Engine eng, int id )
     {
         super( eng,  id);
-        color[0]=1.0f;
-        color[1]=1.0f;
-        color[2]=0.0f;
+        color = 0xFFFF00;
         acumScale=1;
         collision=false;
 
@@ -36,9 +34,7 @@ public class Coins extends  LineObject {
         posiniX=posX;
         posiniY=posY;
 
-        color[0]=1.0f;
-        color[1]=1.0f;
-        color[2]=0.0f;
+        color = 0xFFFF00;
         acumScale=1;
         collision=false;
 

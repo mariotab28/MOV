@@ -19,8 +19,8 @@ public class Main {
         Engine engine=new Engine();
         OffTheLineLogic logic=new OffTheLineLogic(engine);
         engine.setGame(logic);
-        logic.loadFont();
-        while(true)
+        logic.loadFont(); //TODO: Esto está bien?
+        while(true) //TODO: NO HACE FALTA ESTE WHILE
         {
 
             engine.UpdateEngine();

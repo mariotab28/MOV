@@ -13,12 +13,7 @@ public class Particle extends  LineObject {
     public Particle(Engine eng, int id )
     {
         super( eng,  id);
-        color[0]=1.0f;
-        color[1]=1.0f;
-        color[2]=0.0f;
-
-
-
+        color = 0xFFFF00;
 
         double[] verX= {-4,4,4,-4};
         double[] verY= {4,4,-4,-4};
@@ -28,14 +23,9 @@ public class Particle extends  LineObject {
 
     public Particle(Engine eng,int id,double posX,double posY)
     {
-
         super( eng,  id,(int)posX,(int)posY);
 
-
-        color[0]=0.0f;
-        color[1]=0.5f;
-        color[2]=1.0f;
-
+        color = 0x007FFF;
 
         double[] verX= {-3,3};
         double[] verY= {3,3};
