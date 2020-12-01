@@ -84,6 +84,10 @@ public class AndroidEngine implements Engine, Runnable {
         long informePrevio = lastFrameTime; // Informes de FPS
         int frames = 0;
 
+        graphics.lockCanvas();
+        graphics.save();
+        graphics.unlockCanvas();
+
         // Bucle principal.
         while(_running) {
 
@@ -91,6 +95,9 @@ public class AndroidEngine implements Engine, Runnable {
             long nanoElapsedTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
             float elapsedTime = (float) (nanoElapsedTime / 1.0E9);
+
+            // Bloqueamos el canvas
+            graphics.lockCanvas();
 
             game.update(elapsedTime); //UPDATE
 

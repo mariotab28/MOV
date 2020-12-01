@@ -3,6 +3,7 @@ package es.ucm.gdv.engine.android;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -58,6 +59,7 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
     //  Métodos de control de la transformación sobre el canvas
     //------------------------------------------------------------
 
+    //TODO: MÉTODOS DE TRANSFORMACIÇON SOBRE EL CANVAS
     public void translate(double x, double y) {
         canvas.translate((float)x, (float)y);
     }
@@ -67,8 +69,7 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
     }
 
     public void rotate(float angle) {
-        //TODO: ROTATE
-        //canvas.rotate(angle);
+        canvas.rotate(angle);
     }
 
     public void save() {
@@ -79,6 +80,7 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
     public void restore() {
         if(stateIsSaved) {
             canvas.restore();
+
             stateIsSaved = false;
         } else {
             //System.out.println("Aviso: Intento de restaurar canvas sin guardar primero.\n");
@@ -110,11 +112,12 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
      * @param y2
      */
     public void drawLine(double x1, double y1, double x2, double y2) {
-        canvas.drawLine((float)x1, (float)y2, (float)x2, (float)y2, paint);
+        paint.setStrokeWidth (7);
+        canvas.drawLine((float)x1, (float)y1, (float)x2, (float)y2, paint);
     }
 
     public void drawLine(int x1, int y1, int x2, int y2) {
-        canvas.drawLine((float)x1, (float)y2, (float)x2, (float)y2, paint);
+        canvas.drawLine((float)x1, (float)y1, (float)x2, (float)y2, paint);
     }
 
 
@@ -166,11 +169,33 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
         this.canvas = canvas;
     }
 
-    public void renderFrame(Game game) {
-        // Pintamos el frame
+    /**
+     *  Se obtiene el canvas y se bloquea.
+     *  IMPORTANTE: Llamar a esto antes de renderFrame
+     */
+    public void lockCanvas() {
         while (!_holder.getSurface().isValid())
             ;
         canvas = _holder.lockCanvas();
+    }
+
+    public void unlockCanvas() {
+        _holder.unlockCanvasAndPost(canvas);
+    }
+
+    /**
+     * Renderiza el siguiente frame del juego
+     * y, al terminar, libera el canvas.
+     * @param game El juego con la lista de objetos a renderizar.
+     */
+    public void renderFrame(Game game) {
+        if(canvas == null) {
+            // Problema: No hemos hecho el lockCanvas
+            System.out.println("ERROR: Canvas is null.");
+            return;
+        }
+
+        // Pintamos el frame
         try {
             game.render(); //render(canvas);
         }
@@ -184,7 +209,10 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
                 throw exception; // No es un underflow
             }
         }
-        _holder.unlockCanvasAndPost(canvas);
+
+
+        // Desbloqueamos el canvas
+        unlockCanvas();
     }
 
 }
