@@ -19,6 +19,7 @@ public class LineObject extends  GameObject {
         {
             if(engine!=null) {
                 if (vertexX.length > 0 && vertexY.length > 0) {
+                    engine.getGraphics().save();
                     engine.getGraphics().translate(transform.getPosX(),transform.getPosY());
                     engine.getGraphics().scale(transform.getScaleX(),transform.getScaleY());
                     engine.getGraphics().rotate(transform.getRotation());

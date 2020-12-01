@@ -21,5 +21,16 @@ public class AndroidFont implements Font {
 
 
         Typeface.createFromAsset(/*this.getAssets()*/null, path.toString());
+
+    }
+
+    @Override
+    public void setFont() {
+        if(isBold)
+            font=Typeface.create(font,Typeface.BOLD);
+        else
+            font=Typeface.create(font,Typeface.NORMAL);
+
+
     }
 }

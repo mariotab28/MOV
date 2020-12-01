@@ -29,6 +29,11 @@ public class Font  implements es.ucm.gdv.engine.Font{
 
     }
 
+    public void setFont()
+    {
+
+    }
+
 
 
 }
