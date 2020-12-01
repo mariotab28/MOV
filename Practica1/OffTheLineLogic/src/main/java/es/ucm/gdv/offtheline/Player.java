@@ -124,8 +124,14 @@ public class Player extends  LineObject {
                     if (onWall) {
                         multiplier = -multiplier;
                         onWall = false;
-                        flyingDirX = yDir*multiplier;
-                        flyingDirY = -xDir*multiplier;
+
+                        double xLastDir=nextVertexX-lastVertexX;
+                        double yLastDir=nextVertexY-lastVertexY;
+                        double magnitude= Math.sqrt(Math.pow(xLastDir,2)+ Math.pow(yLastDir,2));
+                        xLastDir=(xLastDir/magnitude);
+                        yLastDir=yLastDir/magnitude;
+                        flyingDirX = yLastDir*multiplier;
+                        flyingDirY = -xLastDir*multiplier;
                         transform.setPosY(transform.getPosY()+flyingDirY);
                         transform.setPosX(transform.getPosX()+flyingDirX);
                     }

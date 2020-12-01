@@ -51,7 +51,7 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
         mouseX=(int)(mouseEvent.getX());
-        mouseY=(int)(mouseEvent.getX());
+        mouseY=(int)(mouseEvent.getY());
 
         TouchEvent t=new TouchEvent();
         t.x=(int)(mouseEvent.getX());
@@ -74,7 +74,7 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
         mouseX=(int)(mouseEvent.getX());
-        mouseY=(int)(mouseEvent.getX());
+        mouseY=(int)(mouseEvent.getY());
 
         TouchEvent t=new TouchEvent();
         t.x=(int)(mouseEvent.getX());

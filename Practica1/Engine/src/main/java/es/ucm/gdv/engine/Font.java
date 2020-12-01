@@ -5,6 +5,9 @@ package es.ucm.gdv.engine;
  */
 public interface Font {
 
-    void setFont();
+    String getFontName();
+    float getFontSize();
+
+    boolean isBold();
 
 }

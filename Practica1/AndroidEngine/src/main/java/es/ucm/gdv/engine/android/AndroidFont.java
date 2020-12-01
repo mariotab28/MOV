@@ -13,8 +13,7 @@ public class AndroidFont implements Font {
     float size;
     Typeface font;
 
-    public AndroidFont(InputStream path, int size, boolean isBold)
-    {
+    public AndroidFont(InputStream path, float size, boolean isBold) {
         this.isBold = isBold;
         this.size = size;
         this.color = color;
@@ -25,12 +24,17 @@ public class AndroidFont implements Font {
     }
 
     @Override
-    public void setFont() {
-        if(isBold)
-            font=Typeface.create(font,Typeface.BOLD);
-        else
-            font=Typeface.create(font,Typeface.NORMAL);
+    public String getFontName() {
+        return null;
+    }
 
+    @Override
+    public float getFontSize() {
+        return size;
+    }
 
+    @Override
+    public boolean isBold() {
+        return isBold;
     }
 }

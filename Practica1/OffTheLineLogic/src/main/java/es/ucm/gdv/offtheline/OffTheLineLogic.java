@@ -36,7 +36,7 @@ public class OffTheLineLogic implements Game {
     {
         stateChanged=false;
         this.engine=engine;
-        state = new PlayState(engine,0);
+        state = new MenuState(engine);
         state.start();
 
 

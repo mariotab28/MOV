@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.util.Vector;
 
 import es.ucm.gdv.engine.Engine;
+import es.ucm.gdv.engine.Font;
 
 
 public class PlayState implements GameState {
@@ -24,6 +25,7 @@ public class PlayState implements GameState {
     Engine engine=null;
     JSONArray levels=null;
     Vector<GameObject> objectsInScene;
+    Vector<GameObject> objectsInGameOver;
     int coinsInLevel;
     int levelIndex;
     double timer;
@@ -32,6 +34,7 @@ public class PlayState implements GameState {
     int movementSpeed;
     Player player=null;
     boolean playing=false;
+    Font font;
 
     public PlayState(Engine engine,int difficulty)
     {
@@ -64,6 +67,9 @@ public class PlayState implements GameState {
         }
 
         loadFont();
+
+
+
     }
 
     public void setDificulty( int diff)
@@ -85,18 +91,62 @@ public class PlayState implements GameState {
         objectsInScene=loadLevel(levelIndex,movementSpeed);
         playing=true;
     }
-    public InputStream loadFont()
+    public void loadFont()
     {
-        InputStream font= engine.openInputStream("Bungee-Regular.ttf");
-        engine.getGraphics().newFont(font,80,true);
-        return font;
+        InputStream fontis= engine.openInputStream("Bungee-Regular.ttf");
+
+        font= engine.getGraphics().newFont(fontis,15,false);
+    }
+
+    public  void loadGameOverObjects()
+    {
+
+        objectsInGameOver=new Vector<>();
+
+        Button BackToMenu = new Button(engine,-1);
+        BackToMenu.transform.setPosX(200);
+        BackToMenu.transform.setPosY(100);
+        BackToMenu.transform.setScaleX(3);
+        BackToMenu.transform.setScaleY(3);
+        BackToMenu.setOffSetClick(-200,-100,200,200);
+        BackToMenu.text="GAME OVER";
+        BackToMenu.setFont(font);
+        BackToMenu.setColor(0xFF0000);
+
+        objectsInGameOver.add(BackToMenu);
+
+        MyText mode = new MyText(engine,5);
+        mode.transform.setPosX(240);
+        mode.transform.setPosY(150);
+        mode.transform.setScaleX(2);
+        mode.transform.setScaleY(2);
+        if(movementSpeed==400)
+            mode.text="HARD MODE";
+        else
+            mode.text="EASY MODE";
+        mode.setColor(0xFFFFFF);
+
+        mode.setFont(font);
+
+        objectsInGameOver.add(mode);
+
+        MyText levelReach = new MyText(engine,5);
+        levelReach.transform.setPosX(240);
+        levelReach.transform.setPosY(180);
+        levelReach.transform.setScaleX(2);
+        levelReach.transform.setScaleY(2);
+        levelReach.text="SCORE: "+(levelIndex+1);
+        levelReach.setColor(0xFFFFFF);
+        levelReach.setFont(font);
+
+        objectsInGameOver.add(levelReach);
+
     }
 
     public  Vector<GameObject> loadLevel(int i,int movementSpeed)
     {
 
         Vector<GameObject> objects=new Vector<>();
-        GameObject[] objectsA=new  GameObject[100];
 
 
         if(levels!=null) {
@@ -202,6 +252,8 @@ public class PlayState implements GameState {
                 name= "Level "+ (i+1) + "- "+name;
                 MyText text=new MyText(engine,5);
                 text.text=name;
+
+                text.setFont(font);
                 text.transform.setPosX(100);
                 text.transform.setPosY(20);
 
@@ -218,7 +270,7 @@ public class PlayState implements GameState {
 
     @Override
     public void update(float deltaTime) {
-
+        if (numLives > 0 && levelIndex<levels.size()) {
             for (int i = 0; i < objectsInScene.size(); i++) {
                 objectsInScene.get(i).update(deltaTime);
             }
@@ -239,24 +291,51 @@ public class PlayState implements GameState {
                 if (timer > 2) {
                     objectsInScene.clear();
                     numLives--;
-                    if (numLives < 0)
+                    if (numLives <= 0) {
                         numLives = 0;
-
-                    objectsInScene = loadLevel(levelIndex, movementSpeed);
+                        loadGameOverObjects();
+                    }
+                    else
+                        objectsInScene = loadLevel(levelIndex, movementSpeed);
 
                     timer = 0;
                 }
 
             }
+        }
+        else
+        {
+            for (int i = 0; i < objectsInGameOver.size(); i++) {
+                objectsInGameOver.get(i).update(deltaTime);
+            }
+        }
 
     }
 
     @Override
     public void render() {
-        engine.getGraphics().clear(0x000000);
-        for(int i =0;i<objectsInScene.size();i++)
+
+        if (numLives > 0 && levelIndex<levels.size()) {
+            engine.getGraphics().clear(0x000000);
+            for (int i = 0; i < objectsInScene.size(); i++) {
+                objectsInScene.get(i).render();
+            }
+        }
+        else
         {
-            objectsInScene.get(i).render();
+            engine.getGraphics().restore();
+            engine.getGraphics().rotate(0);
+            engine.getGraphics().translate(0,0);
+            engine.getGraphics().scale(1,1);
+            engine.getGraphics().setColor(0x0F0F0F);
+            engine.getGraphics().fillRect(0,0,640.0,200);
+            engine.getGraphics().setColor(0xFFFFFF);
+            for (int i = 0; i < objectsInGameOver.size(); i++) {
+                objectsInGameOver.get(i).render();
+            }
+
         }
     }
+
+
 }

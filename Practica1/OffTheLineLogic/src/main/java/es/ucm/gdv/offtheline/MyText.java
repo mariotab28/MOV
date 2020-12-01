@@ -29,12 +29,14 @@ public class MyText extends  GameObject {
             if(engine!=null) {
                 engine.getGraphics().save();
                // font.setFont();
+
+
                 engine.getGraphics().translate(transform.getPosX(),transform.getPosY());
                 engine.getGraphics().scale(transform.getScaleX(),transform.getScaleY());
                 engine.getGraphics().rotate(transform.getRotation());
                 engine.getGraphics().setColor(color);
 
-
+                engine.getGraphics().setFont(font);
                 engine.getGraphics().drawText(text,offSetx,offSetY);
                 engine.getGraphics().restore();
 

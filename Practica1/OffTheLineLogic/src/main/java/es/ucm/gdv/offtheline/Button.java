@@ -18,10 +18,11 @@ public class Button extends MyText{
     }
     public void update(float deltaTime)
     {
-
-        handleInput();
-        if(clicked)
-            function();
+        if(isActive) {
+            handleInput();
+            if (clicked)
+                function();
+        }
     }
     public void function()
     {
@@ -30,10 +31,15 @@ public class Button extends MyText{
             OffTheLineLogic.stateChanged=true;
             OffTheLineLogic.nextState=new PlayState(engine,0);
         }
-        else
+        else if(id==1)
         {
             OffTheLineLogic.stateChanged=true;
             OffTheLineLogic.nextState=new PlayState(engine,1);
+        }
+        else if(id==-1)
+        {
+            OffTheLineLogic.stateChanged=true;
+            OffTheLineLogic.nextState=new MenuState(engine);
         }
     }
     public void handleInput()
@@ -41,16 +47,19 @@ public class Button extends MyText{
         for(int i=0;i<engine.getInput().getTouchEvents().size();i++) {
             if(engine.getInput().getTouchEvents().get(i).type==0)
             {
-                if(engine.getInput().getTouchEvents().get(i).x<offSetClickX1+transform.getPosX()  && engine.getInput().getTouchEvents().get(i).x>offSetClickX0+transform.getPosX() )
+
+                if(engine.getInput().getTouchEvents().get(i).x<offSetClickX1*transform.getScaleX()+transform.getPosX()  && engine.getInput().getTouchEvents().get(i).x>offSetClickX0*transform.getScaleX()+transform.getPosX() )
                 {
-                    if(engine.getInput().getTouchEvents().get(i).y<offSetClickY1+transform.getPosY()  && engine.getInput().getTouchEvents().get(i).y>offSetClickY0+transform.getPosY())
+
+                    if(engine.getInput().getTouchEvents().get(i).y<offSetClickY1*transform.getScaleY()+transform.getPosY()  && engine.getInput().getTouchEvents().get(i).y>offSetClickY0*transform.getScaleY()+transform.getPosY())
                     {
+
                         clicked=true;
                     }
                 }
             }
         }
-        engine.getInput().getTouchEvents().clear();
+
     }
 
 }
