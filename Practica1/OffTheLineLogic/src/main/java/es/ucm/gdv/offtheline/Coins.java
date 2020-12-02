@@ -64,7 +64,6 @@ public class Coins extends  LineObject {
 
             transform.setRotation(transform.getRotation() + ((float) Math.PI ) * deltaTime);
 
-            engine.getGraphics().rotate(transform.getRotation());
 
             if (collision) {
                 acumScale = acumScale + 0.005f* deltaTime;

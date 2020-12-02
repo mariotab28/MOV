@@ -8,10 +8,15 @@ import java.io.InputStream;
 public class Font  implements es.ucm.gdv.engine.Font{
     boolean bold=false;
     java.awt.Font baseFont =null;
-    int _size=1;
-    public Font(InputStream is,int size, boolean isBold,java.awt.Graphics g)
+
+    String fontName;
+    float _size=1;
+    public Font( InputStream is,float size, boolean isBold)
     {
 
+
+
+       // InputStream is= engine.openInputStream(FontName);
         try {
             baseFont= java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, is);
         } catch (FontFormatException e) {
@@ -22,13 +27,41 @@ public class Font  implements es.ucm.gdv.engine.Font{
         bold=isBold;
         _size=size;
 
-        if(bold)
-            g.setFont(baseFont.deriveFont(java.awt.Font.BOLD, _size));
-        else
-            g.setFont(baseFont.deriveFont(java.awt.Font.PLAIN, _size));
 
+
+        fontName=baseFont.getName();
+        if(bold)
+            baseFont= baseFont.deriveFont(java.awt.Font.BOLD, _size);
+            //g.setFont(baseFont.deriveFont(java.awt.Font.BOLD, _size));
+        else
+            baseFont= baseFont.deriveFont(java.awt.Font.PLAIN, _size);
+           // g.setFont(baseFont.deriveFont(java.awt.Font.PLAIN, _size))
+
+
+
+
+    }
+
+    public String getFontName()
+    {
+
+        return fontName;
+    }
+    public float getFontSize()
+    {
+
+        return baseFont.getSize();
     }
 
 
 
+    public boolean isBold() {
+        return bold;
+    }
+
+    public  java.awt.Font getFont()
+    {
+       return baseFont;
+
+    }
 }

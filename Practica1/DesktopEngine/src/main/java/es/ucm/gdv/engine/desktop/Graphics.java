@@ -10,6 +10,7 @@ import java.awt.Color;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.font.TextAttribute;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
@@ -129,10 +130,20 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
      * @param isBold
      * @return
      */
-    public Font newFont(InputStream filename, int size, boolean isBold) {
-        Font baseFont=new Font(filename,size,isBold, graphics);
+    public Font newFont(InputStream filename, float size, boolean isBold) {
+        Font baseFont=new Font(filename,size,isBold);
 
         return baseFont;
+    }
+
+
+    @Override
+    public void setFont(es.ucm.gdv.engine.Font font) {
+
+        java.awt.Font help= ((es.ucm.gdv.engine.desktop.Font) font).getFont();
+
+        graphics.setFont(help);
+
     }
 
     /**
@@ -312,7 +323,8 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
         graphics.setColor(actualColor);
 
 
-        graphics.drawString(text, x, y);
+        ((Graphics2D)graphics).drawString(text, x, y);
+        //graphics.drawString(text, x, y);
 
     }
 

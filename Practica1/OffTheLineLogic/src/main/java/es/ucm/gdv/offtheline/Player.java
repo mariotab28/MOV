@@ -95,7 +95,6 @@ public class Player extends  LineObject {
 
             transform.setRotation(transform.getRotation() + ((float) Math.PI ) * deltaTime);
 
-            engine.getGraphics().rotate(transform.getRotation());
 
 
             if(transform.getPosX()<0 || transform.getPosX()>engine.getGraphics().getWidth()||transform.getPosY()<0||transform.getPosY()>engine.getGraphics().getHeight())
@@ -125,8 +124,14 @@ public class Player extends  LineObject {
                     if (onWall) {
                         multiplier = -multiplier;
                         onWall = false;
-                        flyingDirX = yDir*multiplier;
-                        flyingDirY = -xDir*multiplier;
+
+                        double xLastDir=nextVertexX-lastVertexX;
+                        double yLastDir=nextVertexY-lastVertexY;
+                        double magnitude= Math.sqrt(Math.pow(xLastDir,2)+ Math.pow(yLastDir,2));
+                        xLastDir=(xLastDir/magnitude);
+                        yLastDir=yLastDir/magnitude;
+                        flyingDirX = yLastDir*multiplier;
+                        flyingDirY = -xLastDir*multiplier;
                         transform.setPosY(transform.getPosY()+flyingDirY);
                         transform.setPosX(transform.getPosX()+flyingDirX);
                     }
@@ -228,34 +233,7 @@ public class Player extends  LineObject {
 
                         onWall = true;
                         idVertex = wall;
-                        /*
-                        if (multiplier == -1) {
-                            int help = wall;
-                            if (wall + 1 >= gO.get(i).getVertexX().length) {
-                                help = 0;
-                            }
 
-                            lastVertexX = gO.get(i).getVertexX()[help];
-                            lastVertexY = gO.get(i).getVertexY()[help];
-
-                        } else {
-                            lastVertexX = gO.get(i).getVertexX()[wall];
-                            lastVertexY = gO.get(i).getVertexY()[wall];
-                        }
-                        if (multiplier != -1)
-                            wall = wall + 1;
-
-                        if (wall >= gO.get(i).getVertexX().length) {
-                            wall = 0;
-                        } else if (wall < 0) {
-                            wall = gO.get(i).getVertexX().length - 1;
-                        }
-
-
-                        nextVertexX = gO.get(i).getVertexX()[wall];
-                        nextVertexY = gO.get(i).getVertexY()[wall];
-
-                         */
 
                         path = (LevelBorder) gO.get(i);
                     }
@@ -266,16 +244,12 @@ public class Player extends  LineObject {
                         ((Coins) gO.get(i)).collision = true;
 
                     }
-                } else if (gO.get(i).id == 2 && !onWall) {
+                } else if (gO.get(i).id == 2) {
                     x2[0] = gO.get(i).transform.getPosX() + (gO.get(i).getVertexX()[0]) * Math.cos(gO.get(i).transform.getRotation()) - (gO.get(i).getVertexY()[0]) * Math.sin(gO.get(i).transform.getRotation()) * 1;
                     y2[0] = gO.get(i).transform.getPosY() + (gO.get(i).getVertexX()[0]) * Math.sin(gO.get(i).transform.getRotation()) + (gO.get(i).getVertexY()[0]) * Math.cos(gO.get(i).transform.getRotation()) * 1;
                     x2[1] = gO.get(i).transform.getPosX() + (gO.get(i).getVertexX()[1]) * Math.cos(gO.get(i).transform.getRotation()) - (gO.get(i).getVertexY()[1]) * Math.sin(gO.get(i).transform.getRotation()) * 1;
                     y2[1] = gO.get(i).transform.getPosY() + (gO.get(i).getVertexX()[1]) * Math.sin(gO.get(i).transform.getRotation()) + (gO.get(i).getVertexY()[1]) * Math.cos(gO.get(i).transform.getRotation()) * 1;
 
-               /* x2[0]= (gO.get(i).getVertexX()[0]);
-                y2[0]= (gO.get(i).getVertexY()[0]);
-                x2[1]= (gO.get(i).getVertexX()[1]);
-                y2[1]= (gO.get(i).getVertexY()[1]);*/
 
                     result = util.segmentsIntersection(x1, y1, x2, y2);
                     if (result.collision)

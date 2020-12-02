@@ -20,8 +20,9 @@ public interface Graphics {
      * @param isBold
      * @return
      */
-    Font newFont(InputStream filename, int size, boolean isBold);
+    Font newFont(InputStream filename, float size, boolean isBold);
 
+    void setFont(Font font);
 
     /**
      * Borra el contenido completo de la ventana, rellenándolo

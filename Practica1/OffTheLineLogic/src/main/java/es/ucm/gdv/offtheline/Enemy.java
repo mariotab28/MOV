@@ -53,8 +53,8 @@ public class Enemy extends  LineObject {
     public void updateVertex()
     {
 
-        double[] verX= {1,-1};
-        double[] verY= {1,-1};
+        double[] verX= {0.9,-0.9};
+        double[] verY= {0.9,-0.9};
         for(int i =0; i< verX.length;i++)
         {
             verX[i]=verX[i]*((length/2)*Math.cos((angle/180)*Math.PI));

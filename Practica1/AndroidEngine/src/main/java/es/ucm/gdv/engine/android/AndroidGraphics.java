@@ -38,9 +38,11 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
      * @param isBold
      * @return
      */
-    public Font newFont(InputStream filename, int size, boolean isBold) {
+    public Font newFont(InputStream filename, float size, boolean isBold) {
         return null;
     }
+
+    public void setFont(Font font) { }
 
     /**
      * Borra el contenido completo de la ventana, rellenándolo
