@@ -93,9 +93,9 @@ public class PlayState implements GameState {
     }
     public void loadFont()
     {
-        InputStream fontis= engine.openInputStream("Bungee-Regular.ttf");
+        //InputStream fontis= engine.openInputStream("Bungee-Regular.ttf");
 
-        font= engine.getGraphics().newFont(fontis,15,false);
+        font= engine.getGraphics().newFont("BungeeHairline-Regular.ttf",15,false);
     }
 
     public  void loadGameOverObjects()

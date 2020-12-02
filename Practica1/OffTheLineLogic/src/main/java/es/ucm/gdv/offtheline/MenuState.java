@@ -1,12 +1,5 @@
 package es.ucm.gdv.offtheline;
 
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Vector;
 
 import es.ucm.gdv.engine.Engine;
@@ -15,7 +8,7 @@ import es.ucm.gdv.engine.Font;
 public class MenuState implements GameState {
 
     Engine engine=null;
-    Font font1,font2;
+    Font titleFont, textFont;
 
     Vector<GameObject> objectsInScene;
     public MenuState(Engine engine)
@@ -31,13 +24,8 @@ public class MenuState implements GameState {
 
     public void loadFonts()
     {
-        InputStream is= engine.openInputStream("Bungee-Regular.ttf");
-
-        font1=engine.getGraphics().newFont(is,10,true);
-
-        InputStream is2= engine.openInputStream("Bungee-Regular.ttf");
-        font2=engine.getGraphics().newFont(is2,10,false);
-
+        titleFont = engine.getGraphics().newFont("Bungee-Regular.ttf",10,true);
+        textFont = engine.getGraphics().newFont("Bungee-Regular.ttf",10,false);
     }
     @Override
     public void start()
@@ -50,7 +38,7 @@ public class MenuState implements GameState {
         Title.transform.setScaleY(3);
         Title.text="OFF THE LINE";
         Title.setColor(0x000FF);
-        Title.setFont(font1);
+        Title.setFont(titleFont);
         objectsInScene.add(Title);
 
         MyText subTitle = new MyText(engine,5);
@@ -60,7 +48,7 @@ public class MenuState implements GameState {
         subTitle.transform.setScaleY(1.5f);
         subTitle.text="A GAME COPIED TO BRYAN PERFETTO";
         subTitle.setColor(0x000FF);
-        subTitle.setFont(font2);
+        subTitle.setFont(textFont);
         objectsInScene.add(subTitle);
 
         Button b1=new Button(engine,0);
@@ -71,7 +59,7 @@ public class MenuState implements GameState {
         b1.setOffSetClick(0.0,-10,75,4);
         b1.text="EASY MODE";
         b1.setColor(0xFFFFFF);
-       b1.setFont(font1);
+       b1.setFont(titleFont);
         objectsInScene.add(b1);
 
         MyText subButton1 = new MyText(engine,5);
@@ -81,7 +69,7 @@ public class MenuState implements GameState {
         subButton1.transform.setScaleY(1.5f);
         subButton1.text="(SLOW SPEED , 10 LIVES)";
         subButton1.setColor(0x8F8F8F);
-        subButton1.setFont(font2);
+        subButton1.setFont(textFont);
         objectsInScene.add(subButton1);
 
         Button b2=new Button(engine,1);
@@ -91,7 +79,7 @@ public class MenuState implements GameState {
         b2.transform.setScaleY(3);
         b2.setOffSetClick(0.0,-10,75,4);
         b2.text="HARD MODE";
-        b2.font=font1;
+        b2.font= titleFont;
         b2.setColor(0xFFFFFF);
         objectsInScene.add(b2);
 
@@ -102,7 +90,7 @@ public class MenuState implements GameState {
         subButton2.transform.setScaleY(1.5f);
         subButton2.text="(FAST SPEED , 5 LIVES)";
         subButton2.setColor(0x8F8F8F);
-        subButton2.setFont(font2);
+        subButton2.setFont(textFont);
         objectsInScene.add(subButton2);
     }
     @Override

@@ -2,10 +2,7 @@ package es.ucm.gdv.engine.android;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.graphics.Canvas;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -19,7 +16,7 @@ public class AndroidEngine implements Engine, Runnable {
     AndroidInput input = null;
     Game game = null;
     Context _context;
-    AssetManager assets;
+    AssetManager assetsMgr;
     private boolean _running = false;
     private Thread _thread;
 
@@ -29,7 +26,7 @@ public class AndroidEngine implements Engine, Runnable {
         // Creación de Graphics
         graphics = new AndroidGraphics(context);
         input = new AndroidInput(graphics, graphics.getScaleX(), graphics.getScaleY());
-        assets = context.getAssets();
+        assetsMgr = context.getAssets();
     } //AndroidEngine
 
     public void setGame(Game game)
@@ -52,9 +49,10 @@ public class AndroidEngine implements Engine, Runnable {
 
         InputStream is = null;
         try {
-            is = assets.open(filename);
+            is = assetsMgr.open(filename);
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("ERROR: FILE NOT FOUND: " + filename.toString());
         }
         return is;
     }

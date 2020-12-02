@@ -21,28 +21,39 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
     private final SurfaceHolder _holder;
     // Indica si se ha hecho un save() antes de un restore()
     boolean stateIsSaved = false;
+    AssetManager assetsMgr;
 
 
     public AndroidGraphics(Context context) {
         super(context);
         _holder = getHolder();
-        //this.canvas = new Canvas(frameBuffer);
+        assetsMgr = context.getAssets();
     }
-
 
     /**
      *  Crea una nueva fuente del tamaño especificado a partir de un fichero .ttf. Se indica si se desea o no fuente
      * en negrita.
-     * @param filename
+     * @param fileName
      * @param size
      * @param isBold
      * @return
      */
-    public Font newFont(InputStream filename, float size, boolean isBold) {
-        return null;
+    public Font newFont(String fileName, float size, boolean isBold) {
+        Font baseFont = new AndroidFont(fileName, size, isBold, assetsMgr);
+
+        return baseFont;
     }
 
-    public void setFont(Font font) { }
+    /**
+     * Establece la fuente a usar en las próximas llamadas a drawText
+     * @param font La fuente que se desea usar.
+     */
+    @Override
+    public void setFont(Font font) {
+        paint.setTypeface(((AndroidFont)font).getFont());
+        paint.setFakeBoldText(font.isBold());
+        paint.setTextSize(font.getFontSize());
+    }
 
     /**
      * Borra el contenido completo de la ventana, rellenándolo
@@ -61,7 +72,6 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
     //  Métodos de control de la transformación sobre el canvas
     //------------------------------------------------------------
 
-    //TODO: MÉTODOS DE TRANSFORMACIÇON SOBRE EL CANVAS
     public void translate(double x, double y) {
         canvas.translate((float)x, (float)y);
     }
@@ -149,7 +159,7 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
      * @param y
      */
     public void drawText(String text, int x, int y) {
-
+        canvas.drawText(text, x, y, paint);
     }
 
     /**

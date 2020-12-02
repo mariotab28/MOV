@@ -25,24 +25,8 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
     private JFrame frame;
     private java.awt.Graphics graphics;
 
-    public void GraphDispose() {
-
-        graphics.dispose();
-    }
-    public void Show() {
-
-        bufferStrategy.show();
-    }
-    public boolean BsRestore() {
-        return bufferStrategy.contentsRestored();
-    }
-    public boolean BsContentLost() {
-        return bufferStrategy.contentsLost();
-    }
-
     private BufferStrategy bufferStrategy;
     private Canvas canvas;
-
 
     private float savedX=0,savedY=0;
     private float savedScaleX=1,savedScaleY=1;
@@ -56,18 +40,38 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
     private float scaleX=1f,scaleY=1f;
     private float rotation=0;
     private String title ="newWindow";
+    private Engine engine;
 
-    public static Graphics GetGraphics(int _width,int _height)
+
+    public void GraphDispose() {
+
+        graphics.dispose();
+    }
+
+    public void Show() {
+
+        bufferStrategy.show();
+    }
+
+    public boolean BsRestore() {
+        return bufferStrategy.contentsRestored();
+    }
+
+    public boolean BsContentLost() {
+        return bufferStrategy.contentsLost();
+    }
+
+    public static Graphics GetGraphics(int _width, int _height, Engine engine)
     {
         if(instance==null)
-            instance=new Graphics( _width, _height);
+            instance=new Graphics(_width, _height, engine);
         return instance;
     }
 
-    private Graphics(int _width,int _height) {
+    private Graphics(int _width,int _height, Engine engine) {
         width = _width;
         height = _height;
-
+        this.engine = engine;
 
         canvas=new Canvas();
         Dimension s=new Dimension(width,height);
@@ -105,9 +109,6 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
 
         graphics = bufferStrategy.getDrawGraphics();
 
-
-
-
     }
     public Canvas getCanvas()
     {
@@ -115,8 +116,6 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
     }
     public void updateG()
     {
-
-
         graphics = bufferStrategy.getDrawGraphics();
         //g.dispose();
         //frame.paint(g);
@@ -125,13 +124,13 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
     /**
      *  Crea una nueva fuente del tamaño especificado a partir de un fichero .ttf. Se indica si se desea o no fuente
      * en negrita.
-     * @param filename
+     * @param fileName
      * @param size
      * @param isBold
      * @return
      */
-    public Font newFont(InputStream filename, float size, boolean isBold) {
-        Font baseFont=new Font(filename,size,isBold);
+    public Font newFont(String fileName, float size, boolean isBold) {
+        Font baseFont=new Font(engine.openInputStream(fileName), size, isBold);
 
         return baseFont;
     }

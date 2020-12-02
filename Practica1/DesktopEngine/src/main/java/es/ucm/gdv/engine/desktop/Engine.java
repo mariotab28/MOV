@@ -21,7 +21,7 @@ public class Engine implements es.ucm.gdv.engine.Engine{
      */
     public Engine()
     {
-        g= es.ucm.gdv.engine.desktop.Graphics.GetGraphics(640,480);
+        g= es.ucm.gdv.engine.desktop.Graphics.GetGraphics(640,480, this);
         in =es.ucm.gdv.engine.desktop.Input.GetInput(g.getCanvas());
         lastTime=new  java.util.Date();
 
@@ -32,7 +32,7 @@ public class Engine implements es.ucm.gdv.engine.Engine{
         this.game=game;
     }
 
-    public void UpdateEngine()
+    public void mainLoop()
     {
         float deltaTime = getDeltaTime()/1000;
         while(true) {

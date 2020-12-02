@@ -1,31 +1,33 @@
 package es.ucm.gdv.engine.android;
 
+import android.content.res.AssetManager;
 import android.graphics.Typeface;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 
 import es.ucm.gdv.engine.Font;
 
 public class AndroidFont implements Font {
     boolean isBold;
-    int color;
     float size;
     Typeface font;
 
-    public AndroidFont(InputStream path, float size, boolean isBold) {
+    public AndroidFont(String path, float size, boolean isBold, AssetManager assetMgr) {
         this.isBold = isBold;
         this.size = size;
-        this.color = color;
 
-
-        Typeface.createFromAsset(/*this.getAssets()*/null, path.toString());
-
+        font = Typeface.createFromAsset(assetMgr, path);
     }
 
     @Override
     public String getFontName() {
-        return null;
+        return font.toString();
+    }
+
+    public Typeface getFont() {
+        return font;
     }
 
     @Override
