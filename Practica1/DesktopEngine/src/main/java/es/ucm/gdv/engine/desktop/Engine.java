@@ -39,9 +39,9 @@ public class Engine implements es.ucm.gdv.engine.Engine{
 
     public void mainLoop()
     {
-        float deltaTime = getDeltaTime()/1000;
+        float deltaTime = getDeltaTime();
         while(true) {
-            deltaTime = getDeltaTime()/1000;
+            deltaTime = getDeltaTime();
 
             game.handleInput(); // HANDLE INPUT
             game.update(deltaTime); // UPDATE
@@ -62,11 +62,11 @@ public class Engine implements es.ucm.gdv.engine.Engine{
 
     private float getDeltaTime()
     {
-      
+
         long newTime=System.nanoTime();
 
         long timex=newTime-lastTime;
-        float miliseconds=(float)(timex/1.0E6);
+        float miliseconds=(float)(timex/1.0E9);
         lastTime=newTime;
 
 
