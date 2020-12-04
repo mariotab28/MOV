@@ -176,7 +176,7 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         scaleX*=x;
         scaleY*=y;
         graphics = bufferStrategy.getDrawGraphics();
-        ((Graphics2D) graphics).scale(x,y);
+        ((Graphics2D) graphics).scale(scaleX,scaleY);
         graphics.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
 
     }

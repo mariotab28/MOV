@@ -92,7 +92,7 @@ public class AndroidGraphics extends AbstractGraphics {
     }
 
     public void rotate(float angle) {
-        canvas.rotate(angle);
+        canvas.rotate(angle*90);
     }
 
     public void save() {
@@ -135,7 +135,7 @@ public class AndroidGraphics extends AbstractGraphics {
      * @param y2
      */
     public void drawLine(double x1, double y1, double x2, double y2) {
-        paint.setStrokeWidth (7);
+        paint.setStrokeWidth (1.5f);
         canvas.drawLine((float)x1, (float)y1, (float)x2, (float)y2, paint);
     }
 
@@ -208,7 +208,7 @@ public class AndroidGraphics extends AbstractGraphics {
         // Pintamos el frame
         try {
             // Escalado del canvas
-            scale(3.5f,3.5f);
+            scale(3.0f,3.0f);
             // Traslación del canvas hacia el centro de la pantalla
             //TODO: translate(x, y);
 

@@ -277,7 +277,6 @@ public class PlayState implements GameState {
                 objectsInScene.get(i).update(deltaTime);
             }
             player.ManageCollisions(objectsInScene);
-            engine.getInput().getTouchEvents().clear();
             if (coinsInLevel == player.getCoinsCollected()) {
                 timer += deltaTime;
                 if (timer > 1) {
@@ -317,9 +316,19 @@ public class PlayState implements GameState {
     @Override
     public void handleInput() {
         List<Input.TouchEvent> touchEvents = engine.getInput().getTouchEvents();
-        for (int i = 0; i < objectsInScene.size(); i++) {
-            objectsInScene.get(i).handleInput(touchEvents);
+        if (numLives > 0 && levelIndex<levels.size()) {
+            for (int i = 0; i < objectsInScene.size(); i++) {
+
+                objectsInScene.get(i).handleInput(touchEvents);
+            }
         }
+        else {
+            for (int j = 0; j < objectsInGameOver.size(); j++) {
+
+                objectsInGameOver.get(j).handleInput(touchEvents);
+            }
+        }
+
     }
 
     @Override

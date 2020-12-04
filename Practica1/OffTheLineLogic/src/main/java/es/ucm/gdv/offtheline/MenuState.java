@@ -104,7 +104,7 @@ public class MenuState implements GameState {
             objectsInScene.get(i).update(deltaTime);
 
         }
-        engine.getInput().getTouchEvents().clear();
+      //  engine.getInput().getTouchEvents().clear();
 
     }
 
