@@ -103,6 +103,7 @@ public class AndroidEngine implements Engine, Runnable {
             // Bloqueamos el canvas
             graphics.lockCanvas();
 
+            game.handleInput(); //HANDLE INPUT
             game.update(elapsedTime); //UPDATE
 
             // Informe de FPS
@@ -111,11 +112,11 @@ public class AndroidEngine implements Engine, Runnable {
                 System.out.println("" + fps + " fps");
                 frames = 0;
                 informePrevio = currentTime;
-            }*/
-            ++frames;
+            }
+            ++frames;*/
 
             // Pintamos el frame
-            graphics.renderFrame(game);
+            graphics.renderFrame(game); // RENDER
 
         } // while
     } // run

@@ -14,13 +14,13 @@ import es.ucm.gdv.engine.Pool;
 import es.ucm.gdv.engine.Pool.PoolObjectFactory;
 
 public class TouchHandler implements OnTouchListener {
-    boolean isTouched;
-    int touchX;
-    int touchY;
-    Pool<TouchEvent> touchEventPool;
-    List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
-    List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
-    AbstractGraphics graphics;
+    private boolean isTouched;
+    private int touchX;
+    private int touchY;
+    private Pool<TouchEvent> touchEventPool;
+    private List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
+    private List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
+    private AbstractGraphics graphics;
 
     public TouchHandler(View view, AbstractGraphics graphics) {
         PoolObjectFactory<TouchEvent> factory = new PoolObjectFactory<TouchEvent>() {
@@ -29,7 +29,7 @@ public class TouchHandler implements OnTouchListener {
                 return new TouchEvent();
             }
         };
-        touchEventPool = new Pool<TouchEvent>(factory, 100);
+        touchEventPool = new Pool<TouchEvent>(factory, 50);
         view.setOnTouchListener(this);
         this.graphics = graphics;
     }
@@ -83,6 +83,10 @@ public class TouchHandler implements OnTouchListener {
         }
     }
 
+    /**
+     * Devuelve la lista de TouchEvents y libera el buffer de eventos.
+     * @return Lista con los TouchEvents ocurridos desde la última llamada a este método.
+     */
     public List<TouchEvent> getTouchEvents() {
         synchronized(this) {
             int len = touchEvents.size();

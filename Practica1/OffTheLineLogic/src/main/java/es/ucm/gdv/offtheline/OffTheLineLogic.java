@@ -43,7 +43,12 @@ public class OffTheLineLogic implements Game {
 
     }
 
+    @Override
+    public void handleInput() {
+        state.handleInput();
+    }
 
+    @Override
     public void update(float deltaTime){
         if(stateChanged)
         {
@@ -55,10 +60,11 @@ public class OffTheLineLogic implements Game {
         state.update(deltaTime);
 
     }
+
+    @Override
     public void render()
     {
         state.render();
-
     }
 
     public int getWidth() {

@@ -1,6 +1,9 @@
 package es.ucm.gdv.offtheline;
 
+import java.util.List;
+
 import es.ucm.gdv.engine.Engine;
+import es.ucm.gdv.engine.Input;
 
 public class GameObject {
 
@@ -81,6 +84,13 @@ public class GameObject {
     {
 
     }
+
+
+    public void handleInput(List<Input.TouchEvent> events)
+    {
+
+    }
+
     public GameObject()
     {
 

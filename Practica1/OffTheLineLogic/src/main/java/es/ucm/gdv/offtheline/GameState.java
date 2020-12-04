@@ -4,4 +4,5 @@ public interface GameState {
     void update(float deltaTime);
     void render();
     void start();
+    void handleInput();
 }

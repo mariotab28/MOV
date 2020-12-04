@@ -43,15 +43,14 @@ public class Engine implements es.ucm.gdv.engine.Engine{
         while(true) {
             deltaTime = getDeltaTime()/1000;
 
+            game.handleInput(); // HANDLE INPUT
+            game.update(deltaTime); // UPDATE
 
-            game.update(deltaTime);
-
-            //update(deltaTime);
             do {
                 do {
                     g.updateBuffer();
                     try {
-                        game.render();
+                        game.render(); // RENDER
                     } finally {
                        g.GraphDispose();
                     }

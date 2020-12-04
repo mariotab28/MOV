@@ -1,5 +1,6 @@
 package es.ucm.gdv.offtheline;
 
+import java.util.List;
 import java.util.Vector;
 
 import es.ucm.gdv.engine.Engine;
@@ -102,6 +103,44 @@ public class Player extends  LineObject {
                 isActive=false;
 
 
+        }
+    }
+
+    @Override
+    public void handleInput(List<Input.TouchEvent> events) {
+        int size = events.size();
+        for(int i=0; i < size; i++) {
+            Input.TouchEvent evt = events.get(i);
+            if(evt.type== Input.TouchEvent.TOUCH_DOWN)
+            {
+                if(path.hasDirections())
+                {
+                    if (onWall) {
+                        flyingDirX = path.getDirectionsX()[idVertex];
+                        flyingDirY = path.getDirectionsY()[idVertex];
+                        transform.setPosY(transform.getPosY() + flyingDirY);
+                        transform.setPosX(transform.getPosX() + flyingDirX);
+                        onWall = false;
+                    }
+                }
+                else {
+                    if (onWall) {
+                        multiplier = -multiplier;
+                        onWall = false;
+
+                        double xLastDir=nextVertexX-lastVertexX;
+                        double yLastDir=nextVertexY-lastVertexY;
+                        double magnitude= Math.sqrt(Math.pow(xLastDir,2)+ Math.pow(yLastDir,2));
+                        xLastDir=(xLastDir/magnitude);
+                        yLastDir=yLastDir/magnitude;
+                        flyingDirX = yLastDir*multiplier;
+                        flyingDirY = -xLastDir*multiplier;
+                        transform.setPosY(transform.getPosY()+flyingDirY);
+                        transform.setPosX(transform.getPosX()+flyingDirX);
+                    }
+                }
+
+            }
         }
     }
 

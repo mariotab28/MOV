@@ -1,9 +1,11 @@
 package es.ucm.gdv.offtheline;
 
+import java.util.List;
 import java.util.Vector;
 
 import es.ucm.gdv.engine.Engine;
 import es.ucm.gdv.engine.Font;
+import es.ucm.gdv.engine.Input;
 
 public class MenuState implements GameState {
 
@@ -93,6 +95,7 @@ public class MenuState implements GameState {
         subButton2.setFont(textFont);
         objectsInScene.add(subButton2);
     }
+
     @Override
     public void update(float deltaTime)
     {
@@ -103,6 +106,14 @@ public class MenuState implements GameState {
         }
         engine.getInput().getTouchEvents().clear();
 
+    }
+
+    @Override
+    public void handleInput() {
+        List<Input.TouchEvent> touchEvents = engine.getInput().getTouchEvents();
+        for (int i = 0; i < objectsInScene.size(); i++) {
+            objectsInScene.get(i).handleInput(touchEvents);
+        }
     }
 
     @Override

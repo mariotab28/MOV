@@ -5,8 +5,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import es.ucm.gdv.engine.Pool;
 
 public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMotionListener {
     private final int NUM_BUTTONS=5;
@@ -14,25 +17,41 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
     //private boolean[] buttonsLast =new boolean[NUM_BUTTONS];
    // private int scaleX,scaleY;
     private int mouseX,mouseY;
-    private List<TouchEvent> events;
+    //private List<TouchEvent> events;
+    private Pool<TouchEvent> touchEventPool;
+    private List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
+    private List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
 
     public Input(Canvas canvas)
     {
+        Pool.PoolObjectFactory<TouchEvent> factory = new Pool.PoolObjectFactory<TouchEvent>() {
+            @Override
+            public TouchEvent createObject() {
+                return new TouchEvent();
+            }
+        };
+        touchEventPool = new Pool<TouchEvent>(factory, 50);
+
         mouseX=0;
         mouseY=0;
 
-        events= new LinkedList<TouchEvent>();
         canvas.addMouseListener(this);
         canvas.addMouseMotionListener(this);
     }
-    public void update()
-    {
 
-    }
+    /**
+     * Devuelve la lista de TouchEvents y libera el buffer de eventos.
+     * @return Lista con los TouchEvents ocurridos desde la última llamada a este método.
+     */
     public List<TouchEvent> getTouchEvents()
     {
-
-        return events;
+        int len = touchEvents.size();
+        for( int i = 0; i < len; i++ )
+            touchEventPool.free(touchEvents.get(i));
+        touchEvents.clear();
+        touchEvents.addAll(touchEventsBuffer);
+        touchEventsBuffer.clear();
+        return touchEvents;
     }
 
     @Override
@@ -42,15 +61,15 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
-        mouseX=(int)(mouseEvent.getX());
-        mouseY=(int)(mouseEvent.getY());
+        mouseX=mouseEvent.getX();
+        mouseY=mouseEvent.getY();
 
         TouchEvent t=new TouchEvent();
-        t.x=(int)(mouseEvent.getX());
-        t.y=(int)(mouseEvent.getY());
-        t.type=2;
+        t.x=mouseEvent.getX();
+        t.y=mouseEvent.getY();
+        t.type=TouchEvent.TOUCH_DRAGGED;
         t.pointer=mouseEvent.getButton();
-        events.add(t);
+        touchEventsBuffer.add(t);
     }
 
     @Override
@@ -65,35 +84,35 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
 
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
-        mouseX=(int)(mouseEvent.getX());
+        /*mouseX=(int)(mouseEvent.getX());
         mouseY=(int)(mouseEvent.getY());
 
         TouchEvent t=new TouchEvent();
         t.x=(int)(mouseEvent.getX());
         t.y=(int)(mouseEvent.getY());
-        t.type=2;
+        t.type=TouchEvent.TOUCH_DRAGGED;
         t.pointer=-1;
-        events.add(t);
+        touchEventsBuffer.add(t);*/
     }
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
         TouchEvent t=new TouchEvent();
-        t.x=mouseX;
-        t.y=mouseY;
-        t.type=0;
+        t.x=mouseEvent.getX();
+        t.y=mouseEvent.getY();
+        t.type=TouchEvent.TOUCH_DOWN;
         t.pointer=mouseEvent.getButton();
-        events.add(t);
+        touchEventsBuffer.add(t);
     }
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
         TouchEvent t=new TouchEvent();
-        t.x=mouseX;
-        t.y=mouseY;
-        t.type=1;
+        t.x=mouseEvent.getX();
+        t.y=mouseEvent.getY();
+        t.type=TouchEvent.TOUCH_UP;
         t.pointer=mouseEvent.getButton();
-        events.add(t);
+        touchEventsBuffer.add(t);
     }
 
     @Override

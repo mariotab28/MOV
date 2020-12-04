@@ -8,10 +8,12 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Vector;
 
 import es.ucm.gdv.engine.Engine;
 import es.ucm.gdv.engine.Font;
+import es.ucm.gdv.engine.Input;
 
 
 public class PlayState implements GameState {
@@ -310,6 +312,14 @@ public class PlayState implements GameState {
             }
         }
 
+    }
+
+    @Override
+    public void handleInput() {
+        List<Input.TouchEvent> touchEvents = engine.getInput().getTouchEvents();
+        for (int i = 0; i < objectsInScene.size(); i++) {
+            objectsInScene.get(i).handleInput(touchEvents);
+        }
     }
 
     @Override
