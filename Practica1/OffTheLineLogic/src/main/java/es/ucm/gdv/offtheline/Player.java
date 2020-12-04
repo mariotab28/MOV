@@ -54,9 +54,11 @@ public class Player extends  LineObject {
     @Override
     public void update(float deltaTime) {
 
+        System.out.println(deltaTime);
+
         if(isActive) {
 
-            handleEvent();
+
             lastPosX=transform.getPosX();
             lastPosY=transform.getPosY();
             double differX=Math.abs(nextVertexX-transform.getPosX());
@@ -144,42 +146,6 @@ public class Player extends  LineObject {
         }
     }
 
-    public void handleEvent()
-    {
-        for(int i=0;i<engine.getInput().getTouchEvents().size();i++) {
-            if(engine.getInput().getTouchEvents().get(i).type== Input.TouchEvent.TOUCH_DOWN)
-            {
-                if(path.hasDirections())
-                {
-                    if (onWall) {
-                        flyingDirX = path.getDirectionsX()[idVertex];
-                        flyingDirY = path.getDirectionsY()[idVertex];
-                        transform.setPosY(transform.getPosY() + flyingDirY);
-                        transform.setPosX(transform.getPosX() + flyingDirX);
-                        onWall = false;
-                    }
-
-                }
-                else {
-                    if (onWall) {
-                        multiplier = -multiplier;
-                        onWall = false;
-
-                        double xLastDir=nextVertexX-lastVertexX;
-                        double yLastDir=nextVertexY-lastVertexY;
-                        double magnitude= Math.sqrt(Math.pow(xLastDir,2)+ Math.pow(yLastDir,2));
-                        xLastDir=(xLastDir/magnitude);
-                        yLastDir=yLastDir/magnitude;
-                        flyingDirX = yLastDir*multiplier;
-                        flyingDirY = -xLastDir*multiplier;
-                        transform.setPosY(transform.getPosY()+flyingDirY);
-                        transform.setPosX(transform.getPosX()+flyingDirX);
-                    }
-                }
-
-            }
-        }
-    }
 
     public void Die(Vector<GameObject> gO)
     {

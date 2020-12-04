@@ -13,7 +13,7 @@ public class Engine implements es.ucm.gdv.engine.Engine{
     es.ucm.gdv.engine.desktop.Graphics g=null;
     es.ucm.gdv.engine.desktop.Input in=null;
     Game game=null;
-    java.util.Date lastTime;
+    long lastTime;
 
     /**
      * Devuelve la instancia del motor gráfico.
@@ -23,7 +23,7 @@ public class Engine implements es.ucm.gdv.engine.Engine{
     {
         g= new es.ucm.gdv.engine.desktop.Graphics(640,480, this);
         in = new es.ucm.gdv.engine.desktop.Input(g.getCanvas());
-        lastTime=new  java.util.Date();
+        lastTime=System.nanoTime();
 
     }
 
@@ -62,11 +62,12 @@ public class Engine implements es.ucm.gdv.engine.Engine{
 
     private float getDeltaTime()
     {
-        java.util.Date time= new  java.util.Date();
-        long newTime=time.getTime();
-        long timex=newTime-lastTime.getTime();
-        float miliseconds=timex;
-        lastTime=time;
+      
+        long newTime=System.nanoTime();
+
+        long timex=newTime-lastTime;
+        float miliseconds=(float)(timex/1.0E6);
+        lastTime=newTime;
 
 
         return miliseconds;
