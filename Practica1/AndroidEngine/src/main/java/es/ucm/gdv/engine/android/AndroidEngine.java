@@ -25,13 +25,19 @@ public class AndroidEngine implements Engine, Runnable {
         this._context = context;
         // Creación de Graphics
         graphics = new AndroidGraphics(context);
-        input = new AndroidInput(graphics, graphics.getScaleX(), graphics.getScaleY());
+        input = new AndroidInput(graphics.getSurfaceView(), graphics);
         assetsMgr = context.getAssets();
     } //AndroidEngine
 
+    /**
+     * Establece el juego y las dimensiones lógicas.
+     * @param game El juego que ejecutará el motor.
+     */
     public void setGame(Game game)
     {
         this.game = game;
+        graphics.setTargetHeight(game.getHeight());
+        graphics.setTargetWidth(game.getWidth());
     }
 
     @Override
@@ -100,12 +106,12 @@ public class AndroidEngine implements Engine, Runnable {
             game.update(elapsedTime); //UPDATE
 
             // Informe de FPS
-            if (currentTime - informePrevio > 1000000000l) {
+            /*if (currentTime - informePrevio > 1000000000l) {
                 long fps = frames * 1000000000l / (currentTime - informePrevio);
                 System.out.println("" + fps + " fps");
                 frames = 0;
                 informePrevio = currentTime;
-            }
+            }*/
             ++frames;
 
             // Pintamos el frame

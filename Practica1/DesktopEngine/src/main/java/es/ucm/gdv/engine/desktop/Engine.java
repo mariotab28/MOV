@@ -21,15 +21,20 @@ public class Engine implements es.ucm.gdv.engine.Engine{
      */
     public Engine()
     {
-        g= es.ucm.gdv.engine.desktop.Graphics.GetGraphics(640,480, this);
-        in =es.ucm.gdv.engine.desktop.Input.GetInput(g.getCanvas());
+        g= new es.ucm.gdv.engine.desktop.Graphics(640,480, this);
+        in = new es.ucm.gdv.engine.desktop.Input(g.getCanvas());
         lastTime=new  java.util.Date();
 
     }
 
+    /**
+     * Establece el juego y las dimensiones lógicas.
+     * @param game El juego que ejecutará el motor.
+     */
     public void setGame(Game game)
     {
         this.game=game;
+        g.setScreenSize(game.getWidth(), game.getHeight());
     }
 
     public void mainLoop()
@@ -44,7 +49,7 @@ public class Engine implements es.ucm.gdv.engine.Engine{
             //update(deltaTime);
             do {
                 do {
-                    g.updateG();
+                    g.updateBuffer();
                     try {
                         game.render();
                     } finally {

@@ -3,6 +3,7 @@ package es.ucm.gdv.offtheline;
 import java.util.Vector;
 
 import es.ucm.gdv.engine.Engine;
+import es.ucm.gdv.engine.Input;
 
 public class Player extends  LineObject {
 
@@ -107,7 +108,7 @@ public class Player extends  LineObject {
     public void handleEvent()
     {
         for(int i=0;i<engine.getInput().getTouchEvents().size();i++) {
-            if(engine.getInput().getTouchEvents().get(i).type==0)
+            if(engine.getInput().getTouchEvents().get(i).type== Input.TouchEvent.TOUCH_DOWN)
             {
                 if(path.hasDirections())
                 {
@@ -216,7 +217,7 @@ public class Player extends  LineObject {
 
                         if((Math.abs(dir1x-xDir)+Math.abs(dir1y-yDir)) <(Math.abs(dir2x-xDir)+Math.abs(dir2y-yDir)))
                         {
-                            wallDir=+1;
+                            wallDir=1;
                             lastVertexX = gO.get(i).getVertexX()[wall];
                             lastVertexY = gO.get(i).getVertexY()[wall];
                             nextVertexX=gO.get(i).getVertexX()[help];

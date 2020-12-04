@@ -19,6 +19,7 @@ import es.ucm.gdv.engine.Game;
  * Implementa la interfaz lógica del juego.
  */
 public class OffTheLineLogic implements Game {
+    final int WIDTH = 640, HEIGHT = 480;
 
     Engine engine=null;
     JSONArray levels=null;
@@ -58,5 +59,13 @@ public class OffTheLineLogic implements Game {
     {
         state.render();
 
+    }
+
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    public int getHeight() {
+        return HEIGHT;
     }
 }

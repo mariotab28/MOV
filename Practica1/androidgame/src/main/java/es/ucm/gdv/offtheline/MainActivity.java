@@ -12,6 +12,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import es.ucm.gdv.engine.android.AndroidEngine;
+import es.ucm.gdv.engine.android.AndroidGraphics;
 
 /**
  * Actividad principal de la aplicación.
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         engine.setGame(logic);
 
         // Preparamos el contenido de la actividad.
-        setContentView((View) engine.getGraphics());
+        setContentView(((AndroidGraphics)engine.getGraphics()).getSurfaceView());
     } // onCreate
 
     /**

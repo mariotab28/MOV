@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import es.ucm.gdv.engine.AbstractGraphics;
 import es.ucm.gdv.engine.Input.TouchEvent;
 import es.ucm.gdv.engine.Pool;
 import es.ucm.gdv.engine.Pool.PoolObjectFactory;
@@ -19,10 +20,9 @@ public class TouchHandler implements OnTouchListener {
     Pool<TouchEvent> touchEventPool;
     List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
     List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
-    float scaleX;
-    float scaleY;
+    AbstractGraphics graphics;
 
-    public TouchHandler(View view, float scaleX, float scaleY) {
+    public TouchHandler(View view, AbstractGraphics graphics) {
         PoolObjectFactory<TouchEvent> factory = new PoolObjectFactory<TouchEvent>() {
             @Override
             public TouchEvent createObject() {
@@ -31,8 +31,7 @@ public class TouchHandler implements OnTouchListener {
         };
         touchEventPool = new Pool<TouchEvent>(factory, 100);
         view.setOnTouchListener(this);
-        this.scaleX = scaleX;
-        this.scaleY = scaleY;
+        this.graphics = graphics;
     }
 
     @Override
@@ -55,8 +54,8 @@ public class TouchHandler implements OnTouchListener {
                     break;
             }
 
-            touchEvent.x = touchX = (int) (event.getX() * scaleX);
-            touchEvent.y = touchY = (int) (event.getY() * scaleY);
+            touchEvent.x = touchX = (int) graphics.adjustToTargetWidth(event.getX());
+            touchEvent.y = touchY = (int) graphics.adjustToTargetHeight(event.getY());
             touchEventsBuffer.add(touchEvent);
 
             return true;

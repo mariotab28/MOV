@@ -59,7 +59,7 @@ public class MenuState implements GameState {
         b1.setOffSetClick(0.0,-10,75,4);
         b1.text="EASY MODE";
         b1.setColor(0xFFFFFF);
-       b1.setFont(titleFont);
+        b1.setFont(titleFont);
         objectsInScene.add(b1);
 
         MyText subButton1 = new MyText(engine,5);

@@ -3,31 +3,42 @@ package es.ucm.gdv.engine.android;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
-import java.io.InputStream;
-
+import es.ucm.gdv.engine.AbstractGraphics;
 import es.ucm.gdv.engine.Font;
 import es.ucm.gdv.engine.Game;
-import es.ucm.gdv.engine.Graphics;
 
-public class AndroidGraphics extends SurfaceView implements Graphics {
-    Canvas canvas;
-    Paint paint = new Paint();
-    // Manejador de la superficie para poder acceder a su contenido.
-    private final SurfaceHolder _holder;
+public class AndroidGraphics extends AbstractGraphics {
+    private Canvas canvas;
+    private Paint paint = new Paint();
     // Indica si se ha hecho un save() antes de un restore()
-    boolean stateIsSaved = false;
-    AssetManager assetsMgr;
+    private boolean stateIsSaved = false;
+    private AssetManager assetsMgr;
+    // Vista principal de la actividad
+    private SurfaceView renderView;
+    // Manejador de la superficie para poder acceder a su contenido.
+    private SurfaceHolder holder;
 
 
     public AndroidGraphics(Context context) {
-        super(context);
-        _holder = getHolder();
+        // Crear el SurfaceView
+        renderView = new SurfaceView(context);
+        holder = renderView.getHolder();
+        // Obtener el asset manager
         assetsMgr = context.getAssets();
+
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        screenWidth = metrics.widthPixels;
+        screenHeight = metrics.heightPixels;
+    }
+
+    public View getSurfaceView() {
+        return (View) renderView;
     }
 
     /**
@@ -128,11 +139,6 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
         canvas.drawLine((float)x1, (float)y1, (float)x2, (float)y2, paint);
     }
 
-    public void drawLine(int x1, int y1, int x2, int y2) {
-        canvas.drawLine((float)x1, (float)y1, (float)x2, (float)y2, paint);
-    }
-
-
     @Override
     public void fillRect(double x1, double y1, double x2, double y2) {
 
@@ -162,17 +168,6 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
         canvas.drawText(text, x, y, paint);
     }
 
-    /**
-     * Devuelven el tamaño del canvas.
-     * @return
-     */
-    public int getCanvasWidth() {
-        return canvas.getWidth();
-    }
-    public int getCanvasHeight() {
-        return canvas.getHeight();
-    }
-
     public Canvas getCanvas() {
         return canvas;
     }
@@ -186,13 +181,16 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
      *  IMPORTANTE: Llamar a esto antes de renderFrame
      */
     public void lockCanvas() {
-        while (!_holder.getSurface().isValid())
+        while (!holder.getSurface().isValid())
             ;
-        canvas = _holder.lockCanvas();
+        canvas = holder.lockCanvas();
     }
 
+    /**
+     * Desbloquea el canvas.
+     */
     public void unlockCanvas() {
-        _holder.unlockCanvasAndPost(canvas);
+        holder.unlockCanvasAndPost(canvas);
     }
 
     /**
@@ -209,7 +207,13 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
 
         // Pintamos el frame
         try {
-            game.render(); //render(canvas);
+            // Escalado del canvas
+            scale(3.5f,3.5f);
+            // Traslación del canvas hacia el centro de la pantalla
+            //TODO: translate(x, y);
+
+            // Renderizado de objetos del juego
+            game.render();
         }
         catch (java.lang.IllegalStateException exception) {
             if (exception.getMessage() != null && (//
@@ -226,5 +230,4 @@ public class AndroidGraphics extends SurfaceView implements Graphics {
         // Desbloqueamos el canvas
         unlockCanvas();
     }
-
 }

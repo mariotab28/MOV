@@ -20,8 +20,7 @@ import java.io.InputStream;
 
 import javax.swing.JFrame;
 
-public class Graphics implements es.ucm.gdv.engine.Graphics {
-    static Graphics instance=null;
+public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
     private JFrame frame;
     private java.awt.Graphics graphics;
 
@@ -35,7 +34,6 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
 
     private Color actualColor;
 
-    private int width, height;
     private float transX=0f,transY=0f;
     private float scaleX=1f,scaleY=1f;
     private float rotation=0;
@@ -61,20 +59,13 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
         return bufferStrategy.contentsLost();
     }
 
-    public static Graphics GetGraphics(int _width, int _height, Engine engine)
-    {
-        if(instance==null)
-            instance=new Graphics(_width, _height, engine);
-        return instance;
-    }
-
-    private Graphics(int _width,int _height, Engine engine) {
-        width = _width;
-        height = _height;
+    public Graphics(int _width,int _height, Engine engine) {
+        screenWidth = _width;
+        screenHeight = _height;
         this.engine = engine;
 
         canvas=new Canvas();
-        Dimension s=new Dimension(width,height);
+        Dimension s=new Dimension(screenWidth, screenHeight);
         canvas.setMinimumSize(s);
         canvas.setMaximumSize(s);
         canvas.setPreferredSize(s);
@@ -110,17 +101,28 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
         graphics = bufferStrategy.getDrawGraphics();
 
     }
+
+    /**
+     * Establece las dimensiones de la ventana.
+     * @param w Ancho de la ventana.
+     * @param h Alto de la ventana.
+     */
+    public void setScreenSize(int w, int h) {
+        screenWidth = w;
+        screenHeight = h;
+        frame.setSize(w, h);
+    }
+
     public Canvas getCanvas()
     {
         return canvas;
     }
-    public void updateG()
+
+    public void updateBuffer()
     {
         graphics = bufferStrategy.getDrawGraphics();
-        //g.dispose();
-        //frame.paint(g);
-        //bs.show();
     }
+
     /**
      *  Crea una nueva fuente del tamaño especificado a partir de un fichero .ttf. Se indica si se desea o no fuente
      * en negrita.
@@ -155,7 +157,7 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
         Color c=new Color(color);
        // g.clearRect(0,0,width,height);
         graphics.setColor(c);
-        graphics.fillRect(0,0,width,height);
+        graphics.fillRect(0,0,screenWidth,screenHeight);
     }
 
     //------------------------------------------------------------
@@ -266,32 +268,6 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
         ((Graphics2D)graphics).fill(new Rectangle2D.Double(nX1,nY1,nX2,nY2));
 
     }
-    /**
-     * Dibuja una línea en patalla
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
-     */
-    public void drawLine(int x1, int y1, int x2, int y2) {
-       // g.translate(0,0);
-        graphics.setColor(actualColor);
-
-
-
-        double nX1=((((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))*1));
-
-        double nY1=((((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))*1));
-        double nX2=((((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
-        double nY2=((((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))*1));
-
-        ((Graphics2D)graphics).setStroke(new BasicStroke(2));
-        ((Graphics2D)graphics).draw(new Line2D.Double(nX1,nY1,nX2,nY2));
-        //g.drawLine(nX1,nY1,nX2,nY2);
-
-        //g.drawRect();
-
-    }
 
     /**
      * Dibuja un rectángulo relleno.
@@ -327,15 +303,6 @@ public class Graphics implements es.ucm.gdv.engine.Graphics {
 
     }
 
-    /**
-     * Devuelven el tamaño de la ventana.
-     * @return
-     */
-    public int getWidth() {
-        return width;
-    }
-    public int getHeight() {
-        return height;
-    }
+
 
 }

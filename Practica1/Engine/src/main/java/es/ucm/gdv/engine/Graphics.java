@@ -10,8 +10,6 @@ import es.ucm.gdv.engine.Font;
  * TODO:  independizar la lógica de la resolución del dispositivo
  */
 public interface Graphics {
-
-
     /**
      *  Crea una nueva fuente del tamaño especificado a partir de un fichero .ttf. Se indica si se desea o no fuente
      * en negrita.
@@ -69,25 +67,6 @@ public interface Graphics {
     void fillRect(double x1, double y1, double x2, double y2);
 
     /**
-     * Dibuja una línea en patalla
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
-     */
-
-    void drawLine(int x1, int y1, int x2, int y2);
-
-    /**
-     * Dibuja un rectángulo relleno.
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
-     */
-    void fillRect(int x1, int y1, int x2, int y2);
-
-    /**
      * Escribe el texto con la fuente y color activos.
      * @param text
      * @param x
@@ -101,5 +80,4 @@ public interface Graphics {
      */
     int getWidth();
     int getHeight();
-
 }

@@ -4,13 +4,14 @@ import java.util.List;
 
 import android.view.View;
 
+import es.ucm.gdv.engine.AbstractGraphics;
 import es.ucm.gdv.engine.Input;
 
 public class AndroidInput implements Input {
     TouchHandler touchHandler;
 
-    public AndroidInput(View view, float scaleX, float scaleY) {
-        touchHandler = new TouchHandler(view, scaleX, scaleY);
+    public AndroidInput(View view, AbstractGraphics graphics) {
+        touchHandler = new TouchHandler(view, graphics);
     }
 
     @Override
