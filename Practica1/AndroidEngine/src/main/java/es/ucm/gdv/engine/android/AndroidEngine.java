@@ -98,7 +98,7 @@ public class AndroidEngine implements Engine, Runnable {
             long currentTime = System.nanoTime();
             long nanoElapsedTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
-            float elapsedTime = (float) (nanoElapsedTime / 1.0E9);
+            float elapsedTime = (float) (nanoElapsedTime / 1.0E10)*5;
 
             // Bloqueamos el canvas
             graphics.lockCanvas();

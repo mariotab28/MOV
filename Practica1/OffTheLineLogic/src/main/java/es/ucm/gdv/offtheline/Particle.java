@@ -62,7 +62,7 @@ public class Particle extends  LineObject {
             transform.setPosY((transform.getPosY() + ((speed*deltaTime) * (randDirY))));
 
 
-            engine.getGraphics().rotate(transform.getRotation());
+            //engine.getGraphics().rotate(transform.getRotation());
 
             if(timer>0.75)
                 setActive(false);
