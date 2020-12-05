@@ -7,7 +7,52 @@ public abstract class AbstractGraphics implements Graphics {
      */
     protected int targetWidth, targetHeight;
 
+    /**
+     * Dimensiones de la ventana.
+     */
     protected int screenWidth, screenHeight;
+
+    /**
+     * Factor de escalado del canvas.
+     */
+    protected float scaleFactor;
+
+    /**
+     * Traslación a realizar para centrar el canvas,
+     * dejando bandas negras a los lados.
+     */
+    protected float canvasXOffset;
+    protected float canvasYOffset;
+
+    /**
+     * Calcula el factor de escalado del canvas.
+     * @return Factor de escalado del canvas.
+     */
+    protected float getScaleFactor() {
+        float factor = 1.0f;
+        if (screenWidth <= screenHeight) // Pantalla vertical (portrait) -> scaleFactor depende del ancho
+            factor = (float)screenWidth / (float)targetWidth;
+        else if (screenWidth > screenHeight) // Pantalla horizontal (landscape) -> scaleFactor depende del alto
+            factor = (float)screenHeight / (float)targetHeight;
+
+        return factor;
+    }
+
+    /**
+     * Ajusta el canvas para
+     * centrarlo en la pantalla ocupando el máximo espacio
+     * sin romper la relación de aspecto del ancho/alto lógicos.
+     */
+    public void initCanvas() {
+
+        // Establece el factor de escala del canvas
+        scaleFactor = getScaleFactor();
+
+        // Establece la traslación necesaria para centrar
+        // el canvas en la pantalla.
+        canvasXOffset = (screenWidth / 2) - (targetWidth * scaleFactor / 2);
+        canvasYOffset = (screenHeight / 2) - (targetHeight * scaleFactor / 2);
+    }
 
     /**
      * Recibe una coordena x en base al ancho de la pantalla
@@ -18,7 +63,6 @@ public abstract class AbstractGraphics implements Graphics {
      * @return Coordenada ajustada a la lógica del juego.
      */
     public double adjustToTargetWidth(double x) {
-        //x * (targetWidth / getWidth());
         return (x / getWidth()) * targetWidth;
     }
 

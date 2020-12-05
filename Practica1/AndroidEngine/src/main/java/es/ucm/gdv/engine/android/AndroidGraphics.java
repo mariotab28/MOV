@@ -9,6 +9,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import java.security.SignatureSpi;
+
 import es.ucm.gdv.engine.AbstractGraphics;
 import es.ucm.gdv.engine.Font;
 import es.ucm.gdv.engine.Game;
@@ -32,9 +34,11 @@ public class AndroidGraphics extends AbstractGraphics {
         // Obtener el asset manager
         assetsMgr = context.getAssets();
 
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        screenWidth = metrics.widthPixels;
-        screenHeight = metrics.heightPixels;
+        do {
+            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+            screenWidth = metrics.widthPixels;
+            screenHeight = metrics.heightPixels;
+        } while(screenWidth == 0); // Nos aseguramos de que el context ya se ha creado
     }
 
     public View getSurfaceView() {
@@ -91,15 +95,25 @@ public class AndroidGraphics extends AbstractGraphics {
         canvas.scale(x, y);
     }
 
+    /**
+     * Le aplica una rotación al canvas.
+     * @param angle Ángulo de la rotación en RADIANES.
+     */
     public void rotate(float angle) {
-        canvas.rotate(angle*90);
+        canvas.rotate(angle * 180 /(float) Math.PI);
     }
 
+    /**
+     * Guarda el estado del canvas.
+     */
     public void save() {
         canvas.save();
         stateIsSaved = true;
     }
 
+    /**
+     * Restaura el último estado guardado del canvas.
+     */
     public void restore() {
         if(stateIsSaved) {
             canvas.restore();
@@ -135,7 +149,7 @@ public class AndroidGraphics extends AbstractGraphics {
      * @param y2
      */
     public void drawLine(double x1, double y1, double x2, double y2) {
-        paint.setStrokeWidth (1.5f);
+        paint.setStrokeWidth (1.0f);
         canvas.drawLine((float)x1, (float)y1, (float)x2, (float)y2, paint);
     }
 
@@ -143,8 +157,6 @@ public class AndroidGraphics extends AbstractGraphics {
     public void fillRect(double x1, double y1, double x2, double y2) {
 
     }
-
-
 
     /**
      * Dibuja un rectángulo relleno.
@@ -207,10 +219,11 @@ public class AndroidGraphics extends AbstractGraphics {
 
         // Pintamos el frame
         try {
-            // Escalado del canvas
-            scale(3.0f,3.0f);
             // Traslación del canvas hacia el centro de la pantalla
-            //TODO: translate(x, y);
+            translate(canvasXOffset, canvasYOffset);
+
+            // Escalado del canvas
+            scale(scaleFactor, scaleFactor);
 
             // Renderizado de objetos del juego
             game.render();

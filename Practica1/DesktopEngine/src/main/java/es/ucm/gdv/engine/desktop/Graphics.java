@@ -10,6 +10,8 @@ import java.awt.Color;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.font.TextAttribute;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -19,6 +21,8 @@ import java.io.InputStream;
 
 
 import javax.swing.JFrame;
+
+import es.ucm.gdv.engine.Game;
 
 public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
     private JFrame frame;
@@ -81,6 +85,7 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
 
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
+        frame.addComponentListener(new FrameListener(this));
 
         int intentos = 100;
         while(intentos-- > 0) {
@@ -116,6 +121,21 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
     public Canvas getCanvas()
     {
         return canvas;
+    }
+
+    /**
+     * Renderiza el siguiente frame del juego.
+     * @param game El juego con la lista de objetos a renderizar.
+     */
+    public void renderFrame(Game game) {
+        // Traslación del canvas hacia el centro de la pantalla
+        translate(canvasXOffset, canvasYOffset);
+
+        // Escalado del canvas
+        scale(scaleFactor, scaleFactor);
+
+        // Renderizado de objetos del juego
+        game.render();
     }
 
     public void updateBuffer()
@@ -303,6 +323,40 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
 
     }
 
+    // *********************************************************
+    //                  FRAME LISTENER
+    // *********************************************************
 
+    /**
+     * Escucha eventos sobre la ventana.
+     */
+    private class FrameListener implements ComponentListener {
+        private Graphics graphics;
 
+        public FrameListener(Graphics graphics)
+        {
+            this.graphics = graphics;
+
+        }
+
+        /**
+         * Función que se llama al cambiar el tamaño de la ventana.
+         * Actualiza las variables que ayudan a posicionar el canvas
+         * en el centro de la ventana.
+         */
+        public void componentResized(ComponentEvent arg0) {
+            if(targetWidth == 0 || targetHeight == 0) return; // Todavía no se han establecido las dimensiones del juego
+
+            int w = frame.getWidth(), h = frame.getHeight();
+            graphics.setScreenSize(w, h);
+            graphics.initCanvas();
+        }
+
+        public void componentHidden(ComponentEvent arg0) {
+        }
+        public void componentMoved(ComponentEvent arg0) {
+        }
+        public void componentShown(ComponentEvent arg0) {
+        }
+    }
 }

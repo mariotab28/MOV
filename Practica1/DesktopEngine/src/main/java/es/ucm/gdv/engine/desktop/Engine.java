@@ -35,6 +35,9 @@ public class Engine implements es.ucm.gdv.engine.Engine{
     {
         this.game=game;
         g.setScreenSize(game.getWidth(), game.getHeight());
+        g.setTargetWidth(game.getWidth());
+        g.setTargetHeight(game.getHeight());
+        g.initCanvas();
     }
 
     public void mainLoop()
@@ -50,7 +53,7 @@ public class Engine implements es.ucm.gdv.engine.Engine{
                 do {
                     g.updateBuffer();
                     try {
-                        game.render(); // RENDER
+                        g.renderFrame(game); // RENDER
                     } finally {
                        g.GraphDispose();
                     }

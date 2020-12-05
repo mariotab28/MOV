@@ -36,8 +36,9 @@ public class AndroidEngine implements Engine, Runnable {
     public void setGame(Game game)
     {
         this.game = game;
-        graphics.setTargetHeight(game.getHeight());
         graphics.setTargetWidth(game.getWidth());
+        graphics.setTargetHeight(game.getHeight());
+        graphics.initCanvas();
     }
 
     @Override
