@@ -53,12 +53,12 @@ public class Enemy extends  LineObject {
     public void updateVertex()
     {
 
-        double[] verX= {0.9,-0.9};
-        double[] verY= {0.9,-0.9};
+        double[] verX= {1.0,-1.0};
+        double[] verY= {1.0,-1.0};
         for(int i =0; i< verX.length;i++)
         {
-            verX[i]=verX[i]*((length/2)*Math.cos((angle/180)*Math.PI));
-            verY[i]=verY[i]*((length/2)*Math.sin((-angle/180)*Math.PI));
+            verX[i]=verX[i]*((int)((length-1)/2)*Math.cos((angle/180)*Math.PI));
+            verY[i]=verY[i]*((int)((length-1)/2)*Math.sin((-angle/180)*Math.PI));
         }
         setVertex(verX,verY);
     }
@@ -71,8 +71,8 @@ public class Enemy extends  LineObject {
             transform.setRotation(transform.getRotation()+(float)((rot/180.0)*Math.PI));
             if(counter<time1 && moving)
             {
-                transform.setPosX(transform.getPosX()+offsetX * direction*deltaTime);
-                transform.setPosY(transform.getPosY()+offsetY * direction*deltaTime);
+                transform.setPosX(transform.getPosX()+offsetX *1/time1 * direction*deltaTime);
+                transform.setPosY(transform.getPosY()+offsetY *1/time1* direction*deltaTime);
 
             }
             else if(counter>= time1&& moving) {

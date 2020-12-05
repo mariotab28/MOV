@@ -19,7 +19,7 @@ public class Utils {
         t = ( s2_x * ( y1[0] - y2[0]) - s2_y * (x1[0] - x2[0])) / (-s2_x * s1_y + s1_x * s2_y);
 
         Pair punto=new Pair();
-        if (s > 0 && s < 1 && t > 0 && t < 1)
+        if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
         {
             // Collision detected
 

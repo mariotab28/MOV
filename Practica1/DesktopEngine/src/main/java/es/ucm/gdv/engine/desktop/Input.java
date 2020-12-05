@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import es.ucm.gdv.engine.AbstractGraphics;
 import es.ucm.gdv.engine.Pool;
 
 public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMotionListener {
@@ -16,14 +17,16 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
     //private boolean[] buttons =new boolean[NUM_BUTTONS];
     //private boolean[] buttonsLast =new boolean[NUM_BUTTONS];
    // private int scaleX,scaleY;
-    private int mouseX,mouseY;
+   // private int mouseX,mouseY;
     //private List<TouchEvent> events;
     private Pool<TouchEvent> touchEventPool;
     private List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
     private List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
+    private  AbstractGraphics graphics;
 
-    public Input(Canvas canvas)
+    public Input(Canvas canvas, AbstractGraphics graphics)
     {
+        this.graphics=graphics;
         Pool.PoolObjectFactory<TouchEvent> factory = new Pool.PoolObjectFactory<TouchEvent>() {
             @Override
             public TouchEvent createObject() {
@@ -32,8 +35,8 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
         };
         touchEventPool = new Pool<TouchEvent>(factory, 50);
 
-        mouseX=0;
-        mouseY=0;
+        //mouseX=0;
+       // mouseY=0;
 
         canvas.addMouseListener(this);
         canvas.addMouseMotionListener(this);
@@ -61,12 +64,14 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
-        mouseX=mouseEvent.getX();
-        mouseY=mouseEvent.getY();
+      //  mouseX=(int)graphics.adjustToTargetWidth(mouseEvent.getX());
+     //   mouseY= (int) graphics.adjustToTargetHeight(mouseEvent.getY());
+
+
 
         TouchEvent t=new TouchEvent();
-        t.x=mouseEvent.getX();
-        t.y=mouseEvent.getY();
+        t.x=(int)graphics.adjustToTargetWidth(mouseEvent.getX());
+        t.y=(int) graphics.adjustToTargetHeight(mouseEvent.getY());
         t.type=TouchEvent.TOUCH_DRAGGED;
         t.pointer=mouseEvent.getButton();
         touchEventsBuffer.add(t);
@@ -98,8 +103,8 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
         TouchEvent t=new TouchEvent();
-        t.x=mouseEvent.getX();
-        t.y=mouseEvent.getY();
+        t.x=(int)graphics.adjustToTargetWidth(mouseEvent.getX());
+        t.y=(int) graphics.adjustToTargetHeight(mouseEvent.getY());
         t.type=TouchEvent.TOUCH_DOWN;
         t.pointer=mouseEvent.getButton();
         touchEventsBuffer.add(t);
@@ -108,8 +113,8 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
         TouchEvent t=new TouchEvent();
-        t.x=mouseEvent.getX();
-        t.y=mouseEvent.getY();
+        t.x=(int)graphics.adjustToTargetWidth(mouseEvent.getX());
+        t.y=(int) graphics.adjustToTargetHeight(mouseEvent.getY());
         t.type=TouchEvent.TOUCH_UP;
         t.pointer=mouseEvent.getButton();
         touchEventsBuffer.add(t);

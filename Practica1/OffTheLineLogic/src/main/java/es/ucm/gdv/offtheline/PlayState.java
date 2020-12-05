@@ -54,7 +54,7 @@ public class PlayState implements GameState {
             e.printStackTrace();
         }
         timer=0;
-        levelIndex=0;
+        levelIndex=16;
         if(difficulty==0)
         {
             this.maxLives=EASYLIVES;

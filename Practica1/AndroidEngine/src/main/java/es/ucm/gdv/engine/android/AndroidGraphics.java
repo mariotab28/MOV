@@ -17,7 +17,7 @@ import es.ucm.gdv.engine.Game;
 
 public class AndroidGraphics extends AbstractGraphics {
     private Canvas canvas;
-    private Paint paint = new Paint();
+    private Paint paint ;
     // Indica si se ha hecho un save() antes de un restore()
     private boolean stateIsSaved = false;
     private AssetManager assetsMgr;
@@ -33,7 +33,8 @@ public class AndroidGraphics extends AbstractGraphics {
         holder = renderView.getHolder();
         // Obtener el asset manager
         assetsMgr = context.getAssets();
-
+         paint =new Paint();
+         paint.setStrokeCap(Paint.Cap.SQUARE);
         do {
             DisplayMetrics metrics = context.getResources().getDisplayMetrics();
             screenWidth = metrics.widthPixels;
@@ -149,13 +150,15 @@ public class AndroidGraphics extends AbstractGraphics {
      * @param y2
      */
     public void drawLine(double x1, double y1, double x2, double y2) {
-        paint.setStrokeWidth (1.0f);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth (2f);
         canvas.drawLine((float)x1, (float)y1, (float)x2, (float)y2, paint);
     }
 
     @Override
     public void fillRect(double x1, double y1, double x2, double y2) {
-
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawRect((float)x1, (float)y1, (float)x2, (float)y2, paint);
     }
 
     /**
@@ -165,10 +168,6 @@ public class AndroidGraphics extends AbstractGraphics {
      * @param x2 Right
      * @param y2 Bottom
      */
-    public void fillRect(int x1, int y1, int x2, int y2) {
-        paint.setStyle(Paint.Style.FILL);
-        canvas.drawRect(x1, y1, x2, y2, paint);
-    }
 
     /**
      * Escribe el texto con la fuente y color activos.

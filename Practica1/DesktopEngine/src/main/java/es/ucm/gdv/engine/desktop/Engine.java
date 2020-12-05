@@ -22,7 +22,7 @@ public class Engine implements es.ucm.gdv.engine.Engine{
     public Engine()
     {
         g= new es.ucm.gdv.engine.desktop.Graphics(640,480, this);
-        in = new es.ucm.gdv.engine.desktop.Input(g.getCanvas());
+        in = new es.ucm.gdv.engine.desktop.Input(g.getCanvas(),g);
         lastTime=System.nanoTime();
 
     }
@@ -34,7 +34,7 @@ public class Engine implements es.ucm.gdv.engine.Engine{
     public void setGame(Game game)
     {
         this.game=game;
-        g.setScreenSize(game.getWidth(), game.getHeight());
+       // g.setScreenSize(game.getWidth(), game.getHeight());
         g.setTargetWidth(game.getWidth());
         g.setTargetHeight(game.getHeight());
         g.initCanvas();

@@ -66,9 +66,9 @@ public class Coins extends  LineObject {
 
 
             if (collision) {
-                acumScale = acumScale + 0.005f* deltaTime;
-                transform.setScaleX(transform.getScaleX() * acumScale);
-                transform.setScaleY(transform.getScaleY() * acumScale);
+                acumScale = acumScale +6* deltaTime;
+                transform.setScaleX( acumScale);
+                transform.setScaleY(acumScale);
 
             }
             if(transform.getScaleX()>=4)

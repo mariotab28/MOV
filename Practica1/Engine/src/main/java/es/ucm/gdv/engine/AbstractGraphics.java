@@ -30,10 +30,13 @@ public abstract class AbstractGraphics implements Graphics {
      */
     protected float getScaleFactor() {
         float factor = 1.0f;
-        if (screenWidth <= screenHeight) // Pantalla vertical (portrait) -> scaleFactor depende del ancho
-            factor = (float)screenWidth / (float)targetWidth;
-        else if (screenWidth > screenHeight) // Pantalla horizontal (landscape) -> scaleFactor depende del alto
-            factor = (float)screenHeight / (float)targetHeight;
+
+        /*El factor de escalado más pequeño es con el que nos quedamos, asegurando así que quepa
+         el juego en la pantalla */
+        if((float)screenWidth / (float)targetWidth <= (float)screenHeight / (float)targetHeight)
+            factor = (float)screenWidth / (float)targetWidth;// Pantalla vertical (portrait) -> scaleFactor depende del ancho
+        else
+            factor = (float)screenHeight / (float)targetHeight; // Pantalla horizontal (landscape)-> scaleFactor depende del alto
 
         return factor;
     }
@@ -50,8 +53,8 @@ public abstract class AbstractGraphics implements Graphics {
 
         // Establece la traslación necesaria para centrar
         // el canvas en la pantalla.
-        canvasXOffset = (screenWidth / 2) - (targetWidth * scaleFactor / 2);
-        canvasYOffset = (screenHeight / 2) - (targetHeight * scaleFactor / 2);
+        canvasXOffset = ((screenWidth / 2) - (targetWidth * scaleFactor/2f));
+        canvasYOffset = ((screenHeight / 2) - (targetHeight * scaleFactor/2));
     }
 
     /**

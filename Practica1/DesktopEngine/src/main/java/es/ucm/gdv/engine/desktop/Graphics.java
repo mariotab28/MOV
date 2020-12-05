@@ -18,6 +18,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 
 import java.io.InputStream;
+import java.math.MathContext;
 
 
 import javax.swing.JFrame;
@@ -30,6 +31,8 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
 
     private BufferStrategy bufferStrategy;
     private Canvas canvas;
+
+
 
     private float savedX=0,savedY=0;
     private float savedScaleX=1,savedScaleY=1;
@@ -70,18 +73,21 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
 
         canvas=new Canvas();
         Dimension s=new Dimension(screenWidth, screenHeight);
-        canvas.setMinimumSize(s);
+        Dimension sMIN=new Dimension(0, 0);
+        Dimension sMAX=new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+
+        canvas.setMinimumSize(sMIN);
         canvas.setMaximumSize(s);
         canvas.setPreferredSize(s);
 
         frame = new JFrame(title);
-       // frame.setSize((int) (width * scale), (int) (height * scale));
+        frame.setSize((int) (screenWidth), (int) (screenHeight));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setIgnoreRepaint(true);
         frame.setVisible(true);
         frame.setLayout(new BorderLayout());
         frame.add(canvas,BorderLayout.CENTER);
-        frame.pack();
+        //frame.pack();
 
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
@@ -116,6 +122,13 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         screenWidth = w;
         screenHeight = h;
         frame.setSize(w, h);
+
+        Dimension s=new Dimension(screenWidth, screenHeight);
+
+
+        canvas.setMinimumSize(s);
+        canvas.setMaximumSize(s);
+        canvas.setPreferredSize(s);
     }
 
     public Canvas getCanvas()
@@ -129,10 +142,10 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
      */
     public void renderFrame(Game game) {
         // Traslación del canvas hacia el centro de la pantalla
-        translate(canvasXOffset, canvasYOffset);
-
+        //translate(canvasXOffset, canvasYOffset);
+        restore();
         // Escalado del canvas
-        scale(scaleFactor, scaleFactor);
+
 
         // Renderizado de objetos del juego
         game.render();
@@ -188,16 +201,18 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         transX+=x;
         transY+=y;
 
-        ((Graphics2D)graphics).translate((transX*1/scaleX),(transY*1/scaleY));
+        ((Graphics2D)graphics).translate((transX /scaleX),(transY /scaleY));
     }
 
     public void scale(float x, float y) {
         //canvas.setSize(x,y);
-        scaleX*=x;
-        scaleY*=y;
+        scaleX=x*scaleFactor;
+        scaleY=y*scaleFactor;
         graphics = bufferStrategy.getDrawGraphics();
-        ((Graphics2D) graphics).scale(scaleX,scaleY);
-        graphics.translate((int)(transX*1/scaleX),(int)(transY*1/scaleY));
+        if(graphics!=null) {
+            ((Graphics2D) graphics).scale(scaleX, scaleY);
+            ((Graphics2D) graphics).translate((transX * scaleFactor / scaleX), (transY *scaleFactor / scaleY));
+        }
 
     }
 
@@ -228,6 +243,18 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         graphics.setColor(actualColor);
         scale(scaleX,scaleY);
 
+    }
+
+    private void completeRestore()
+    {
+        actualColor=Color.BLACK;
+        rotation=0;
+        scaleX=1;
+        scaleY=1;
+        transX=0;
+        transY=0;
+        graphics.setColor(actualColor);
+       // scale(scaleX,scaleY);
     }
 
     //------------------------------------------------------------
@@ -348,8 +375,15 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
             if(targetWidth == 0 || targetHeight == 0) return; // Todavía no se han establecido las dimensiones del juego
 
             int w = frame.getWidth(), h = frame.getHeight();
+
             graphics.setScreenSize(w, h);
             graphics.initCanvas();
+            completeRestore();
+            translate(canvasXOffset*1/scaleFactor , canvasYOffset*1/scaleFactor );
+            scaleX=scaleFactor;
+            scaleY=scaleFactor;
+
+            save();
         }
 
         public void componentHidden(ComponentEvent arg0) {
