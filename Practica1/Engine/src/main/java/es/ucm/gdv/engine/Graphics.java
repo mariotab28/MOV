@@ -13,12 +13,12 @@ public interface Graphics {
     /**
      *  Crea una nueva fuente del tamaño especificado a partir de un fichero .ttf. Se indica si se desea o no fuente
      * en negrita.
-     * @param filename
+     * @param fileName
      * @param size
      * @param isBold
      * @return
      */
-    Font newFont(InputStream fileName, float size, boolean isBold);
+    Font newFont(String fileName, float size, boolean isBold);
 
     void setFont(Font font);
 
@@ -87,4 +87,6 @@ public interface Graphics {
      */
     int getTargetWidth();
     int getTargetHeight();
+
+    void toggleFullscreen();
 }

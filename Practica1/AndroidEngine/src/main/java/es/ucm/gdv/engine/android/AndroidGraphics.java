@@ -242,4 +242,9 @@ public class AndroidGraphics extends AbstractGraphics {
         // Desbloqueamos el canvas
         unlockCanvas();
     }
+
+    @Override
+    public void toggleFullscreen() {
+
+    }
 }

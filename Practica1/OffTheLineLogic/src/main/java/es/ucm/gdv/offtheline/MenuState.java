@@ -11,11 +11,11 @@ public class MenuState implements GameState {
 
     Engine engine=null;
     Font titleFont, textFont;
-
+    FullScreenChanger fullScreenController;
     Vector<GameObject> objectsInScene;
     public MenuState(Engine engine)
     {
-
+        fullScreenController=new FullScreenChanger(engine);
 
         this.engine=engine;
 
@@ -114,6 +114,7 @@ public class MenuState implements GameState {
         for (int i = 0; i < objectsInScene.size(); i++) {
             objectsInScene.get(i).handleInput(touchEvents);
         }
+        fullScreenController.handleInput(touchEvents);
     }
 
     @Override

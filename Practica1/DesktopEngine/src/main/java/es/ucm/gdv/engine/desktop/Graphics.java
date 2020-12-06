@@ -10,6 +10,9 @@ import java.awt.Color;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Window;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.font.TextAttribute;
@@ -26,13 +29,12 @@ import javax.swing.JFrame;
 import es.ucm.gdv.engine.Game;
 
 public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
+
     private JFrame frame;
     private java.awt.Graphics graphics;
 
     private BufferStrategy bufferStrategy;
     private Canvas canvas;
-
-
 
     private float savedX=0,savedY=0;
     private float savedScaleX=1,savedScaleY=1;
@@ -47,6 +49,7 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
     private String title ="newWindow";
     private Engine engine;
 
+    private GraphicsDevice device;
 
     public void GraphDispose() {
 
@@ -67,6 +70,7 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
     }
 
     public Graphics(int _width,int _height, Engine engine) {
+
         screenWidth = _width;
         screenHeight = _height;
         this.engine = engine;
@@ -81,10 +85,11 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         canvas.setPreferredSize(s);
 
         frame = new JFrame(title);
+
         frame.setSize((int) (screenWidth), (int) (screenHeight));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setIgnoreRepaint(true);
-        frame.setVisible(true);
+
         frame.setLayout(new BorderLayout());
         frame.add(canvas,BorderLayout.CENTER);
         //frame.pack();
@@ -92,6 +97,7 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
         frame.addComponentListener(new FrameListener(this));
+        frame.setVisible(true);
 
         int intentos = 100;
         while(intentos-- > 0) {
@@ -110,7 +116,20 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         bufferStrategy = canvas.getBufferStrategy();
 
         graphics = bufferStrategy.getDrawGraphics();
+        device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
 
+    }
+
+    public void toggleFullscreen()
+    {
+        Window window=device.getFullScreenWindow();
+        device.setFullScreenWindow(window==null? frame:null);
+
+    }
+
+    public void setTitle(String title)
+    {
+        frame.setTitle(title);
     }
 
     /**
@@ -141,6 +160,7 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
      * @param game El juego con la lista de objetos a renderizar.
      */
     public void renderFrame(Game game) {
+
         // Traslación del canvas hacia el centro de la pantalla
         //translate(canvasXOffset, canvasYOffset);
         restore();

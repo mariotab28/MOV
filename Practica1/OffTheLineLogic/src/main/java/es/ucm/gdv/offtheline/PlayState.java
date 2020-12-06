@@ -8,10 +8,12 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Vector;
 
 import es.ucm.gdv.engine.Engine;
 import es.ucm.gdv.engine.Font;
+import es.ucm.gdv.engine.Input;
 
 
 public class PlayState implements GameState {
@@ -26,6 +28,7 @@ public class PlayState implements GameState {
     JSONArray levels=null;
     Vector<GameObject> objectsInScene;
     Vector<GameObject> objectsInGameOver;
+    FullScreenChanger fullScreenController;
     int coinsInLevel;
     int levelIndex;
     double timer;
@@ -65,7 +68,7 @@ public class PlayState implements GameState {
             this.numLives=HARDLIVES;
             this.movementSpeed=HARDSPEED;
         }
-
+        fullScreenController=new FullScreenChanger(engine);
         loadFont();
 
 
@@ -383,6 +386,25 @@ public class PlayState implements GameState {
                 objectsInGameOver.get(i).update(deltaTime);
             }
         }
+
+    }
+
+    @Override
+    public void handleInput() {
+        List<Input.TouchEvent> touchEvents = engine.getInput().getTouchEvents();
+        if (numLives > 0 && levelIndex<levels.size()) {
+            for (int i = 0; i < objectsInScene.size(); i++) {
+
+                objectsInScene.get(i).handleInput(touchEvents);
+            }
+        }
+        else {
+            for (int j = 0; j < objectsInGameOver.size(); j++) {
+
+                objectsInGameOver.get(j).handleInput(touchEvents);
+            }
+        }
+        fullScreenController.handleInput(touchEvents);
 
     }
 

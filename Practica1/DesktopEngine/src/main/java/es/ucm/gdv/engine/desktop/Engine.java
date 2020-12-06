@@ -38,6 +38,7 @@ public class Engine implements es.ucm.gdv.engine.Engine{
         g.setTargetWidth(game.getWidth());
         g.setTargetHeight(game.getHeight());
         g.initCanvas();
+        g.setTitle("OffTheLine");
     }
 
     public void mainLoop()
