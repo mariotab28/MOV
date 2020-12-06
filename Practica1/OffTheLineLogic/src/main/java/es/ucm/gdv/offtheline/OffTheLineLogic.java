@@ -22,14 +22,6 @@ public class OffTheLineLogic implements Game {
    static final int WIDTH = 640, HEIGHT = 480;
 
     Engine engine=null;
-    JSONArray levels=null;
-    Vector<GameObject> objectsInScene;
-    int coinsInLevel;
-    int levelIndex;
-    double timer;
-    int numLives=0;
-    int maxLives=10;
-    Player player=null;
     static GameState nextState;
     static  boolean stateChanged;
     GameState state;
