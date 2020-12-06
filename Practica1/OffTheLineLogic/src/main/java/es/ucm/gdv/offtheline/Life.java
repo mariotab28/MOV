@@ -4,6 +4,13 @@ import es.ucm.gdv.engine.Engine;
 
 public class Life extends  LineObject {
 
+    /**
+     * Creacion de la instancia de las vidas dibujadas en la interfaz
+     * @param eng
+     * @param id
+     * @param posX
+     * @param posY
+     */
     public Life(Engine eng, int id ,double posX,double posY)
     {
         super( eng,  id,posX,posY);

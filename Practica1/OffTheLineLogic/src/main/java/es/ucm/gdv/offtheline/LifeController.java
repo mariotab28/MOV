@@ -7,6 +7,15 @@ public class LifeController extends GameObject{
 
     Life[] lives;
     Engine engine;
+
+    /**
+     * Constructora de el controlador de las vidas en la interfaz. Comunica con las vidas y las crea para cambiarlas de color y forma indicando cuantas quedan
+     * @param numOfLives
+     * @param remainingLifes
+     * @param eng
+     * @param posX
+     * @param posY
+     */
     public LifeController(int numOfLives,int remainingLifes, Engine eng,double posX,double posY)
     {
         id=6;

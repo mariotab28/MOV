@@ -24,12 +24,19 @@ public class MenuState implements GameState {
 
     }
 
+    /**
+     * Carga de fuentes para el menu
+     */
     public void loadFonts()
     {
         titleFont = engine.getGraphics().newFont("Bungee-Regular.ttf",10,true);
         textFont = engine.getGraphics().newFont("Bungee-Regular.ttf",10,false);
         titleFontBold = engine.getGraphics().newFont("Bungee-Regular.ttf",10,true);
     }
+
+    /**
+     * Inicializacion de los elementos del menu
+     */
     @Override
     public void start()
     {
@@ -105,7 +112,7 @@ public class MenuState implements GameState {
             objectsInScene.get(i).update(deltaTime);
 
         }
-      //  engine.getInput().getTouchEvents().clear();
+
 
     }
 

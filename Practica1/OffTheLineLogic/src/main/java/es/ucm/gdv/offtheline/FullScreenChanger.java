@@ -12,6 +12,10 @@ public class FullScreenChanger {
         eng=engine;
     }
 
+    /**
+     * Deteccion del boton de escape
+     * @param events
+     */
     public void handleInput(List<Input.TouchEvent> events) {
         int size = events.size();
 

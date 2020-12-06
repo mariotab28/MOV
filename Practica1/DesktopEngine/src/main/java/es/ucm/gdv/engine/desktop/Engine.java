@@ -41,6 +41,9 @@ public class Engine implements es.ucm.gdv.engine.Engine{
         g.setTitle("OffTheLine");
     }
 
+    /**
+     * Bucle principal del motor, llamando al juego y más tarde renderizando los cambios.
+     * */
     public void mainLoop()
     {
         float deltaTime = getDeltaTime();
@@ -64,19 +67,27 @@ public class Engine implements es.ucm.gdv.engine.Engine{
         }
     }
 
+    /**
+     * Devuelve el tiempo en segundos desde el ultimo frame.
+     * @return
+     * */
     private float getDeltaTime()
     {
 
         long newTime=System.nanoTime();
 
         long timex=newTime-lastTime;
-        float miliseconds=(float)(timex/1.0E9);
+        float seconds=(float)(timex/1.0E9);
         lastTime=newTime;
 
 
-        return miliseconds;
+        return seconds;
     }
 
+    /**
+     * Devuelve la instancia del gestor de render.
+     * @return
+     */
     public Graphics getGraphics()
     {
         return g;

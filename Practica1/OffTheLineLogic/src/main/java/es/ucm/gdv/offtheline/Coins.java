@@ -12,6 +12,11 @@ public class Coins extends  LineObject {
     double posiniX=0;
     double posiniY=0;
 
+    /**
+     * Creación de la instancia moneda base sin necesidad de posicion inicial
+     * @param eng
+     * @param id
+     */
     public Coins(Engine eng, int id )
     {
         super( eng,  id);
@@ -27,6 +32,11 @@ public class Coins extends  LineObject {
         setVertex(verX,verY);
     }
 
+    /**
+     * Creación de la instancia moneda base
+     * @param eng
+     * @param id
+     */
     public Coins(Engine eng,int id,double posX,double posY)
     {
 
@@ -44,16 +54,12 @@ public class Coins extends  LineObject {
         setVertex(verX,verY);
 
     }
-/*
-    public void updateVertex()
-    {
-        for(int i =0; i< vertexX.length;i++)
-        {
-            vertexX[i]=vertexX[i]+(radius*Math.cos((angle/180)*Math.PI));
-            vertexY[i]=vertexY[i]+(radius*Math.sin((angle/180)*Math.PI));
-        }
-    }
-*/
+
+    /**
+     * Funcion de actualizacion de la moneda
+     * Actualiza el giro y la escala
+     * @param deltaTime
+     */
     @Override
     public void update(float deltaTime) {
 

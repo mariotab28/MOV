@@ -19,6 +19,12 @@ public class Enemy extends  LineObject {
     int direction=1;
 
     double counter=0;
+
+    /**
+     * Creacion de instancia de enemy sin posicion inicial
+     * @param eng
+     * @param id
+     */
     public Enemy(Engine eng, int id )
     {
         super( eng,  id);
@@ -34,6 +40,13 @@ public class Enemy extends  LineObject {
         setVertex(verX,verY);
     }
 
+    /**
+     * Creación de la instancia del enemy
+     * @param eng
+     * @param id
+     * @param posX
+     * @param posY
+     */
     public Enemy(Engine eng,int id,double posX,double posY)
     {
 
@@ -50,6 +63,10 @@ public class Enemy extends  LineObject {
 
     }
 
+    /**
+     * Actualiza los vertices del enemigo a unos especificos con la longitud y angulos correctos.
+     * Esta funcion se debe llamar tras las funciones de set correspondientes a la longitud y angulo.
+     */
     public void updateVertex()
     {
 
@@ -63,6 +80,10 @@ public class Enemy extends  LineObject {
         setVertex(verX,verY);
     }
 
+    /**
+     * Comportamiento del Enemy respecto a su movimiento y rotación.
+     * @param deltaTime
+     */
     @Override
     public void update(float deltaTime) {
 
@@ -90,43 +111,82 @@ public class Enemy extends  LineObject {
         }
     }
 
+    /**
+     * Getter de angulo
+     * @return
+     */
     public double getAngle() {
         return angle;
     }
-
+    /**
+     * Setter de angulo
+     * @return
+     */
     public void setAngle(double angle) {
         this.angle = angle;
 
     }
 
+    /**
+     * Getter de velocidad
+     * @return
+     */
     public double getSpeed() {
         return speed;
     }
 
+    /**
+     * Setter de velocidad
+     * @return
+     */
     public void setSpeed(double speed) {
         this.speed = speed;
     }
 
+    /**
+     * Getter de longitud
+     * @return
+     */
     public double getLength() {
         return length;
     }
 
+    /**
+     * Setter de longitud
+     * @return
+     */
     public void setLength(double length) {
         this.length = length;
     }
 
+    /**
+     * Setter de posicion a la que tiene que llegar en la X
+     * @return
+     */
     public void setOffsetX(double offsetX) {
         this.offsetX = offsetX;
     }
 
+    /**
+     * Setter de posicion a la que tiene que llegar en la Y
+     * @return
+     */
     public void setOffsetY(double offsetY) {
         this.offsetY = offsetY;
     }
 
+    /**
+     * Setter del tiempo que tarda en llegar al destino
+     * @return
+     */
     public void setTime1(double time1) {
         this.time1 = time1;
     }
 
+    /**
+     * Setter del tiempo que dura en el destino antes de volver
+     * @return
+     */
     public void setTime2(double time2) {
         this.time2 = time2;
     }

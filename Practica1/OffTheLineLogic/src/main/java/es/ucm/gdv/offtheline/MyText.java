@@ -22,14 +22,15 @@ public class MyText extends  GameObject {
 
     }
 
+    /**
+     * Render de objetos que incluyan texto y no basados en lineas
+     */
     public void render ()
     {
         if(isActive)
         {
             if(engine!=null) {
                 engine.getGraphics().save();
-               // font.setFont();
-
 
                 engine.getGraphics().translate(transform.getPosX(),transform.getPosY());
                 engine.getGraphics().scale(transform.getScaleX(),transform.getScaleY());
