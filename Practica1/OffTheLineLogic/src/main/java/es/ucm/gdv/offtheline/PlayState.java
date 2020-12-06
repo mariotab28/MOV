@@ -28,6 +28,7 @@ public class PlayState implements GameState {
     JSONArray levels=null;
     Vector<GameObject> objectsInScene;
     Vector<GameObject> objectsInGameOver;
+    FullScreenChanger fullScreenController;
     int coinsInLevel;
     int levelIndex;
     double timer;
@@ -54,7 +55,7 @@ public class PlayState implements GameState {
             e.printStackTrace();
         }
         timer=0;
-        levelIndex=16;
+        levelIndex=0;
         if(difficulty==0)
         {
             this.maxLives=EASYLIVES;
@@ -67,7 +68,7 @@ public class PlayState implements GameState {
             this.numLives=HARDLIVES;
             this.movementSpeed=HARDSPEED;
         }
-
+        fullScreenController=new FullScreenChanger(engine);
         loadFont();
 
 
@@ -328,6 +329,7 @@ public class PlayState implements GameState {
                 objectsInGameOver.get(j).handleInput(touchEvents);
             }
         }
+        fullScreenController.handleInput(touchEvents);
 
     }
 

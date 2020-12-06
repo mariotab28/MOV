@@ -45,6 +45,7 @@ public class OffTheLineLogic implements Game {
     @Override
     public void handleInput() {
         state.handleInput();
+
     }
 
     @Override

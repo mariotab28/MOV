@@ -80,4 +80,5 @@ public interface Graphics {
      */
     int getWidth();
     int getHeight();
+    void toggleFullscreen();
 }
