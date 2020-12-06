@@ -103,6 +103,7 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         ///Creación de la ventana y su configuracion base.
         frame = new JFrame(title);
 
+        //frame.setBounds(10,10,(int) (screenWidth), (int) (screenHeight));
         frame.setSize((int) (screenWidth), (int) (screenHeight));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setIgnoreRepaint(true);
@@ -114,6 +115,9 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         frame.setResizable(true);
         frame.addComponentListener(new FrameListener(this));
         frame.setVisible(true);
+        ///LA ALTURA SIN INCLUIR LA BANDITA BLANCA DE ARRIBA
+        screenHeight=frame.getContentPane().getSize().height;
+
 
         int intentos = 100;
         while(intentos-- > 0) {
@@ -165,7 +169,9 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         frame.setSize(w, h);
 
         Dimension s=new Dimension(screenWidth, screenHeight);
-
+        ///LA ALTURA SIN INCLUIR LA BANDITA BLANCA DE ARRIBA
+        screenHeight=frame.getContentPane().getSize().height;
+       
 
         canvas.setMinimumSize(s);
         canvas.setMaximumSize(s);
@@ -254,7 +260,7 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         transX+=x;
         transY+=y;
 
-        ((Graphics2D)graphics).translate((transX /scaleX),(transY /scaleY));
+        ((Graphics2D)graphics).translate((transX* scaleFactor  /scaleX),(transY* scaleFactor  /scaleY));
     }
 
     /**
@@ -262,6 +268,7 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
      */
     public void scale(float x, float y) {
         //canvas.setSize(x,y);
+
         scaleX=x*scaleFactor;
         scaleY=y*scaleFactor;
         graphics = bufferStrategy.getDrawGraphics();
