@@ -34,10 +34,17 @@ public class TouchHandler implements OnTouchListener {
         this.graphics = graphics;
     }
 
+    /**
+     * Método heredado de OnTouchListener que se llama
+     * al recibir input en la pantalla táctil
+     * @param v Vista de la aplicación
+     * @param event Evento recibido
+     */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         synchronized (this) {
             TouchEvent touchEvent = touchEventPool.getObject();
+            // Establece el tipo de evento
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     touchEvent.type = TouchEvent.TOUCH_DOWN;
@@ -54,8 +61,10 @@ public class TouchHandler implements OnTouchListener {
                     break;
             }
 
+            // Coordenadas del evento
             touchEvent.x = touchX = (int) graphics.adjustToTargetWidth(event.getX());
             touchEvent.y = touchY = (int) graphics.adjustToTargetHeight(event.getY());
+            // Añade el evento al buffer de eventos
             touchEventsBuffer.add(touchEvent);
 
             return true;

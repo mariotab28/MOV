@@ -45,7 +45,7 @@ public interface Input {
     /**
      * Devuelve la coordenada X de la posición de la pantalla
      * donde se está pulsando actualmente, o undefined si no se
-     *      * está pulsando en ese momento.
+     * está pulsando en ese momento.
      * @param pointer
      * @return coordenada X de la pulsación
      */
