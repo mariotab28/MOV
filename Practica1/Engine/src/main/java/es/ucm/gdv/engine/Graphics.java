@@ -13,12 +13,12 @@ public interface Graphics {
     /**
      *  Crea una nueva fuente del tamaño especificado a partir de un fichero .ttf. Se indica si se desea o no fuente
      * en negrita.
-     * @param fileName
+     * @param filename
      * @param size
      * @param isBold
      * @return
      */
-    Font newFont(String fileName, float size, boolean isBold);
+    Font newFont(InputStream fileName, float size, boolean isBold);
 
     void setFont(Font font);
 
@@ -80,4 +80,11 @@ public interface Graphics {
      */
     int getWidth();
     int getHeight();
+
+    /**
+     * Devuelven las dimensiones lógicas del juego.
+     * @return dimensiones lógicas del juego.
+     */
+    int getTargetWidth();
+    int getTargetHeight();
 }

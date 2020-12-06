@@ -1,10 +1,8 @@
 package es.ucm.gdv.offtheline;
 
-import java.util.List;
 import java.util.Vector;
 
 import es.ucm.gdv.engine.Engine;
-import es.ucm.gdv.engine.Input;
 
 public class Player extends  LineObject {
 
@@ -54,32 +52,16 @@ public class Player extends  LineObject {
     @Override
     public void update(float deltaTime) {
 
-
-
         if(isActive) {
 
-
+            handleEvent();
             lastPosX=transform.getPosX();
             lastPosY=transform.getPosY();
-
-
-
-            double[] x1,y1;
-            x1=new double[2];
-            x1[0]=lastPosX;
-            x1[1]=transform.getPosX();
-            y1=new double[2];
-            y1[0]=lastPosY;
-            y1[1]=transform.getPosY();
-
-
-            double diffChange =util.sqrDistancePointSegment(x1,y1,nextVertexX,nextVertexY);
-
+            double differX=Math.abs(nextVertexX-transform.getPosX());
+            double differY=Math.abs(nextVertexY-transform.getPosY());
 
             if(onWall) {
-                if( diffChange<=16) {
-                    transform.setPosX(path.getVertexX()[idVertex]);
-                    transform.setPosY(path.getVertexY()[idVertex]);
+                if (differX<2 && differY<2) {
                     idVertex+=1*wallDir;
                     if(idVertex>=path.getVertexX().length)
                         idVertex=0;
@@ -89,7 +71,6 @@ public class Player extends  LineObject {
                     lastVertexY = nextVertexY;
                     nextVertexX = path.getVertexX()[idVertex];
                     nextVertexY = path.getVertexY()[idVertex];
-
 
 
                 }
@@ -116,67 +97,49 @@ public class Player extends  LineObject {
 
 
 
-            if(transform.getPosX()<0 || transform.getPosX()>OffTheLineLogic.WIDTH||transform.getPosY()<0||transform.getPosY()>OffTheLineLogic.HEIGHT)
+            if(transform.getPosX()<0 || transform.getPosX()>engine.getGraphics().getWidth()||transform.getPosY()<0||transform.getPosY()>engine.getGraphics().getHeight())
                 isActive=false;
 
 
         }
     }
 
-    @Override
-    public void handleInput(List<Input.TouchEvent> events) {
-        int size = events.size();
-        for(int i=0; i < size; i++) {
-            Input.TouchEvent evt = events.get(i);
-            if(evt.type== Input.TouchEvent.TOUCH_DOWN) {
-
-
-                    double xLastDir = nextVertexX - lastVertexX;
-                    double yLastDir = nextVertexY - lastVertexY;
-                    double magnitude = Math.sqrt(Math.pow(xLastDir, 2) + Math.pow(yLastDir, 2));
-                    xLastDir = (xLastDir / magnitude);
-                    yLastDir = yLastDir / magnitude;
-                    if (path.hasDirections()) {
-                        if (onWall) {
-                            int idver = idVertex - wallDir;
-                            if (idver < 0)
-                                idver = path.getVertexX().length - 1;
-                            if (idver >= path.getVertexX().length)
-                                idver = 0;
-
-
-                            idver = Math.min(idver, idVertex);
-
-
-                            flyingDirX = path.getDirectionsX()[idver];
-                            flyingDirY = path.getDirectionsY()[idver];
-
-                            transform.setPosY(transform.getPosY() + flyingDirY);
-                            transform.setPosX(transform.getPosX() + flyingDirX);
-                            onWall = false;
-
-                            if (Math.abs(flyingDirY - xLastDir) < 0.01 && Math.abs(flyingDirX - yLastDir) > 0.01) {
-                                multiplier = -1;
-                            } else
-                                multiplier = 1;
-                        }
-                    } else {
-                        if (onWall) {
-                            multiplier = -multiplier;
-                            onWall = false;
-
-
-                            flyingDirX = yLastDir * multiplier;
-                            flyingDirY = -xLastDir * multiplier;
-                            transform.setPosY(transform.getPosY() + flyingDirY);
-                            transform.setPosX(transform.getPosX() + flyingDirX);
-                        }
+    public void handleEvent()
+    {
+        for(int i=0;i<engine.getInput().getTouchEvents().size();i++) {
+            if(engine.getInput().getTouchEvents().get(i).type==0)
+            {
+                if(path.hasDirections())
+                {
+                    if (onWall) {
+                        flyingDirX = path.getDirectionsX()[idVertex];
+                        flyingDirY = path.getDirectionsY()[idVertex];
+                        transform.setPosY(transform.getPosY() + flyingDirY);
+                        transform.setPosX(transform.getPosX() + flyingDirX);
+                        onWall = false;
                     }
+
+                }
+                else {
+                    if (onWall) {
+                        multiplier = -multiplier;
+                        onWall = false;
+
+                        double xLastDir=nextVertexX-lastVertexX;
+                        double yLastDir=nextVertexY-lastVertexY;
+                        double magnitude= Math.sqrt(Math.pow(xLastDir,2)+ Math.pow(yLastDir,2));
+                        xLastDir=(xLastDir/magnitude);
+                        yLastDir=yLastDir/magnitude;
+                        flyingDirX = yLastDir*multiplier;
+                        flyingDirY = -xLastDir*multiplier;
+                        transform.setPosY(transform.getPosY()+flyingDirY);
+                        transform.setPosX(transform.getPosX()+flyingDirX);
+                    }
+                }
 
             }
         }
     }
-
 
     public void Die(Vector<GameObject> gO)
     {
@@ -219,11 +182,9 @@ public class Player extends  LineObject {
 
 
                         result = util.segmentsIntersection(x1, y1, x2, y2);
-                        double checkDistance=util.sqrDistancePointSegment(x1,y1,nextVertexX,nextVertexY);
                         if ((x2[0] != lastVertexX || x2[1] != nextVertexX || y2[0] != lastVertexY || y2[1] != nextVertexY) && (x2[1] != lastVertexX || x2[0] != nextVertexX || y2[1] != lastVertexY || y2[0] != nextVertexY))
                             found = result.collision;
                         else found = false;
-
                         if (!found)
                             wall++;
 
@@ -255,12 +216,11 @@ public class Player extends  LineObject {
 
                         if((Math.abs(dir1x-xDir)+Math.abs(dir1y-yDir)) <(Math.abs(dir2x-xDir)+Math.abs(dir2y-yDir)))
                         {
-                            wallDir=1;
+                            wallDir=+1;
                             lastVertexX = gO.get(i).getVertexX()[wall];
                             lastVertexY = gO.get(i).getVertexY()[wall];
                             nextVertexX=gO.get(i).getVertexX()[help];
                             nextVertexY=gO.get(i).getVertexY()[help];
-                            idVertex = help;
                         }
                         else {
                             lastVertexX = gO.get(i).getVertexX()[help];
@@ -268,12 +228,11 @@ public class Player extends  LineObject {
                             nextVertexX=gO.get(i).getVertexX()[wall];
                             nextVertexY=gO.get(i).getVertexY()[wall];
                             wallDir = -1;
-                            idVertex = wall;
                         }
 
 
                         onWall = true;
-
+                        idVertex = wall;
 
 
                         path = (LevelBorder) gO.get(i);
@@ -308,7 +267,7 @@ public class Player extends  LineObject {
     }
 
     public void setSpeed(double speed) {
-        this.speed = speed;
+        this.speed = 100;//speed;
     }
 
     public int getCoinsCollected() {

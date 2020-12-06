@@ -8,12 +8,10 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 import java.util.Vector;
 
 import es.ucm.gdv.engine.Engine;
 import es.ucm.gdv.engine.Font;
-import es.ucm.gdv.engine.Input;
 
 
 public class PlayState implements GameState {
@@ -32,11 +30,11 @@ public class PlayState implements GameState {
     int levelIndex;
     double timer;
     int numLives=0;
-    int maxLives=10;
+    int maxLives = 10;
     int movementSpeed;
     Player player=null;
     boolean playing=false;
-    Font font;
+    Font levelFont, titleFont;
 
     public PlayState(Engine engine,int difficulty)
     {
@@ -54,7 +52,7 @@ public class PlayState implements GameState {
             e.printStackTrace();
         }
         timer=0;
-        levelIndex=16;
+        levelIndex=19;
         if(difficulty==0)
         {
             this.maxLives=EASYLIVES;
@@ -95,31 +93,50 @@ public class PlayState implements GameState {
     }
     public void loadFont()
     {
-        //InputStream fontis= engine.openInputStream("Bungee-Regular.ttf");
+        levelFont = engine.getGraphics().newFont("BungeeHairline-Regular.ttf",15,false);
+        titleFont = engine.getGraphics().newFont("Bungee-Regular.ttf",15,false);
+    }
 
-        font= engine.getGraphics().newFont("BungeeHairline-Regular.ttf",15,false);
+    /**
+     * Devuelve un objeto rectangular configurado para contener la información
+     * del final de la partida.
+     *
+     * @return Objeto rectangular para el fondo del texto de final de partida.
+     */
+    RectObject createGameOverRect() {
+        int rWidth = engine.getGraphics().getTargetWidth(), rHeight = engine.getGraphics().getTargetHeight() / 2 - 60;
+        RectObject bgRect = new RectObject(engine, 10, 0, 0, rWidth, rHeight);
+        bgRect.transform.setPosX(0);
+        bgRect.transform.setPosY(50);
+        bgRect.setColor(0x3A3A3A);
+
+        return bgRect;
     }
 
     public  void loadGameOverObjects()
     {
-
         objectsInGameOver=new Vector<>();
 
-        Button BackToMenu = new Button(engine,-1);
-        BackToMenu.transform.setPosX(200);
-        BackToMenu.transform.setPosY(100);
-        BackToMenu.transform.setScaleX(3);
-        BackToMenu.transform.setScaleY(3);
-        BackToMenu.setOffSetClick(-200,-100,200,200);
-        BackToMenu.text="GAME OVER";
-        BackToMenu.setFont(font);
-        BackToMenu.setColor(0xFF0000);
+        RectObject bgRect = createGameOverRect();
+        objectsInGameOver.add(bgRect);
+        objectsInScene.add(bgRect);
 
-        objectsInGameOver.add(BackToMenu);
+        Button backToMenu = new Button(engine,-1);
+        backToMenu.transform.setPosX(200);
+        backToMenu.transform.setPosY(120);
+        backToMenu.transform.setScaleX(3);
+        backToMenu.transform.setScaleY(3);
+        backToMenu.setOffSetClick(-200,-100,200,200);
+        backToMenu.text="GAME OVER";
+        backToMenu.setFont(titleFont);
+        backToMenu.setColor(0xFF0000);
+
+        objectsInGameOver.add(backToMenu);
+        objectsInScene.add(backToMenu);
 
         MyText mode = new MyText(engine,5);
-        mode.transform.setPosX(240);
-        mode.transform.setPosY(150);
+        mode.transform.setPosX(247);
+        mode.transform.setPosY(170);
         mode.transform.setScaleX(2);
         mode.transform.setScaleY(2);
         if(movementSpeed==400)
@@ -128,20 +145,70 @@ public class PlayState implements GameState {
             mode.text="EASY MODE";
         mode.setColor(0xFFFFFF);
 
-        mode.setFont(font);
+        mode.setFont(titleFont);
 
         objectsInGameOver.add(mode);
+        objectsInScene.add(mode);
 
         MyText levelReach = new MyText(engine,5);
-        levelReach.transform.setPosX(240);
-        levelReach.transform.setPosY(180);
+        levelReach.transform.setPosX(255);
+        levelReach.transform.setPosY(205);
         levelReach.transform.setScaleX(2);
         levelReach.transform.setScaleY(2);
         levelReach.text="SCORE: "+(levelIndex+1);
         levelReach.setColor(0xFFFFFF);
-        levelReach.setFont(font);
-
+        levelReach.setFont(titleFont);
         objectsInGameOver.add(levelReach);
+        objectsInScene.add(levelReach);
+
+
+    }
+
+    public  void loadCongratulationObjects()
+    {
+        objectsInGameOver=new Vector<>();
+
+        RectObject bgRect = createGameOverRect();
+        objectsInGameOver.add(bgRect);
+        objectsInScene.add(bgRect);
+
+        Button backToMenu = new Button(engine,-1);
+        backToMenu.transform.setPosX(70);
+        backToMenu.transform.setPosY(110);
+        backToMenu.transform.setScaleX(3);
+        backToMenu.transform.setScaleY(3);
+        backToMenu.setOffSetClick(-200,-100,200,200);
+        backToMenu.text="CONGRATULATIONS";
+        backToMenu.setFont(titleFont);
+        backToMenu.setColor(0xFFFF00);
+        objectsInGameOver.add(backToMenu);
+        objectsInScene.add(backToMenu);
+
+        MyText mode = new MyText(engine,5);
+        mode.transform.setPosX(140);
+        mode.transform.setPosY(160);
+        mode.transform.setScaleX(2);
+        mode.transform.setScaleY(2);
+        if(movementSpeed==400)
+            mode.text="HARD MODE COMPLETE";
+        else
+            mode.text="EASY MODE COMPLETE";
+        mode.setColor(0xFFFFFF);
+        mode.setFont(titleFont);
+        objectsInGameOver.add(mode);
+        objectsInScene.add(mode);
+
+        MyText levelReach = new MyText(engine,5);
+        levelReach.transform.setPosX(70);
+        levelReach.transform.setPosY(200);
+        levelReach.transform.setScaleX(2);
+        levelReach.transform.setScaleY(2);
+        levelReach.text="CLICK TO QUIT TO MAIN MENU";
+        levelReach.setColor(0xFFFFFF);
+        levelReach.setFont(titleFont);
+        objectsInGameOver.add(levelReach);
+        objectsInScene.add(levelReach);
+
 
     }
 
@@ -249,13 +316,13 @@ public class PlayState implements GameState {
                         objects.add(enemy);
                     }
                 }
-                //////AQUI TIENEN QUE ESTAR LOS ENEMIGOS
+                //////TODO:AQUI TIENEN QUE ESTAR LOS ENEMIGOS
                 String name=(String)level.get("name");
                 name= "Level "+ (i+1) + "- "+name;
                 MyText text=new MyText(engine,5);
                 text.text=name;
 
-                text.setFont(font);
+                text.setFont(levelFont);
                 text.transform.setPosX(100);
                 text.transform.setPosY(20);
 
@@ -277,20 +344,26 @@ public class PlayState implements GameState {
                 objectsInScene.get(i).update(deltaTime);
             }
             player.ManageCollisions(objectsInScene);
+            engine.getInput().getTouchEvents().clear();
             if (coinsInLevel == player.getCoinsCollected()) {
                 timer += deltaTime;
                 if (timer > 1) {
                     levelIndex++;
-                    objectsInScene.clear();
-                    objectsInScene = loadLevel(levelIndex, movementSpeed);
-                    timer = 0;
+
+                    if(levelIndex >= levels.size()) // NO HAY MAS NIVELES
+                        loadCongratulationObjects();
+                    else {
+                        objectsInScene.clear();
+                        objectsInScene = loadLevel(levelIndex, movementSpeed);
+                        timer = 0;
+                    }
                 }
             }
 
             if (!player.isActive()) {
                 timer += deltaTime;
                 if (timer > 2) {
-                    objectsInScene.clear();
+                    //objectsInScene.clear();
                     numLives--;
                     if (numLives <= 0) {
                         numLives = 0;
@@ -314,47 +387,12 @@ public class PlayState implements GameState {
     }
 
     @Override
-    public void handleInput() {
-        List<Input.TouchEvent> touchEvents = engine.getInput().getTouchEvents();
-        if (numLives > 0 && levelIndex<levels.size()) {
-            for (int i = 0; i < objectsInScene.size(); i++) {
-
-                objectsInScene.get(i).handleInput(touchEvents);
-            }
-        }
-        else {
-            for (int j = 0; j < objectsInGameOver.size(); j++) {
-
-                objectsInGameOver.get(j).handleInput(touchEvents);
-            }
-        }
-
-    }
-
-    @Override
     public void render() {
-
-        if (numLives > 0 && levelIndex<levels.size()) {
             engine.getGraphics().clear(0x000000);
             for (int i = 0; i < objectsInScene.size(); i++) {
                 objectsInScene.get(i).render();
             }
         }
-        else
-        {
-            engine.getGraphics().restore();
-            engine.getGraphics().rotate(0);
-            engine.getGraphics().translate(0,0);
-            engine.getGraphics().scale(1,1);
-            engine.getGraphics().setColor(0x0F0F0F);
-            engine.getGraphics().fillRect(0,0,640.0,200);
-            engine.getGraphics().setColor(0xFFFFFF);
-            for (int i = 0; i < objectsInGameOver.size(); i++) {
-                objectsInGameOver.get(i).render();
-            }
-
-        }
     }
 
 
-}

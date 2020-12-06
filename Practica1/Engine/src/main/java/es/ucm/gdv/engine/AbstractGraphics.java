@@ -93,6 +93,22 @@ public abstract class AbstractGraphics implements Graphics {
     }
 
     /**
+     * Devuelve el ancho de la ventana de juego.
+     * @return ancho de la ventana de juego.
+     */
+    public int getTargetWidth() {
+        return this.targetWidth;
+    }
+
+    /**
+     * Devuelve el alto de la ventana de juego.
+     * @return alto de la ventana de juego.
+     */
+    public int getTargetHeight() {
+        return this.targetHeight;
+    }
+
+    /**
      * Devuelve el ancho de la pantalla.
      * @return ancho de la pantalla.
      */
