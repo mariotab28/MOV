@@ -55,7 +55,7 @@ public class PlayState implements GameState {
             e.printStackTrace();
         }
         timer=0;
-        levelIndex=19;
+        levelIndex=10;
         if(difficulty==0)
         {
             this.maxLives=EASYLIVES;
@@ -96,7 +96,7 @@ public class PlayState implements GameState {
     }
     public void loadFont()
     {
-        levelFont = engine.getGraphics().newFont("BungeeHairline-Regular.ttf",15,false);
+        levelFont = engine.getGraphics().newFont("BungeeHairline-Regular.ttf",20,false);
         titleFont = engine.getGraphics().newFont("Bungee-Regular.ttf",15,false);
         titleFontBold = engine.getGraphics().newFont("Bungee-Regular.ttf",15,true);
     }
@@ -327,8 +327,9 @@ public class PlayState implements GameState {
                 text.text=name;
 
                 text.setFont(levelFont);
-                text.transform.setPosX(100);
-                text.transform.setPosY(20);
+                text.setColor(0xFFFFFF);
+                text.transform.setPosX(10);
+                text.transform.setPosY(27);
 
                 objects.add(text);
 
