@@ -26,6 +26,9 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
     private List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
     private  AbstractGraphics graphics;
 
+    /**
+     * Creacion de la instancia de Input
+     * */
     public Input(Canvas canvas, AbstractGraphics graphics)
     {
         this.graphics=graphics;
@@ -65,6 +68,9 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
 
     }
 
+    /**
+     * Capta el mover el raton mientras se pulsa
+     * */
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
       //  mouseX=(int)graphics.adjustToTargetWidth(mouseEvent.getX());
@@ -103,6 +109,10 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
         touchEventsBuffer.add(t);*/
     }
 
+
+    /**
+     * Capta el pulsado del raton
+     * */
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
         TouchEvent t=new TouchEvent();
@@ -113,6 +123,9 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
         touchEventsBuffer.add(t);
     }
 
+    /**
+     * Capta el soltado de un boton del raton
+     * */
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
         TouchEvent t=new TouchEvent();
@@ -123,6 +136,15 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
         touchEventsBuffer.add(t);
     }
 
+    /**
+     * Capta el pulsado de una tecla del teclado
+     *
+     * Teclas posibles a captar :
+     * -Los numeros
+     * -El abecedario ingles
+     * -Escape
+     * -Barra Espaciadora
+     * */
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         TouchEvent t=new TouchEvent();
@@ -151,6 +173,16 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
         touchEventsBuffer.add(t);
     }
 
+
+    /**
+     * Capta el soltado de una tecla del teclado
+     *
+     * Teclas posibles a captar :
+     * -Los numeros
+     * -El abecedario ingles
+     * -Escape
+     * -Barra Espaciadora
+     * */
     @Override
     public void keyReleased(KeyEvent keyEvent) {
         TouchEvent t=new TouchEvent();

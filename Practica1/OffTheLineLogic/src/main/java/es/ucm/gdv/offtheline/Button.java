@@ -13,6 +13,13 @@ public class Button extends MyText {
         super(eng, id);
     }
 
+    /**
+     * Establece el offset del boton en el que se capta la pulsacion del raton
+     * @param ofx1
+     * @param ofy1
+     * @param ofx2
+     * @param ofy2
+     */
     public void setOffSetClick(double ofx1, double ofy1, double ofx2, double ofy2) {
         offSetClickX0 = ofx1;
         offSetClickY0 = ofy1;
@@ -20,12 +27,19 @@ public class Button extends MyText {
         offSetClickY1 = ofy2;
     }
 
+    /**
+     * Comprobación de si se ha pulsado y por consecuente llamada a la función correspondiente
+     * @param deltaTime
+     */
     public void update(float deltaTime) {
         if (isActive && clicked)
                 function();
     }
 
-    public void function() {
+    /**
+     * Funcion de eleccion de funcionalidad segun el Id del boton
+     */
+    private void function() {
         if (id == 0) {
             OffTheLineLogic.stateChanged = true;
             OffTheLineLogic.nextState = new PlayState(engine, 0);
@@ -38,15 +52,17 @@ public class Button extends MyText {
         }
     }
 
+    /**
+     * Comprobación de pulsación en el boton
+     * @param events
+     */
     @Override
     public void handleInput(List<Input.TouchEvent> events) {
         int size = events.size();
 
         for (int i = 0; i < size; i++) {
             Input.TouchEvent evt = events.get(i);
-           /* System.out.println("(x,y): " + evt.x + ", " + evt.y);
-            System.out.println("FROM: " + (offSetClickX0 * transform.getScaleX() + transform.getPosX()) + ", " + (offSetClickY0 * transform.getScaleY() + transform.getPosY()));
-            System.out.println("TO: " + (offSetClickX1 * transform.getScaleX() + transform.getPosX()) + ", " + (offSetClickY1 * transform.getScaleY() + transform.getPosY()));*/
+
             if (evt.type == Input.TouchEvent.TOUCH_DOWN && // Tipo de evento: TOUCH_DOWN
                     evt.x < (offSetClickX1 * transform.getScaleX() + transform.getPosX()) && evt.x > (offSetClickX0 * transform.getScaleX() + transform.getPosX()) && // coor. x del evento dentro del botón
                     evt.y < (offSetClickY1 * transform.getScaleY() + transform.getPosY()) && evt.y > (offSetClickY0 * transform.getScaleY() + transform.getPosY())) // coor. y del evento dentro del botón

@@ -39,6 +39,11 @@ public class PlayState implements GameState {
     boolean playing=false;
     Font levelFont, titleFont, titleFontBold;
 
+    /**
+     * Constructora de PlayState que contendra los objetos del juego.
+     * @param engine
+     * @param difficulty
+     */
     public PlayState(Engine engine,int difficulty)
     {
         this.engine=engine;
@@ -55,7 +60,7 @@ public class PlayState implements GameState {
             e.printStackTrace();
         }
         timer=0;
-        levelIndex=10;
+        levelIndex=0;
         if(difficulty==0)
         {
             this.maxLives=EASYLIVES;
@@ -75,6 +80,10 @@ public class PlayState implements GameState {
 
     }
 
+    /**
+     * Selecciona la dificiultad del juego
+     * @param diff =0 es facil, cualquier otro valor es dificil
+     */
     public void setDificulty( int diff)
     {
         if(diff==0)
@@ -89,11 +98,18 @@ public class PlayState implements GameState {
         }
     }
 
+    /**
+     * Llamada para la carga de nivel
+     */
     public void start()
     {
         objectsInScene=loadLevel(levelIndex,movementSpeed);
         playing=true;
     }
+
+    /**
+     * Carga de las fuentes que se usaran
+     */
     public void loadFont()
     {
         levelFont = engine.getGraphics().newFont("BungeeHairline-Regular.ttf",15,false);
@@ -117,6 +133,10 @@ public class PlayState implements GameState {
         return bgRect;
     }
 
+    /**
+     * Carga de objetos que representarán el menu de fin de partida
+     * Tiene que estar en play state para que se siga renderizando por detras el juego
+     */
     public  void loadGameOverObjects()
     {
         objectsInGameOver=new Vector<>();
@@ -167,7 +187,10 @@ public class PlayState implements GameState {
 
 
     }
-
+    /**
+     * Carga de objetos que representarán el menu de fin de partida al ganar
+     * Tiene que estar en play state para que se siga renderizando por detras el juego
+     */
     public  void loadCongratulationObjects()
     {
         objectsInGameOver=new Vector<>();
@@ -216,6 +239,12 @@ public class PlayState implements GameState {
 
     }
 
+    /**
+     * carga de los objetos del nivel segun el nivel actual
+     * @param i nivel a cargar
+     * @param movementSpeed del jugador dada por la dificultad
+     * @return
+     */
     public  Vector<GameObject> loadLevel(int i,int movementSpeed)
     {
 
@@ -230,6 +259,9 @@ public class PlayState implements GameState {
 
                 JSONObject level=(JSONObject)levels.get(i);
                 JSONArray walls=(JSONArray)level.get("paths");
+                /**
+                 * Carga de los muros
+                 */
                 if(walls!=null) {
                     for (int j = 0; j < walls.size(); j++) {
                         JSONArray vertices = (JSONArray) ((JSONObject) walls.get(j)).get("vertices");
@@ -242,7 +274,7 @@ public class PlayState implements GameState {
                             verteX[vert] = x + 320;
                             verteY[vert] = (-y) + 240;
                         }
-                        /////Falta tambien las direcciones
+
                         JSONArray directions = (JSONArray) ((JSONObject) walls.get(j)).get("directions");
                         double[] dirX=null;
                         double[] dirY=null;
@@ -269,12 +301,17 @@ public class PlayState implements GameState {
 
                     }
                 }
-
+                /**
+                 * Carga del jugador, no se lee del archivo
+                 */
                 player=new Player(engine,3,(LevelBorder)objects.get(0));
                 player.setSpeed(movementSpeed);
                 objects.add(player);
                 coinsInLevel=0;
                 JSONArray items=(JSONArray)level.get("items");
+                /**
+                 * Carga de las monedas
+                 */
                 if(items!=null) {
                     for (int it = 0; it < items.size(); it++) {
                         int x = ((Number) ((JSONObject) items.get(it)).get("x")).intValue();
@@ -293,7 +330,9 @@ public class PlayState implements GameState {
                     }
                 }
                 /////
-
+                /**
+                 * Carga de los enemigos
+                 */
                 JSONArray enemies=(JSONArray)level.get("enemies");
                 if(enemies!=null) {
                     for (int it = 0; it < enemies.size(); it++) {
@@ -320,7 +359,9 @@ public class PlayState implements GameState {
                         objects.add(enemy);
                     }
                 }
-                //////TODO:AQUI TIENEN QUE ESTAR LOS ENEMIGOS
+                /**
+                 * Carga del texto con el nombre del nivel
+                 */
                 String name=(String)level.get("name");
                 name= "Level "+ (i+1) + "- "+name;
                 MyText text=new MyText(engine,5);
@@ -332,6 +373,9 @@ public class PlayState implements GameState {
 
                 objects.add(text);
 
+                /**
+                 * Carga del interfaz de la vidas del jugador
+                 */
                 LifeController lives =new LifeController(maxLives,numLives,engine, 320+100,20);
                 objects.add(lives);
             }
@@ -341,8 +385,15 @@ public class PlayState implements GameState {
     }
 
 
+    /**
+     * Bucle principal de comportamiento del Estado de juego
+     * @param deltaTime
+     */
     @Override
     public void update(float deltaTime) {
+        /*
+        Si el jugador esta vivo y no has llegado al final del juego
+         */
         if (numLives > 0 && levelIndex<levels.size()) {
             for (int i = 0; i < objectsInScene.size(); i++) {
                 objectsInScene.get(i).update(deltaTime);
@@ -363,7 +414,7 @@ public class PlayState implements GameState {
                     }
                 }
             }
-
+            ///Si EL JUGADOR ESTA MUERTO
             if (!player.isActive()) {
                 timer += deltaTime;
                 if (timer > 2) {
@@ -381,6 +432,7 @@ public class PlayState implements GameState {
 
             }
         }
+        //SI HAS PERDIDO (MORIR)O HAS GANADO (SUPERADO EL NUMERO DE NIVELES)
         else
         {
             for (int i = 0; i < objectsInGameOver.size(); i++) {
@@ -393,12 +445,16 @@ public class PlayState implements GameState {
     @Override
     public void handleInput() {
         List<Input.TouchEvent> touchEvents = engine.getInput().getTouchEvents();
+          /*
+        Si el jugador esta vivo y no has llegado al final del juego
+         */
         if (numLives > 0 && levelIndex<levels.size()) {
             for (int i = 0; i < objectsInScene.size(); i++) {
 
                 objectsInScene.get(i).handleInput(touchEvents);
             }
         }
+        //SI HAS PERDIDO (MORIR)O HAS GANADO (SUPERADO EL NUMERO DE NIVELES)
         else {
             for (int j = 0; j < objectsInGameOver.size(); j++) {
 

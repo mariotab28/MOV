@@ -11,12 +11,15 @@ public class Font  implements es.ucm.gdv.engine.Font{
 
     String fontName;
     float _size=1;
+
+    /**
+     * Devuelve la instancia de Font creada con el archivo y los parametros necesarios
+     * @param is inputStream ya abierto del que se obtiene la fuente
+     * @return
+     */
     public Font( InputStream is,float size, boolean isBold)
     {
 
-
-
-       // InputStream is= engine.openInputStream(FontName);
         try {
             baseFont= java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, is);
         } catch (FontFormatException e) {
@@ -27,26 +30,25 @@ public class Font  implements es.ucm.gdv.engine.Font{
         bold=isBold;
         _size=size;
 
-
-
         fontName=baseFont.getName();
         if(bold)
             baseFont= baseFont.deriveFont(java.awt.Font.BOLD, _size);
-            //g.setFont(baseFont.deriveFont(java.awt.Font.BOLD, _size));
         else
             baseFont= baseFont.deriveFont(java.awt.Font.PLAIN, _size);
-           // g.setFont(baseFont.deriveFont(java.awt.Font.PLAIN, _size))
-
-
-
 
     }
 
+    /**
+    * Devuelve el nombre de la fuente
+     **/
     public String getFontName()
     {
 
         return fontName;
     }
+    /**
+     * Devuelve el tamaño de la fuente
+     **/
     public float getFontSize()
     {
 
@@ -54,11 +56,19 @@ public class Font  implements es.ucm.gdv.engine.Font{
     }
 
 
-
+    /**
+     * Devuelve si la fuente esta en negrita
+     **/
     public boolean isBold() {
         return bold;
     }
 
+
+
+    /**
+     * Devuelve la fuente de java, esto solo se puede usar desde el desktopEngine y consecuentes.
+     * Solo se tiene que usar y se usa en desktopGraphics
+     **/
     public  java.awt.Font getFont()
     {
        return baseFont;

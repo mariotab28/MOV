@@ -13,6 +13,10 @@ public class LineObject extends  GameObject {
     {
         super( eng,  id,posX,posY);
     }
+
+    /**
+     * Funcion de renderizado de los objetos que se dibujen con lineas
+     */
     public void render ()
     {
         if(isActive)

@@ -51,30 +51,46 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
 
     private GraphicsDevice device;
 
+    /**
+     * Encapsulación de la funcion dispose del graphics
+     **/
     public void GraphDispose() {
 
         graphics.dispose();
     }
 
+    /**
+     * Encapsulación de la funcion show del bufferStrategy
+     **/
     public void Show() {
 
         bufferStrategy.show();
     }
 
+    /**
+     * Encapsulación de la funcion contentsRestored del bufferStrategy
+     **/
     public boolean BsRestore() {
         return bufferStrategy.contentsRestored();
     }
 
+    /**
+     * Encapsulación de la funcion contentsLost del bufferStrategy
+     **/
     public boolean BsContentLost() {
         return bufferStrategy.contentsLost();
     }
 
+    /**
+     * Creacion del graphics y la ventana con las medidas establecidas iniciales.
+     **/
     public Graphics(int _width,int _height, Engine engine) {
 
         screenWidth = _width;
         screenHeight = _height;
         this.engine = engine;
 
+        ///Creación del canvas donde se pintará principalmente.
         canvas=new Canvas();
         Dimension s=new Dimension(screenWidth, screenHeight);
         Dimension sMIN=new Dimension(0, 0);
@@ -84,6 +100,7 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         canvas.setMaximumSize(s);
         canvas.setPreferredSize(s);
 
+        ///Creación de la ventana y su configuracion base.
         frame = new JFrame(title);
 
         frame.setSize((int) (screenWidth), (int) (screenHeight));
@@ -92,7 +109,6 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
 
         frame.setLayout(new BorderLayout());
         frame.add(canvas,BorderLayout.CENTER);
-        //frame.pack();
 
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
@@ -120,6 +136,9 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
 
     }
 
+    /**
+     * Establece en pantalla completa la ventana
+     */
     public void toggleFullscreen()
     {
         Window window=device.getFullScreenWindow();
@@ -127,6 +146,9 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
 
     }
 
+    /**
+     * Establece un nuevo nombre a la aplicación
+     */
     public void setTitle(String title)
     {
         frame.setTitle(title);
@@ -150,6 +172,7 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         canvas.setPreferredSize(s);
     }
 
+
     public Canvas getCanvas()
     {
         return canvas;
@@ -171,6 +194,9 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         game.render();
     }
 
+    /**
+     * Encapsulación de la funcion getDrawGraphics del bufferStrategy para actualizar Graphics
+     **/
     public void updateBuffer()
     {
         graphics = bufferStrategy.getDrawGraphics();
@@ -191,6 +217,10 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
     }
 
 
+    /**
+     * Establece la nueva fuente para pintar
+     * @param font Fuente elegida
+     **/
     @Override
     public void setFont(es.ucm.gdv.engine.Font font) {
 
@@ -217,6 +247,9 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
     //  Métodos de control de la transformación sobre el canvas
     //------------------------------------------------------------
 
+    /**
+     * Traslada el canvas a la posicion en la que se dibujará
+     */
     public void translate(double x, double y) {
         transX+=x;
         transY+=y;
@@ -224,6 +257,9 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         ((Graphics2D)graphics).translate((transX /scaleX),(transY /scaleY));
     }
 
+    /**
+     * Escala el canvas al tamaño deseado
+     */
     public void scale(float x, float y) {
         //canvas.setSize(x,y);
         scaleX=x*scaleFactor;
@@ -231,11 +267,15 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
         graphics = bufferStrategy.getDrawGraphics();
         if(graphics!=null) {
             ((Graphics2D) graphics).scale(scaleX, scaleY);
+            //// EL TRANSLATE ES NECESARIO YA QUE EL SCALE DE GRAPHICS REINICIA A CERO TODOS LOS DEMAS PARAMETROS DE MODIFICACIÓN (TRANSLATE,ROTATE,COLOR...etc)
             ((Graphics2D) graphics).translate((transX * scaleFactor / scaleX), (transY *scaleFactor / scaleY));
         }
 
     }
 
+    /**
+     * Guarda la rotacion deseada
+     */
     public void rotate(float angle) {
         rotation=angle;
         // g=bs.getDrawGraphics();
@@ -243,6 +283,9 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
 
     }
 
+    /**
+     * Guarda la ultima configuracion deseada de dibujo
+     */
     public void save() {
         savedColor=actualColor;
         savedRot=rotation;
@@ -253,6 +296,9 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
 
     }
 
+    /**
+     * Restaura la ultima configuracion deseada de dibujo
+     */
     public void restore() {
         actualColor=savedColor;
         rotation=savedRot;
@@ -265,6 +311,9 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
 
     }
 
+    /**
+     * Restaura la configuracion a una inicial.  0
+     */
     private void completeRestore()
     {
         actualColor=Color.BLACK;
@@ -297,22 +346,20 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
      * @param y2
      */
     public void drawLine(double x1, double y1, double x2, double y2) {
-        // g.translate(0,0);
+
         graphics.setColor(actualColor);
 
 
+        ////// EL ROTATE LO HACEMOS ASI PORQUE NO ME GUSTABA EL COMO LO HACIA EL DE JAVA Y PARA NO ESTAR OBLIGADOS A UN ORDEN ESPECIFICO DE LLAMADAS
+        double nX1=((((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))));
 
-        double nX1=((((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))*1));
-
-        double nY1=((((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))*1));
-        double nX2=((((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
-        double nY2=((((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))*1));
+        double nY1=((((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))));
+        double nX2=((((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))));
+        double nY2=((((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))));
 
         ((Graphics2D)graphics).setStroke(new BasicStroke(2));
         ((Graphics2D)graphics).draw(new Line2D.Double(nX1,nY1,nX2,nY2));
-        //g.drawLine(nX1,nY1,nX2,nY2);
 
-        //g.drawRect();
 
     }
 
@@ -326,34 +373,18 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
     public void fillRect(double x1, double y1, double x2, double y2) {
 
         graphics.setColor(actualColor);
-        double nX1=((((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))*1));
 
-        double nY1=((((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))*1));
-        double nX2=((((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
-        double nY2=((((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))*1));
-        //g.fillRect(nX1,nY1,nX2,nY2);
+        ////// EL ROTATE LO HACEMOS ASI PORQUE NO ME GUSTABA EL COMO LO HACIA EL DE JAVA Y PARA NO ESTAR OBLIGADOS A UN ORDEN ESPECIFICO DE LLAMADAS
+        double nX1=((((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))));
+
+        double nY1=((((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))));
+        double nX2=((((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))));
+        double nY2=((((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))));
+
         ((Graphics2D)graphics).fill(new Rectangle2D.Double(nX1,nY1,nX2,nY2));
 
     }
 
-    /**
-     * Dibuja un rectángulo relleno.
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
-     */
-    public void fillRect(int x1, int y1, int x2, int y2) {
-
-        graphics.setColor(actualColor);
-        int nX1=((int)(((x1)*Math.cos(rotation)-(y1)*Math.sin(rotation))*1));
-
-        int nY1=((int)(((x1)*Math.sin(rotation)+(y1)*Math.cos(rotation))*1));
-        int nX2=((int)(((x2)*Math.cos(rotation)-(y2)*Math.sin(rotation))*1));
-        int nY2=((int)(((x2)*Math.sin(rotation)+(y2)*Math.cos(rotation))*1));
-        graphics.fillRect(nX1,nY1,nX2,nY2);
-
-    }
 
     /**
      * Escribe el texto con la fuente y color activos.
@@ -366,7 +397,7 @@ public class Graphics extends es.ucm.gdv.engine.AbstractGraphics {
 
 
         ((Graphics2D)graphics).drawString(text, x, y);
-        //graphics.drawString(text, x, y);
+
 
     }
 

@@ -88,5 +88,8 @@ public interface Graphics {
     int getTargetWidth();
     int getTargetHeight();
 
+    /**
+     * Establece en pantalla completa la ventana
+     */
     void toggleFullscreen();
 }

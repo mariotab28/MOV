@@ -10,6 +10,11 @@ public class Particle extends  LineObject {
     double randDirX=0,randDirY=0;
     double timer=0;
 
+    /**
+     * Devuelve la instancia de Particle sin posición definida
+     * @param eng
+     * @param id
+     */
     public Particle(Engine eng, int id )
     {
         super( eng,  id);
@@ -21,6 +26,13 @@ public class Particle extends  LineObject {
         setVertex(verX,verY);
     }
 
+    /**
+     * Devuelve la instancia de Particle
+     * @param eng
+     * @param id
+     * @param posX
+     * @param posY
+     */
     public Particle(Engine eng,int id,double posX,double posY)
     {
         super( eng,  id,(int)posX,(int)posY);
@@ -42,16 +54,11 @@ public class Particle extends  LineObject {
         setVertex(verX,verY);
 
     }
-    /*
-        public void updateVertex()
-        {
-            for(int i =0; i< vertexX.length;i++)
-            {
-                vertexX[i]=vertexX[i]+(radius*Math.cos((angle/180)*Math.PI));
-                vertexY[i]=vertexY[i]+(radius*Math.sin((angle/180)*Math.PI));
-            }
-        }
-    */
+
+    /**
+     * Actualiza la particula según su comportamiento
+     * @param deltaTime
+     */
     @Override
     public void update(float deltaTime) {
 

@@ -5,7 +5,9 @@ import es.ucm.gdv.engine.Engine;
 public class LevelBorder extends  LineObject {
     double []directionsX;
     double []directionsY;
-
+    /**
+     * Funciones y parametros base de las paredes de los niveles del juego
+     */
 
     public LevelBorder(Engine eng, int id )
     {

@@ -16,7 +16,9 @@ public class GameObject {
     double[] vertexX;
     double[] vertexY;
 
-
+    /**
+     * Funciones y parametros base de los objetos que necesiten de posicion en ventana o logica
+     */
 
     public class MyTransform{
         private double posX;
