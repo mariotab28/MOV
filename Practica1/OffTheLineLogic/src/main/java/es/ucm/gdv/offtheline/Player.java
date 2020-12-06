@@ -116,7 +116,7 @@ public class Player extends  LineObject {
 
 
 
-            if(transform.getPosX()<0 || transform.getPosX()>OffTheLineLogic.WIDTH||transform.getPosY()<0||transform.getPosY()>OffTheLineLogic.HEIGHT)
+            if(transform.getPosX()<-10 || transform.getPosX()>OffTheLineLogic.WIDTH||transform.getPosY()<-10||transform.getPosY()>OffTheLineLogic.HEIGHT)
                 isActive=false;
 
 
