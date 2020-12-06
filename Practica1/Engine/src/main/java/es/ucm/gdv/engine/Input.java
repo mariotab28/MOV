@@ -12,6 +12,11 @@ public interface Input {
         public static final int TOUCH_DOWN = 0;
         public static final int TOUCH_UP = 1;
         public static final int TOUCH_DRAGGED = 2;
+        public static final int KEY_DOWN = 3;
+        public static final int KEY_UP= 4;
+
+
+        public enum Key_Code{ESCAPE,SPACE,KEY_1,KEY_2,KEY_3,KEY_4,KEY_5,KEY_6,KEY_7,KEY_8,KEY_9,KEY_0,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z};
         /**
          * Tipo del evento de pulsación.
          */

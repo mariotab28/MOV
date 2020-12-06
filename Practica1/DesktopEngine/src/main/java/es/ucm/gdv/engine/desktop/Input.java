@@ -1,6 +1,8 @@
 package es.ucm.gdv.engine.desktop;
 
 import java.awt.Canvas;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -12,7 +14,7 @@ import java.util.List;
 import es.ucm.gdv.engine.AbstractGraphics;
 import es.ucm.gdv.engine.Pool;
 
-public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMotionListener {
+public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMotionListener, KeyListener {
     private final int NUM_BUTTONS=5;
     //private boolean[] buttons =new boolean[NUM_BUTTONS];
     //private boolean[] buttonsLast =new boolean[NUM_BUTTONS];
@@ -40,6 +42,7 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
 
         canvas.addMouseListener(this);
         canvas.addMouseMotionListener(this);
+        canvas.addKeyListener(this);
     }
 
     /**
@@ -119,6 +122,71 @@ public class Input  implements es.ucm.gdv.engine.Input, MouseListener, MouseMoti
         t.pointer=mouseEvent.getButton();
         touchEventsBuffer.add(t);
     }
+
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+        TouchEvent t=new TouchEvent();
+       // t.x=(int)graphics.adjustToTargetWidth(mouseEvent.getX());
+       // t.y=(int) graphics.adjustToTargetHeight(mouseEvent.getY());
+        t.type=TouchEvent.KEY_DOWN;
+        if(keyEvent.getKeyCode()==KeyEvent.VK_ESCAPE) {
+            t.pointer= TouchEvent.Key_Code.ESCAPE.ordinal();
+        }
+        else if(keyEvent.getKeyCode()==KeyEvent.VK_SPACE) {
+
+            t.pointer= TouchEvent.Key_Code.SPACE.ordinal();
+        }
+        else if(keyEvent.getKeyCode()>=KeyEvent.VK_0 && keyEvent.getKeyCode()<=KeyEvent.VK_9 ) {
+            int key=keyEvent.getKeyCode()-KeyEvent.VK_0;
+
+            t.pointer= TouchEvent.Key_Code.values()[key+TouchEvent.Key_Code.KEY_0.ordinal()].ordinal();
+        }
+        else if(keyEvent.getKeyCode()>=KeyEvent.VK_A && keyEvent.getKeyCode()<=KeyEvent.VK_Z ) {
+            int key=keyEvent.getKeyCode()-KeyEvent.VK_A;
+
+            t.pointer= TouchEvent.Key_Code.values()[TouchEvent.Key_Code.A.ordinal()+key].ordinal();
+        }
+        else
+            t.pointer=-1;
+        touchEventsBuffer.add(t);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
+        TouchEvent t=new TouchEvent();
+        // t.x=(int)graphics.adjustToTargetWidth(mouseEvent.getX());
+        // t.y=(int) graphics.adjustToTargetHeight(mouseEvent.getY());
+        t.type=TouchEvent.KEY_UP;
+
+        if(keyEvent.getKeyCode()==KeyEvent.VK_ESCAPE) {
+            t.pointer= TouchEvent.Key_Code.ESCAPE.ordinal();
+        }
+        else if(keyEvent.getKeyCode()==KeyEvent.VK_SPACE) {
+
+            t.pointer= TouchEvent.Key_Code.SPACE.ordinal();
+        }
+        else if(keyEvent.getKeyCode()>=KeyEvent.VK_0 && keyEvent.getKeyCode()<=KeyEvent.VK_9 ) {
+            int key=keyEvent.getKeyCode()-KeyEvent.VK_0;
+
+            t.pointer= TouchEvent.Key_Code.values()[key+TouchEvent.Key_Code.KEY_0.ordinal()].ordinal();
+        }
+        else if(keyEvent.getKeyCode()>=KeyEvent.VK_A && keyEvent.getKeyCode()<=KeyEvent.VK_Z ) {
+            int key=keyEvent.getKeyCode()-KeyEvent.VK_A;
+
+            t.pointer= TouchEvent.Key_Code.values()[TouchEvent.Key_Code.A.ordinal()+key].ordinal();
+        }
+        else
+            t.pointer=-1;
+
+
+        touchEventsBuffer.add(t);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+
+    }
+
 
     @Override
     public boolean isTouchDown(int pointer) {
