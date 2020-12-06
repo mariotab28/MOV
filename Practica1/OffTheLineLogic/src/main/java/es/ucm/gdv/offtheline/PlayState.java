@@ -37,7 +37,7 @@ public class PlayState implements GameState {
     int movementSpeed;
     Player player=null;
     boolean playing=false;
-    Font levelFont, titleFont;
+    Font levelFont, titleFont, titleFontBold;
 
     public PlayState(Engine engine,int difficulty)
     {
@@ -98,6 +98,7 @@ public class PlayState implements GameState {
     {
         levelFont = engine.getGraphics().newFont("BungeeHairline-Regular.ttf",15,false);
         titleFont = engine.getGraphics().newFont("Bungee-Regular.ttf",15,false);
+        titleFontBold = engine.getGraphics().newFont("Bungee-Regular.ttf",15,true);
     }
 
     /**
@@ -131,7 +132,7 @@ public class PlayState implements GameState {
         backToMenu.transform.setScaleY(3);
         backToMenu.setOffSetClick(-200,-100,200,200);
         backToMenu.text="GAME OVER";
-        backToMenu.setFont(titleFont);
+        backToMenu.setFont(titleFontBold);
         backToMenu.setColor(0xFF0000);
 
         objectsInGameOver.add(backToMenu);
@@ -182,7 +183,7 @@ public class PlayState implements GameState {
         backToMenu.transform.setScaleY(3);
         backToMenu.setOffSetClick(-200,-100,200,200);
         backToMenu.text="CONGRATULATIONS";
-        backToMenu.setFont(titleFont);
+        backToMenu.setFont(titleFontBold);
         backToMenu.setColor(0xFFFF00);
         objectsInGameOver.add(backToMenu);
         objectsInScene.add(backToMenu);

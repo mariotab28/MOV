@@ -10,7 +10,7 @@ import es.ucm.gdv.engine.Input;
 public class MenuState implements GameState {
 
     Engine engine=null;
-    Font titleFont, textFont;
+    Font titleFont, textFont, titleFontBold;
     FullScreenChanger fullScreenController;
     Vector<GameObject> objectsInScene;
     public MenuState(Engine engine)
@@ -28,6 +28,7 @@ public class MenuState implements GameState {
     {
         titleFont = engine.getGraphics().newFont("Bungee-Regular.ttf",10,true);
         textFont = engine.getGraphics().newFont("Bungee-Regular.ttf",10,false);
+        titleFontBold = engine.getGraphics().newFont("Bungee-Regular.ttf",10,true);
     }
     @Override
     public void start()
@@ -39,8 +40,8 @@ public class MenuState implements GameState {
         Title.transform.setScaleX(3);
         Title.transform.setScaleY(3);
         Title.text="OFF THE LINE";
-        Title.setColor(0x000FF);
-        Title.setFont(titleFont);
+        Title.setColor(0x3399FF);
+        Title.setFont(titleFontBold);
         objectsInScene.add(Title);
 
         MyText subTitle = new MyText(engine,5);
@@ -49,7 +50,7 @@ public class MenuState implements GameState {
         subTitle.transform.setScaleX(1.5f);
         subTitle.transform.setScaleY(1.5f);
         subTitle.text="A GAME COPIED TO BRYAN PERFETTO";
-        subTitle.setColor(0x000FF);
+        subTitle.setColor(0x3399FF);
         subTitle.setFont(textFont);
         objectsInScene.add(subTitle);
 
@@ -61,7 +62,7 @@ public class MenuState implements GameState {
         b1.setOffSetClick(0.0,-10,75,4);
         b1.text="EASY MODE";
         b1.setColor(0xFFFFFF);
-        b1.setFont(titleFont);
+        b1.setFont(titleFontBold);
         objectsInScene.add(b1);
 
         MyText subButton1 = new MyText(engine,5);
