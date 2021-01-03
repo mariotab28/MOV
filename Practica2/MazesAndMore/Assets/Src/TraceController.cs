@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MazesAndMore
 {
     public enum Direction { Center, North, South, East, West }
+    [Serializable]
     public struct TraceInfo
     {
         public Direction from;
@@ -19,27 +21,65 @@ namespace MazesAndMore
         public Trace south;
         public Trace east;
         public Trace west;
+       // public TraceInfo infoStart;
+      /*  private void Start()
+        {
+            makeTrace(infoStart, Color.red);
 
+            Invoke("help", infoStart.time+0.1f);
+        }
+        private void help()
+        {
+            TraceInfo nueva = infoStart;
+            nueva.from = infoStart.to;
+            nueva.to = infoStart.from;
+            makeTrace(nueva, Color.red);
+        }*/
         public void makeTrace(TraceInfo info,Color colorTrace)
         {
             bool fromCenter = false;
-            switch(info.from)
+            switch (info.from)
             {
                 case Direction.North:
                     counterNorth++;
-                    north.DrawTrace(info.time,fromCenter,counterNorth, colorTrace);
+                    if (info.to == Direction.Center)
+                        north.DrawTrace(info.time, fromCenter, counterNorth, colorTrace);
+                    else
+                    {
+                        north.DrawTrace(info.time/2, fromCenter, counterNorth, colorTrace);
+                        fromCenterSwitch(info, colorTrace);
+                    }
                     break;
+
                 case Direction.South:
                     counterSouth++;
-                    south.DrawTrace(info.time, fromCenter, counterSouth, colorTrace);
+                    if (info.to == Direction.Center)
+                        south.DrawTrace(info.time, fromCenter, counterSouth, colorTrace);
+                    else
+                    {
+                        south.DrawTrace(info.time/2, fromCenter, counterSouth, colorTrace);
+                        fromCenterSwitch(info, colorTrace);
+                    }
                     break;
                 case Direction.East:
                     counterEast++;
-                    east.DrawTrace(info.time, fromCenter, counterEast, colorTrace);
+                    if (info.to == Direction.Center)
+                        east.DrawTrace(info.time, fromCenter, counterEast, colorTrace);
+                    else
+                    {
+                        east.DrawTrace(info.time/2, fromCenter, counterEast, colorTrace);
+                        fromCenterSwitch(info, colorTrace);
+                    }
                     break;
                 case Direction.West:
                     counterWest++;
-                    west.DrawTrace(info.time, fromCenter, counterWest, colorTrace);
+                    if (info.to == Direction.Center)
+                        west.DrawTrace(info.time, fromCenter, counterWest, colorTrace);
+                    else
+                    {
+                        west.DrawTrace(info.time/2, fromCenter, counterWest, colorTrace);
+                        fromCenterSwitch(info, colorTrace);
+                    }
                     break;
                 case Direction.Center:
                     switch (info.to)
@@ -71,6 +111,28 @@ namespace MazesAndMore
             
         }
 
+        private void fromCenterSwitch(TraceInfo info, Color colorTrace)
+        {
+            switch (info.to)
+            {
+                case Direction.North:
+                    counterNorth--;
+                    north.DrawTraceLater(info.time/2.0f, true, counterNorth, colorTrace, info.time / 2.0f);
+                    break;
+                case Direction.South:
+                    counterSouth--;
+                    south.DrawTraceLater(info.time/2.0f, true, counterSouth, colorTrace, info.time / 2.0f);
+                    break;
+                case Direction.East:
+                    counterEast--;
+                    east.DrawTraceLater(info.time/2.0f, true, counterEast, colorTrace, info.time / 2.0f);
+                    break;
+                case Direction.West:
+                    counterWest--;
+                    west.DrawTraceLater(info.time/2.0f, true, counterWest, colorTrace, info.time / 2.0f);
+                    break;
+            }
+        }
 
     }
 }

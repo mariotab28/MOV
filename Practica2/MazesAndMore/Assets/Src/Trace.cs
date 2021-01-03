@@ -9,27 +9,30 @@ namespace MazesAndMore
     {
         private float timer=0;
         private float maxTime=0;
+        private float deltaTime = 0;
         private bool fromCenter;
         private bool wasCenter;
         private bool enable=false;
+        private bool helpenable = false;
         private Color color;
         private bool visible=false;
         private float maxSize = 0.75f;
+        private float minSize = 0.25f;
 
         public Transform tran;
         public SpriteRenderer spRender;
         public int Xdir;
         public int Ydir;
 
-        public bool start = false;
+
 
         // Update is called once per frame
-        public void Start()
+
+        private void Start()
         {
-            if(start)
-            {
-                DrawTrace(2.0f, false, 1, Color.red);
-            }
+            Vector2 size = spRender.size;
+
+
         }
         void Update()
         {
@@ -46,8 +49,8 @@ namespace MazesAndMore
                     DisableDraw();
                     
                 }
-
-                timer += Time.deltaTime;
+                deltaTime = Time.deltaTime;
+                timer += deltaTime;
 
             }
             else if (visible != enable && timer >= maxTime)
@@ -58,7 +61,8 @@ namespace MazesAndMore
                 else
                     DisableDraw();
                 visible = enable;
-                DrawTrace(2.0f, false, 0, Color.red);
+                spRender.enabled = visible;
+
             }
         }
 
@@ -74,11 +78,60 @@ namespace MazesAndMore
                 this.enable = true;
             }
             color = colorTrace;
+
+            Vector2 size = spRender.size;
+
+            if (enable!=0)
+            {
+                if ((Xdir > 0 && !fromCenter) || (Xdir < 0 && fromCenter))
+                    size.x = -minSize;
+                if ((Ydir > 0 && !fromCenter) || (Ydir < 0 && fromCenter))
+                    size.y = -minSize;
+                spRender.size = size;
+            }
+
+        }
+
+        public void DrawTraceLater(float time, bool fromCenter, int enable, Color colorTrace,float secondsUntil)
+        {
+            timer = time;
+            maxTime = time;
+            this.fromCenter = fromCenter;
+            if (enable == 0)
+                helpenable = false;
+            else
+            {
+                helpenable = true;
+            }
+            color = colorTrace;
+            Invoke("resetTimer", secondsUntil);
+        }
+
+        private void resetTimer()
+        {
+            if (!helpenable)
+                this.enable = false;
+            else
+            {
+                this.enable = true;
+            }
+            timer = 0;
+            Vector2 size = spRender.size;
+            if (helpenable)
+            {
+                if (Xdir > 0 && !fromCenter || Xdir < 0 && fromCenter)
+                    size.x = -minSize;
+                if (Ydir > 0 && !fromCenter || Ydir < 0 && fromCenter)
+                    size.y = -minSize;
+                spRender.size = size;
+            }
         }
 
         private void EnableDraw()
         {
-            if(fromCenter)
+            spRender.enabled = true;
+           
+            if (fromCenter)
             {
                 Vector2 v=new Vector2(Xdir, Ydir);
                 v.x = -v.x * 0.125f + Mathf.Abs(v.x * 0.125f);
@@ -87,10 +140,11 @@ namespace MazesAndMore
                 tran.localPosition = v;
 
                 Vector2 size = spRender.size;
-                size.x = Xdir * (maxSize * (timer / maxTime));
-                size.y = Ydir * (maxSize * (timer / maxTime));
-                if (size.x == 0) size.x = 0.25f;
-                if (size.y == 0) size.y = 0.25f;
+
+                size.x += Xdir * ((maxSize - minSize) * deltaTime / maxTime);
+                size.y += Ydir * ((maxSize - minSize) * deltaTime / maxTime);
+                //if (size.x == 0) size.x = 0.25f;
+                //if (size.y == 0) size.y = 0.25f;
                 spRender.size = size;
                
                 wasCenter = true;
@@ -104,10 +158,11 @@ namespace MazesAndMore
                 tran.localPosition = v;
 
                 Vector2 size = spRender.size;
-                size.x = -Xdir * (maxSize * (timer / maxTime));
-                size.y = -Ydir * (maxSize * (timer / maxTime));
-                if (size.x == 0) size.x = 0.25f;
-                if (size.y == 0) size.y = 0.25f;
+
+                size.x += -Xdir * ((maxSize - minSize) * deltaTime / maxTime);
+                size.y += -Ydir * ((maxSize - minSize) * deltaTime / maxTime);
+                //if (size.x == 0) size.x = 0.25f;
+                //if (size.y == 0) size.y = 0.25f;
                 spRender.size = size;
                 wasCenter = false;
             }
@@ -115,6 +170,7 @@ namespace MazesAndMore
 
         private void DisableDraw()
         {
+            
             if (fromCenter)
             {
                 int multiplier = -1;
@@ -134,10 +190,10 @@ namespace MazesAndMore
 
 
                 Vector2 size = spRender.size;
-                size.x += multiplier*Xdir * (-maxSize * /*(timer / maxTime)*/Time.deltaTime / maxTime);
-                size.y += multiplier * Ydir * (-maxSize * /*(timer / maxTime)*/Time.deltaTime / maxTime);
-                if (size.x == 0) size.x = 0.25f;
-                if (size.y == 0) size.y = 0.25f;
+                size.x += multiplier * Xdir * (-(maxSize - minSize) * /*(timer / maxTime)*/deltaTime / maxTime);
+                size.y += multiplier * Ydir * (-(maxSize - minSize) * /*(timer / maxTime)*/deltaTime / maxTime);
+                //if (size.x == 0) size.x = 0.25f;
+                //if (size.y == 0) size.y = 0.25f;
                 spRender.size = size;
             }
             else
@@ -157,10 +213,10 @@ namespace MazesAndMore
                     multiplier = -1;
                 }
                 Vector2 size = spRender.size;
-                size.x += multiplier * Xdir * (-maxSize * /*(timer / maxTime)*/Time.deltaTime/maxTime);
-                size.y += multiplier * Ydir * (-maxSize * /*(timer / maxTime)*/Time.deltaTime / maxTime);
-                if (size.x == 0) size.x = 0.25f;
-                if (size.y == 0) size.y = 0.25f;
+                size.x += multiplier * Xdir * (-(maxSize-minSize) * /*(timer / maxTime)*/deltaTime / maxTime);
+                size.y += multiplier * Ydir * (-(maxSize - minSize) * /*(timer / maxTime)*/deltaTime / maxTime);
+               // if (size.x == 0) size.x = 0.25f;
+                //if (size.y == 0) size.y = 0.25f;
                 spRender.size = size;
             }
         }
