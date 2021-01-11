@@ -12,9 +12,6 @@ namespace MazesAndMore
         private Tile[,] tiles; // tiles [fila, columna]
         //private Wall[] walls;
 
-        public float yOffset = 0;
-        public float xOffset = 0;
-
         private Map map;
         private LevelManager levelManager;
         
@@ -35,6 +32,19 @@ namespace MazesAndMore
             mapIce = map.GetIceTiles();
             List<Wall> mapWalls;
             mapWalls = map.GetWalls();
+
+            float xOffset = -(map.GetWidth() + 1) / 2.0f;
+            float yOffset = -(map.GetHeight() + 1) / 2.0f;
+
+            Vector3 scale = new Vector3(map.GetWidth(), map.GetHeight());
+           // Resolution mobileRes = Display.main.renderingHeight;
+          
+
+
+            scale.x = (7.0f/scale.x ) *transform.localScale.x * 1.5f;
+            scale.y= ( 9.0f/scale.y ) * transform.localScale.y * 1.5f;
+            this.transform.localScale=scale;
+
             // Instancia las tiles del nivel
             for (int r = 0; r < map.GetHeight()+1; r++)
             {
@@ -79,7 +89,7 @@ namespace MazesAndMore
         {
             GameObject tileGO = Instantiate(tilePF, transform);
             tileGO.name = "Tile_" + x + "_" + y;
-            tileGO.transform.position = new Vector3(x, y, 0);
+            tileGO.transform.localPosition = new Vector3(x, y, 0);
             Tile tile = tileGO.GetComponent<Tile>();
             return tile;
         }

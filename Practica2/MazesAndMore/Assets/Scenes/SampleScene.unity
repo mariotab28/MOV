@@ -178,6 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1603804357}
   - component: {fileID: 1603804356}
+  - component: {fileID: 1603804358}
   m_Layer: 0
   m_Name: bg
   m_TagString: Untagged
@@ -250,6 +251,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1603804358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603804355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0910666e984381447b983282e638b2d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1698391470
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,6 +273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1698391472}
   - component: {fileID: 1698391471}
+  - component: {fileID: 1698391473}
   m_Layer: 0
   m_Name: BoardManager
   m_TagString: Untagged
@@ -280,8 +294,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePF: {fileID: 578609435214942665, guid: 8643732a5e7d15b4d8f813a3a8017f9e, type: 3}
-  yOffset: -3
-  xOffset: -4
 --- !u!4 &1698391472
 Transform:
   m_ObjectHideFlags: 0
@@ -296,6 +308,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1698391473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698391470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0910666e984381447b983282e638b2d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2034493150
 GameObject:
   m_ObjectHideFlags: 0
