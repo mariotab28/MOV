@@ -10,7 +10,7 @@ namespace MazesAndMore
         [Tooltip("Sprite para celda de hielo.")]
         public SpriteRenderer iceFloor;
         public SpriteRenderer goal;
-        public SpriteRenderer nothWall;
+        public SpriteRenderer northWall;
         public SpriteRenderer eastWall;
         public TraceController traces;
 
@@ -37,12 +37,12 @@ namespace MazesAndMore
         }
         public void EnableTopWall()
         {
-            nothWall.enabled = true;
+            northWall.enabled = true;
         }
 
         public void DisableTopWall()
         {
-            nothWall.enabled = false;
+            northWall.enabled = false;
         }
         public void EnableRightWall()
         {
