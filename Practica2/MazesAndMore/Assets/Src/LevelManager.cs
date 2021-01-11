@@ -2,17 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelManager : MonoBehaviour
+namespace MazesAndMore
 {
-    // Start is called before the first frame update
-    void Start()
+    public class LevelManager : MonoBehaviour
     {
-        
-    }
+        public TextAsset level; // temporal
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public BoardManager boardManager;
+
+        void Start()
+        {
+            if (boardManager != null)
+                boardManager.Init(this);
+        }
+
+        public void LoadLevel(TextAsset levelFile)
+        {
+            Map map = Map.GetMapFromJson(levelFile);
+            boardManager.SetMap(map);
+        }
     }
 }

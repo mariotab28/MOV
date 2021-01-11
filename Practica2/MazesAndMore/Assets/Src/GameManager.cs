@@ -7,14 +7,16 @@ namespace MazesAndMore
     public class GameManager : MonoBehaviour
     {
         public LevelManager levelManager;
+        public LevelPackage[] levelPackages;
 #if UNITY_EDITOR
-        public int levelToPlay;
+        public int debugLevel;
 #endif
 
         static GameManager instance;
 
         void Start()
         {
+            StartNewScene(); //temp
             if (instance != null)
             {
                 instance.levelManager = levelManager;
@@ -26,6 +28,16 @@ namespace MazesAndMore
         void Update()
         {
 
+        }
+
+        private void StartNewScene()
+        {
+            if (levelManager)
+            {
+#if UNITY_EDITOR
+                levelManager.LoadLevel(levelPackages[0].levels[debugLevel]); // Carga debugLevel;
+#endif
+            }
         }
     }
 }
