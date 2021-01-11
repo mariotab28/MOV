@@ -280,8 +280,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePF: {fileID: 578609435214942665, guid: 8643732a5e7d15b4d8f813a3a8017f9e, type: 3}
-  yOffset: 0
-  xOffset: 0
+  yOffset: -3
+  xOffset: -4
 --- !u!4 &1698391472
 Transform:
   m_ObjectHideFlags: 0
@@ -349,7 +349,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 9.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -445,7 +445,7 @@ PrefabInstance:
     - target: {fileID: 2969538860218178668, guid: d4e7f16e1ba184f40b89f22064bcea49, type: 3}
       propertyPath: levelPackages.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: f2f669bc64329be4b8af44cd626b7885, type: 2}
+      objectReference: {fileID: 11400000, guid: d3be408f0a5da7b4f968e47990c3ecc3, type: 2}
     - target: {fileID: 2969538860218178668, guid: d4e7f16e1ba184f40b89f22064bcea49, type: 3}
       propertyPath: levelPackages.Array.data[1]
       value: 
