@@ -9,6 +9,7 @@ namespace MazesAndMore
     public class BoardManager : MonoBehaviour
     {
         public GameObject tilePF;
+        public PlayerMovement player;
         private Tile[,] tiles; // tiles [fila, columna]
         //private Wall[] walls;
 
@@ -27,6 +28,7 @@ namespace MazesAndMore
 
         public void SetMap(Map map)
         {
+            this.map = map;
             tiles = new Tile[map.GetHeight()+1, map.GetWidth()+1];
             List<Point> mapIce;
             mapIce = map.GetIceTiles();
@@ -80,7 +82,8 @@ namespace MazesAndMore
                     
                 }
             }
-
+            Point playerStart=map.GetStart();
+            player.init(this,playerStart.x+xOffset+1,playerStart.y + yOffset+1);
             // Instancia los muros del nivel
             
         }
@@ -92,6 +95,21 @@ namespace MazesAndMore
             tileGO.transform.localPosition = new Vector3(x, y, 0);
             Tile tile = tileGO.GetComponent<Tile>();
             return tile;
+        }
+
+        public Tile GetTile(float x, float y)
+        {
+            float xOffset = -(map.GetWidth() + 1) / 2.0f;
+            float yOffset = -(map.GetHeight() + 1) / 2.0f;
+
+            int sx = (int)(x - xOffset+0.5);
+            int sy =(int) (y - yOffset+0.5);
+            Debug.Log(sx+" "+ sy+" "+tiles.Length);
+            return tiles[sy, sx];
+        }
+        public Tile GetTile(int x, int y)
+        {
+            return tiles[x, y];
         }
     }
 }

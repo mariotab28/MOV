@@ -61,5 +61,27 @@ namespace MazesAndMore
         {
             traces.makeTrace(info, color);   
         }
+
+        public bool isWallRight()
+        {
+            return eastWall.enabled;
+        }
+        public bool isWallTop()
+        {
+            return northWall.enabled;
+        }
+
+        public bool isIce()
+        {
+            return iceFloor.enabled;
+        }
+        public bool isGoal()
+        {
+            return goal.enabled;
+        }
+        public Vector3 getPosition()
+        {
+            return transform.localPosition;
+        }
     }
 }

@@ -80,8 +80,8 @@ namespace MazesAndMore
             color = colorTrace;
 
             Vector2 size = spRender.size;
-
-            if (enable!=0)
+            
+            if (enable==1||enable==-1)
             {
                 if ((Xdir > 0 && !fromCenter) || (Xdir < 0 && fromCenter))
                     size.x = -minSize;
@@ -104,8 +104,10 @@ namespace MazesAndMore
                 helpenable = true;
             }
             color = colorTrace;
+            if(enable==1||enable==-1)
             Invoke("resetTimer", secondsUntil);
         }
+
 
         private void resetTimer()
         {
@@ -151,6 +153,7 @@ namespace MazesAndMore
             }
             else
             {
+                
                 Vector2 v = new Vector2(Xdir, Ydir);
                 v.x = v.x * 0.625f + Mathf.Abs(v.x * 0.125f);
                 v.y = v.y * 0.625f + Mathf.Abs(v.y * 0.125f);
