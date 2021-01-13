@@ -13,11 +13,16 @@ namespace MazesAndMore
         private bool fromCenter;
         private bool wasCenter;
         private bool enable=false;
-        private bool helpenable = false;
+        private bool start = false;
         private Color color;
         private bool visible=false;
         private float maxSize = 0.75f;
         private float minSize = 0.25f;
+
+        private Vector2 initialSize;
+        private float startTime;
+        private float actualTime;
+        private float speed;
 
         public Transform tran;
         public SpriteRenderer spRender;
@@ -36,8 +41,9 @@ namespace MazesAndMore
         }
         void Update()
         {
-            if (visible != enable && timer < maxTime)
+            if (start&&actualTime <= startTime+maxTime)
             {
+                actualTime = Time.time;
                 if (enable)
                 {
                     spRender.color = color;
@@ -49,20 +55,19 @@ namespace MazesAndMore
                     DisableDraw();
                     
                 }
-                deltaTime = Time.deltaTime;
-                timer += deltaTime;
+
 
             }
-            else if (visible != enable && timer >= maxTime)
+            else if (start && actualTime >= startTime + maxTime)
             {
-                timer = maxTime;
+
                 if (enable)
                     EnableDraw();
                 else
                     DisableDraw();
                 visible = enable;
                 spRender.enabled = visible;
-
+                start = false;
             }
         }
 
@@ -72,7 +77,10 @@ namespace MazesAndMore
             maxTime = time;
             this.fromCenter = fromCenter;
             if (enable == 0)
+            {
+                startTime = Time.time;
                 this.enable = false;
+            }
             else
             {
                 this.enable = true;
@@ -80,13 +88,17 @@ namespace MazesAndMore
             color = colorTrace;
 
             Vector2 size = spRender.size;
-            
+
+            speed = 1 / time;
+            start = true;
             if (enable==1||enable==-1)
             {
+                startTime = Time.time;
                 if ((Xdir > 0 && !fromCenter) || (Xdir < 0 && fromCenter))
                     size.x = -minSize;
                 if ((Ydir > 0 && !fromCenter) || (Ydir < 0 && fromCenter))
                     size.y = -minSize;
+                initialSize = size;
                 spRender.size = size;
             }
 
@@ -94,43 +106,43 @@ namespace MazesAndMore
 
         public void DrawTraceLater(float time, bool fromCenter, int enable, Color colorTrace,float secondsUntil)
         {
-            timer = time;
+            timer = 0;
             maxTime = time;
             this.fromCenter = fromCenter;
             if (enable == 0)
-                helpenable = false;
-            else
             {
-                helpenable = true;
-            }
-            color = colorTrace;
-            if(enable==1||enable==-1)
-            Invoke("resetTimer", secondsUntil);
-        }
-
-
-        private void resetTimer()
-        {
-            if (!helpenable)
+                startTime = Time.time+secondsUntil-time/2;
                 this.enable = false;
+            }
             else
             {
                 this.enable = true;
             }
-            timer = 0;
+            color = colorTrace;
+            start = true;
             Vector2 size = spRender.size;
-            if (helpenable)
+            initialSize = size;
+            speed = 1 / time;
+
+            
+            if (enable == 1 || enable == -1)
             {
-                if (Xdir > 0 && !fromCenter || Xdir < 0 && fromCenter)
+                startTime = Time.time + secondsUntil;
+                if ((Xdir > 0 && !fromCenter) || (Xdir < 0 && fromCenter))
                     size.x = -minSize;
-                if (Ydir > 0 && !fromCenter || Ydir < 0 && fromCenter)
+                if ((Ydir > 0 && !fromCenter) || (Ydir < 0 && fromCenter))
                     size.y = -minSize;
+                initialSize = size;
                 spRender.size = size;
             }
         }
 
+
+      
+
         private void EnableDraw()
-        {
+        {   
+            if(actualTime>startTime)
             spRender.enabled = true;
            
             if (fromCenter)
@@ -141,12 +153,19 @@ namespace MazesAndMore
 
                 tran.localPosition = v;
 
-                Vector2 size = spRender.size;
+               
+                Vector2 size = initialSize;
+                Vector2 objSize = new Vector2(size.x + Xdir * (maxSize - minSize), size.y + Ydir * (maxSize - minSize));
 
-                size.x += Xdir * ((maxSize - minSize) * deltaTime / maxTime);
-                size.y += Ydir * ((maxSize - minSize) * deltaTime / maxTime);
-                //if (size.x == 0) size.x = 0.25f;
-                //if (size.y == 0) size.y = 0.25f;
+
+                float distCovered = (actualTime - startTime) * speed;
+
+                // Fraction of journey completed equals current distance divided by total distance.
+                float fractionOfJourney = distCovered / 0.5f;
+
+
+                size = Vector2.Lerp(size, objSize, fractionOfJourney);
+
                 spRender.size = size;
                
                 wasCenter = true;
@@ -160,12 +179,21 @@ namespace MazesAndMore
 
                 tran.localPosition = v;
 
-                Vector2 size = spRender.size;
+                
 
-                size.x += -Xdir * ((maxSize - minSize) * deltaTime / maxTime);
-                size.y += -Ydir * ((maxSize - minSize) * deltaTime / maxTime);
-                //if (size.x == 0) size.x = 0.25f;
-                //if (size.y == 0) size.y = 0.25f;
+                Vector2 size = initialSize;
+                Vector2 objSize = new Vector2(size.x - Xdir * (maxSize - minSize), size.y - Ydir * (maxSize - minSize));
+
+
+                float distCovered = (actualTime - startTime) * speed;
+
+                // Fraction of journey completed equals current distance divided by total distance.
+                float fractionOfJourney = distCovered / 0.5f;
+
+
+                size = Vector2.Lerp(size, objSize, fractionOfJourney);
+
+      
                 spRender.size = size;
                 wasCenter = false;
             }
@@ -173,7 +201,10 @@ namespace MazesAndMore
 
         private void DisableDraw()
         {
-            
+            if(actualTime >= startTime + maxTime)
+            {
+                spRender.enabled = false;
+            }
             if (fromCenter)
             {
                 int multiplier = -1;
@@ -192,11 +223,20 @@ namespace MazesAndMore
                 }
 
 
-                Vector2 size = spRender.size;
-                size.x += multiplier * Xdir * (-(maxSize - minSize) * /*(timer / maxTime)*/deltaTime / maxTime);
-                size.y += multiplier * Ydir * (-(maxSize - minSize) * /*(timer / maxTime)*/deltaTime / maxTime);
-                //if (size.x == 0) size.x = 0.25f;
-                //if (size.y == 0) size.y = 0.25f;
+                Vector2 size = initialSize;
+                Vector2 objSize = new Vector2(size.x - Xdir * multiplier * (maxSize - minSize), size.y - Ydir *multiplier* (maxSize - minSize));
+
+
+                float distCovered = (actualTime - startTime) * speed;
+
+                // Fraction of journey completed equals current distance divided by total distance.
+                float fractionOfJourney = distCovered / 0.5f;
+
+
+                size = Vector2.Lerp(size, objSize, fractionOfJourney);
+
+               
+
                 spRender.size = size;
             }
             else
@@ -215,11 +255,19 @@ namespace MazesAndMore
                         spRender.flipY = true;
                     multiplier = -1;
                 }
-                Vector2 size = spRender.size;
-                size.x += multiplier * Xdir * (-(maxSize-minSize) * /*(timer / maxTime)*/deltaTime / maxTime);
-                size.y += multiplier * Ydir * (-(maxSize - minSize) * /*(timer / maxTime)*/deltaTime / maxTime);
-               // if (size.x == 0) size.x = 0.25f;
-                //if (size.y == 0) size.y = 0.25f;
+
+                Vector2 size = initialSize;
+                Vector2 objSize = new Vector2(size.x - Xdir * multiplier * (maxSize - minSize), size.y - Ydir * multiplier * (maxSize - minSize));
+
+
+                float distCovered = (actualTime - startTime) * speed;
+
+                // Fraction of journey completed equals current distance divided by total distance.
+                float fractionOfJourney = distCovered / 0.5f;
+
+
+                size = Vector2.Lerp(size, objSize, fractionOfJourney);
+
                 spRender.size = size;
             }
         }

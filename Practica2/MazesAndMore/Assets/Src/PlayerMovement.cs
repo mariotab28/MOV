@@ -121,7 +121,7 @@ namespace MazesAndMore
         // Desplaza al jugador hasta la siguiente intersección a la DERECHA si es posible
         public void MoveRight()
         {
-            //Debug.Log(board.GetTile(transform.localPosition.x, transform.localPosition.y).isWallRight());
+            
             if (!board.GetTile(transform.localPosition.x, transform.localPosition.y).isWallRight() && !moving)
             {
 
@@ -201,6 +201,7 @@ namespace MazesAndMore
             bool found = false;
 
             int dist = 1;
+            SingularPathCall(dirX, dirY,transform.localPosition.x,transform.localPosition.y,0);
            
             while (!found)
             {
@@ -254,15 +255,18 @@ namespace MazesAndMore
 
                 if (!found)
                 {
+                    DoublePathCall(dirX, dirY, initial.x, initial.y, dist / 4.0f);
                     initial.x = initial.x + dirX;
                     initial.y = initial.y + dirY;
                     dist++;
                    
+
+
                 }
 
             }
-           
-            
+            SingularPathCall(dirX, dirY, initial.x, initial.y, dist/4.0f,true);
+
 
             path.end = initial;
             path.lenght = dist;
@@ -271,82 +275,57 @@ namespace MazesAndMore
             return path;
         }
 
-        //private void firstPathCall(int dirX,int dirY)
-        //{
-        //    TraceInfo info = new TraceInfo();
-        //    info.from = Direction.Center;
-        //    if (dirX > 0)
-        //        info.to = Direction.East;
-        //    else if (dirX < 0)
-        //        info.to = Direction.West;
-        //    else if (dirY > 0)
-        //        info.to = Direction.North;
-        //    else if (dirY < 0)
-        //        info.to = Direction.South;
-        //    info.time = 0.1f;
+        private void SingularPathCall(int dirX, int dirY,float posX,float posY,float secondsUntil,bool end=false)
+        {
+            TraceInfo info = new TraceInfo();
+            if (!end)
+            {
+                info.from = Direction.Center;
+                if (dirX > 0)
+                    info.to = Direction.East;
+                else if (dirX < 0)
+                    info.to = Direction.West;
+                else if (dirY > 0)
+                    info.to = Direction.North;
+                else if (dirY < 0)
+                    info.to = Direction.South;
+            }
+            else
+            {
+                info.to = Direction.Center;
+                if (dirX < 0)
+                    info.from = Direction.East;
+                else if (dirX > 0)
+                    info.from = Direction.West;
+                else if (dirY < 0)
+                    info.from = Direction.North;
+                else if (dirY > 0)
+                    info.from = Direction.South;
+            }
+            info.time = 0.125f;
 
-        //    board.GetTile(transform.localPosition.x, transform.localPosition.y).trace(info);
             
-        //}
-        //private void PathCall()
-        //{
-        //    TraceInfo info = new TraceInfo();
-        //    if (endPoint.dirX > 0)
-        //    {
-        //        info.from = Direction.West;
-        //        info.to = Direction.East;
-        //        info.time = 0.25f;
-        //        if (Mathf.Abs(endPoint.end.x - transform.localPosition.x) < 0.4)
-        //        {
-        //            info.to = Direction.Center;
-        //            info.time = 0.125f;
-        //        }
-                
+            board.GetTile(posX, posY).trace(info,secondsUntil);
 
-        //    }
-        //    else if (endPoint.dirX < 0)
-        //    {
-        //        info.from = Direction.East;
-        //        info.to = Direction.West;
-        //        info.time = 0.25f;
-        //        if (Mathf.Abs(endPoint.end.x - transform.localPosition.x) < 0.4)
-        //        {
-        //            info.to = Direction.Center;
-        //            info.time = 0.125f;
-        //        }
-               
+        }
+        private void DoublePathCall(int dirX, int dirY, float posX, float posY, float secondsUntil)
+        {
+            TraceInfo info = new TraceInfo();
+            
+            if (dirX > 0)
+            { info.to = Direction.East; info.from = Direction.West; }
+            else if (dirX < 0)
+            { info.to = Direction.West; info.from = Direction.East; }
+            else if (dirY > 0)
+            { info.to = Direction.North; info.from = Direction.South; }
+            else if (dirY < 0)
+            {  info.to = Direction.South; info.from = Direction.North; }
+            info.time = 0.15f;
 
-        //    }
-        //    else if (endPoint.dirY > 0)
-        //    {
-        //        info.from = Direction.South;
-        //        info.to = Direction.North;
-        //        info.time = 0.25f;
-        //        if (Mathf.Abs(endPoint.end.y - transform.localPosition.y) < 0.4)
-        //        {
-        //            info.to = Direction.Center;
-        //            info.time = 0.125f;
-        //        }
-               
 
-        //    }
-        //    else if (endPoint.dirY < 0)
-        //    {
-        //        info.from = Direction.North;
-        //        info.to = Direction.South;
-        //        info.time = 0.25f;
-        //        if (Mathf.Abs(endPoint.end.y - transform.localPosition.y) < 0.4)
-        //        {
-        //            info.to = Direction.Center;
-        //            info.time = 0.125f;
-        //        }
-                
+            board.GetTile(posX, posY).trace(info, secondsUntil);
 
-        //    }
-         
-        //    if(endPoint.dirX!=0 ||endPoint.dirY!=0)
-        //    board.GetTile(transform.localPosition.x, transform.localPosition.y).trace(info);
-        //}
+        }
         
     }
 }

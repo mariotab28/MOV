@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ScreenScaler : MonoBehaviour
 {
+    public bool bg;
     // Start is called before the first frame update
     void Start()
     {
@@ -11,31 +12,26 @@ public class ScreenScaler : MonoBehaviour
         WorkingRes.height = 1920;
         WorkingRes.width = 1080;
 
-        float Multiplier = ((float)WorkingRes.width / (float)WorkingRes.height)/((float)Display.main.renderingWidth / (float)Display.main.renderingHeight);
+        
+        float Multiplier = ((float)WorkingRes.width / (float)WorkingRes.height) / ((float)Display.main.renderingWidth / (float)Display.main.renderingHeight);
 
         float Multiplier2 = ((float)WorkingRes.height / (float)WorkingRes.width)/((float)Display.main.renderingHeight / (float)Display.main.renderingWidth);
-
-        if ((float)Display.main.renderingWidth / (float)Display.main.renderingHeight >= ((float)WorkingRes.width / (float)WorkingRes.height))
+        float mult = 0;
+        if (!bg)
         {
-            float help = Multiplier2;
-            Multiplier2 = Multiplier;
-            Multiplier = help;
-            if (Multiplier > Multiplier2)
-                Multiplier2 = 1;
-            else if (Multiplier2 > Multiplier)
-                Multiplier = 1;
+            Multiplier = 1;
+
+            mult = Mathf.Min(Multiplier, Multiplier2);
         }
         else
         {
-            float help = Multiplier2;
-            Multiplier2 = Multiplier;
-            Multiplier = help;
-            if (Multiplier < Multiplier2)
-                Multiplier2 = 1;
-            else if (Multiplier2 < Multiplier)
-                Multiplier = 1;
+            mult = Mathf.Max(Multiplier, Multiplier2);
         }
-        transform.localScale =new Vector3(transform.localScale.x * Multiplier, transform.localScale.y * Multiplier2);
+       
+        transform.localScale =new Vector3(transform.localScale.x * mult, transform.localScale.y * mult);
+
+        
+
     }
 
     // Update is called once per frame

@@ -104,7 +104,7 @@ namespace MazesAndMore
 
             int sx = (int)(x - xOffset+0.5);
             int sy =(int) (y - yOffset+0.5);
-            Debug.Log(sx+" "+ sy+" "+tiles.Length);
+
             return tiles[sy, sx];
         }
         public Tile GetTile(int x, int y)

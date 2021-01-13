@@ -57,9 +57,9 @@ namespace MazesAndMore
         {
             color = c;
         }
-        public void trace(TraceInfo info)
+        public void trace(TraceInfo info,float secondsUntil)
         {
-            traces.makeTrace(info, color);   
+            traces.makeTrace(info, color, secondsUntil);   
         }
 
         public bool isWallRight()
