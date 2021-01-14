@@ -35,9 +35,15 @@ namespace MazesAndMore
             if (levelManager)
             {
 #if UNITY_EDITOR
+                levelManager.Init(this);
+                levelManager.SetLevelColor(levelPackages[0].color);
+                levelManager.setLevelName(levelPackages[0].name, debugLevel);
                 levelManager.LoadLevel(levelPackages[0].levels[debugLevel]); // Carga debugLevel;
+                
 #endif
             }
         }
+
+
     }
 }
