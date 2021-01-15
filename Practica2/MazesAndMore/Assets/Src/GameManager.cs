@@ -12,7 +12,7 @@ namespace MazesAndMore
         public int debugLevel;
 #endif
 
-        static GameManager instance;
+        public static GameManager instance;
 
         void Start()
         {
@@ -23,11 +23,21 @@ namespace MazesAndMore
                 DestroyImmediate(gameObject);
                 return;
             }
+            else
+            {
+                instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
         }
 
         void Update()
         {
 
+        }
+
+        public LevelPackage[] GetLevelPackages()
+        {
+            return levelPackages;
         }
 
         private void StartNewScene()
