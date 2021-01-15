@@ -8,6 +8,7 @@ namespace MazesAndMore
     public class LevelButtonConfiguration : MonoBehaviour
     {
         int levelIndex;
+        int groupIndex;
 
         // Componentes del botón
         public Image imageComponent;
@@ -26,9 +27,10 @@ namespace MazesAndMore
 
         }
 
-        public void Configure(int number, bool locked, bool finished, Color groupColor)
+        public void Configure(int number, bool locked, bool finished, Color groupColor, int group)
         {
-            levelIndex = number + 1;
+            levelIndex = number;
+            groupIndex = group;
             if (locked)
             {
                 lockImage.gameObject.SetActive(true);
@@ -53,7 +55,7 @@ namespace MazesAndMore
 
         public void Clicked()
         {
-            print("LOAD LEVEL " + levelIndex);
+            GameManager.instance.LoadLevel(groupIndex, levelIndex);
         }
     }
 }

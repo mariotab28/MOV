@@ -116,4 +116,4 @@ MonoBehaviour:
   color: {r: 0.28627452, g: 0.69411767, b: 0.3019608, a: 1}
   buttonImage: {fileID: 5807286064229907439, guid: 7db7a6232d4925941a3e7ddf3389cbf6, type: 3}
   buttonPressedImage: {fileID: 2807315191410355828, guid: 7db7a6232d4925941a3e7ddf3389cbf6, type: 3}
-  buttonText: CLASICO
+  groupName: CLASICO

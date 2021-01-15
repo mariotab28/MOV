@@ -13,6 +13,7 @@ namespace MazesAndMore
         public GameObject levelSelectUI;
         public GameObject groupContainer;
         public GameObject levelContainer;
+        public Text levelsTitleText;
         public ButtonConfiguration groupButtonPrefab;
         public LevelButtonConfiguration levelButtonPrefab;
 
@@ -45,7 +46,7 @@ namespace MazesAndMore
         ButtonConfiguration AddGroupButton(LevelPackage group, int index)
         {
             ButtonConfiguration button = Instantiate(groupButtonPrefab, groupContainer.transform);
-            button.Configure(group.buttonImage, group.buttonPressedImage, group.buttonText, this, index);
+            button.Configure(group.buttonImage, group.buttonPressedImage, group.groupName, this, index);
             
             return button;
         }
@@ -59,16 +60,17 @@ namespace MazesAndMore
 
             for (int i = 0; i < size; i++)
             {
-                levelButtons[i] = AddLevelButton(i + 1, group.color);
+                levelButtons[i] = AddLevelButton(i + 1, group.color, index);
             }
 
+            levelsTitleText.text = group.groupName;
             levelSelectUI.SetActive(true);
         }
 
-        LevelButtonConfiguration AddLevelButton(int number, Color groupColor)
+        LevelButtonConfiguration AddLevelButton(int number, Color groupColor, int groupIndex)
         {
             LevelButtonConfiguration button = Instantiate(levelButtonPrefab, levelContainer.transform);
-            button.Configure(number, false, false, groupColor);
+            button.Configure(number, false, true, groupColor, groupIndex); //TODO: en función del progreso
 
             return button;
         }

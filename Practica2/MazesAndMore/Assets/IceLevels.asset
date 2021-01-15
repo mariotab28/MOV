@@ -61,4 +61,4 @@ MonoBehaviour:
   color: {r: 0, g: 0.6627451, b: 0.95294124, a: 1}
   buttonImage: {fileID: 1775592702960557364, guid: 7db7a6232d4925941a3e7ddf3389cbf6, type: 3}
   buttonPressedImage: {fileID: 8300999423182613312, guid: 7db7a6232d4925941a3e7ddf3389cbf6, type: 3}
-  buttonText: PISO DE HIELO
+  groupName: PISO DE HIELO

@@ -10,5 +10,5 @@ public class LevelPackage : ScriptableObject
     public Color color; // Color de las tiles del nivel
     public Sprite buttonImage; // Imagen en el selector de grupos de nivel
     public Sprite buttonPressedImage; // Imagen al presionar el botón
-    public string buttonText; // Texto en el selector de grupos de nivel
+    public string groupName; // Nombre de la categoría
 }
