@@ -55,7 +55,7 @@ namespace MazesAndMore
 
         public void Clicked()
         {
-            GameManager.instance.LoadLevel(groupIndex, levelIndex);
+            GameManager.instance.LoadLevel(groupIndex, levelIndex-1);
         }
     }
 }

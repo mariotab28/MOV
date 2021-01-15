@@ -15,6 +15,9 @@ namespace MazesAndMore
         int groupToLoadIndex;
         int levelToLoadIndex;
 
+        public int amountOfHints;
+       // int playerLevel;
+
         public static GameManager instance;
 
         void Start()
@@ -49,9 +52,7 @@ namespace MazesAndMore
             if (levelManager)
             {
 #if UNITY_EDITOR
-                levelManager.Init(this);
-                levelManager.SetLevelColor(levelPackages[0].color);
-                levelManager.setLevelName(levelPackages[0].name, debugLevel);
+                
                 levelManager.LoadLevel(levelPackages[0].levels[debugLevel]); // Carga debugLevel;
                 
 #endif
@@ -65,13 +66,27 @@ namespace MazesAndMore
             levelToLoadIndex = levelIndex;
         }
 
+        public void LoadMainMenu()
+        {
+            SceneManager.LoadScene(0);
+        }
+
         private void LoadLevel()
         {
             //Debug.Log("GROUP: " + groupToLoadIndex + " - LEVEL: " + levelToLoadIndex);
             if (levelManager)
+            {
+                levelManager.Init(this, groupToLoadIndex,amountOfHints/*, playerLevel*/);
+                levelManager.SetLevelColor(levelPackages[groupToLoadIndex].color);
+                levelManager.setLevelName(levelPackages[groupToLoadIndex].groupName, levelToLoadIndex);
                 levelManager.LoadLevel(levelPackages[groupToLoadIndex].levels[levelToLoadIndex]);
+            }
             else
                 Debug.LogError("Error: Level Manager not found!");
+        }
+        public void setAmmountOfHints(int hints)
+        {
+            amountOfHints = hints;
         }
     }
 }

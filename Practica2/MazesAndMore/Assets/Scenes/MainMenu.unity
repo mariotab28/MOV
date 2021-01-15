@@ -1316,6 +1316,10 @@ PrefabInstance:
       propertyPath: levelPackages.Array.data[29]
       value: 
       objectReference: {fileID: 11400000, guid: d3be408f0a5da7b4f968e47990c3ecc3, type: 2}
+    - target: {fileID: 2969538860218178668, guid: d4e7f16e1ba184f40b89f22064bcea49, type: 3}
+      propertyPath: amountOfHints
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 5127094892343565715, guid: d4e7f16e1ba184f40b89f22064bcea49, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -2967,7 +2971,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -925, y: -111}
+  m_AnchoredPosition: {x: 117, y: -111}
   m_SizeDelta: {x: 137, y: 124}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &902239751
@@ -4077,7 +4081,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -925, y: -111}
+  m_AnchoredPosition: {x: 110, y: -111}
   m_SizeDelta: {x: 137, y: 124}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1450598502

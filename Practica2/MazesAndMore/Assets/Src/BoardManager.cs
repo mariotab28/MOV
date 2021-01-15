@@ -150,7 +150,7 @@ namespace MazesAndMore
                 ifo.from = Direction.North;
             GetTile(end.x + xOffset + 1, end.y + yOffset + 1).hintTrace(ifo);
         }
-        public void HintUsed()
+        public bool HintUsed()
         {
             bool reached = false;
             List<Point> hints = map.GetHints();
@@ -196,6 +196,10 @@ namespace MazesAndMore
                 }
             }
             int maxIter = iter + count;
+            if(iter== hints.Count - 1&& !reached)
+            {
+                return false;
+            }
             while(iter < hints.Count - 1 && iter<maxIter )
             {
                 makeHintTrace(hints[iter], hints[iter + 1]);
@@ -216,6 +220,7 @@ namespace MazesAndMore
                 if (!GetTile(hints[hints.Count - 1].x + xOffset + 1, hints[hints.Count - 1].y + yOffset + 1).isHintTraceDone(ifo))
                     makeHintTrace(hints[hints.Count - 1], map.GetGoal());
             }
+            return true;
         }
 
         public void ResetTiles()

@@ -15,14 +15,23 @@ namespace MazesAndMore
         private GameManager gameManager;
         private bool onPause=false;
         public Text text;
+        public Text hints;
+        public GameObject VictoryPanel;
+        private int levelNumber;
+        private int group;
+        private int amountOfHints;
 
-        public void Init(GameManager gameManager)
+        public void Init(GameManager gameManager,int group,int amountOfHints/*,int playerLevel*/)
         {
+            this.gameManager = gameManager;
             levelColor = Color.white;
             if (boardManager != null)
                 boardManager.Init(this);
             if (player != null)
                 player.setLevelManager(this);
+            this.group = group;
+            this.amountOfHints = amountOfHints;
+            hints.text = amountOfHints.ToString();
         }
 
         public void ResetLevel()
@@ -35,12 +44,19 @@ namespace MazesAndMore
 
         public void UseHint()
         {
-            boardManager.HintUsed();
+           
+            if (boardManager.HintUsed())
+            {
+                amountOfHints -= 1;
+                hints.text = amountOfHints.ToString();
+                gameManager.setAmmountOfHints(amountOfHints);
+            }
         }
 
         public void setLevelName(string name,int lvl)
         {
-            text.text = name + " - " + lvl.ToString();
+            levelNumber = lvl;
+            text.text = name + " - " + (lvl+1).ToString();
         }
         public void LoadLevel(TextAsset levelFile)
         {
@@ -74,9 +90,18 @@ namespace MazesAndMore
         }
         public void LevelComplete()
         {
-            Debug.Log("WIN");
-            //boardManager.ResetTiles();
+            if (VictoryPanel)
+                VictoryPanel.SetActive(true);
 
+        }
+
+        public void NextLevel()
+        {
+            gameManager.LoadLevel(group, levelNumber+1);
+        }
+        public void BackToMenu()
+        {
+            gameManager.LoadMainMenu();
         }
     }
 }
