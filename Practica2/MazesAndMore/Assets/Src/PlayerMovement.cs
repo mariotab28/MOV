@@ -26,8 +26,16 @@ namespace MazesAndMore
 
         }
 
+        public SpriteRenderer playerSprite;
+        public SpriteRenderer NArrowSprite;
+        public SpriteRenderer DArrowSprite;
+        public SpriteRenderer RArrowSprite;
+        public SpriteRenderer LArrowSprite;
+
+        private LevelManager levelManager;
         private BoardManager board;
         private bool moving = false;
+        private bool showArrow = true;
         private int dirX = 0, dirY = 0;
 
         // Transforms to act as start and end markers for the journey.
@@ -39,7 +47,9 @@ namespace MazesAndMore
 
         // Time when the movement started.
         private float startTime;
-
+        private bool goal;
+        private bool onPause;
+        private float actualTime;
         // Total distance between the markers.
         private float journeyLength;
 
@@ -47,120 +57,197 @@ namespace MazesAndMore
         {
             board = _board;
             transform.localPosition = new Vector3(x, y);
+            showArrow = true;
+            moving = false;
+            Color c= levelManager.GetLevelColor();
+            playerSprite.color = c;
+            NArrowSprite.color = c;
+            DArrowSprite.color = c;
+            RArrowSprite.color = c;
+            LArrowSprite.color = c;
+            goal = false;
+            onPause = false;
+        }
+        public void setLevelManager(LevelManager levelManager)
+        {
+            this.levelManager = levelManager;
+        }
+
+        public void Pause()
+        {
+            onPause = true;
+        }
+        public void Resume()
+        {
+            onPause = false;
+            float diff = Time.time - actualTime;
+            startTime += diff;
         }
         void Update()
         {
-            float time = Time.deltaTime;
-            if (moving)
+            if (!onPause)
             {
-                //transform.Translate(time * dirX, time * dirY, 0, Space.Self);
-                //transform.localPosition += new Vector3(time * dirX, time * dirY);
-                //Debug.Log(count);
-                // count -= time;
-
-
-
-                // Distance moved equals elapsed time times speed..
-                float distCovered = (Time.time - startTime) * speed;
-
-                // Fraction of journey completed equals current distance divided by total distance.
-                float fractionOfJourney = distCovered / journeyLength;
-
-
-
-                // Set our position as a fraction of the distance between the markers.
-                transform.localPosition = Vector3.Lerp(startMarker, endPoint.end, fractionOfJourney);
-                if (transform.localPosition == endPoint.end)
+                if (board.GetTile(transform.localPosition.x, transform.localPosition.y).isGoal() && !goal)
                 {
-                    WallDir walls = AmountOfWalls(transform.localPosition.x, transform.localPosition.y);
-                    if (walls.amount == 2 && !board.GetTile(transform.localPosition.x, transform.localPosition.y).isIce())
+                    levelManager.LevelComplete();
+                    goal = true;
+                    endPoint.end = board.GetTile(transform.localPosition.x, transform.localPosition.y).transform.localPosition;
+                }
+                else if (!board.GetTile(transform.localPosition.x, transform.localPosition.y).isGoal())
+                {
+                    goal = false;
+                }
+
+                actualTime= Time.time;
+                if (moving)
+                {
+                    //transform.Translate(time * dirX, time * dirY, 0, Space.Self);
+                    //transform.localPosition += new Vector3(time * dirX, time * dirY);
+                    //Debug.Log(count);
+                    // count -= time;
+                    if (!showArrow)
                     {
-                        int dirX = 0, dirY = 0;
-                        if (endPoint.dirX != 0)
+                        ShowArrows(showArrow);
+                        showArrow = true;
+                    }
+
+
+                    // Distance moved equals elapsed time times speed..
+                    float distCovered = (actualTime - startTime) * speed;
+
+                    // Fraction of journey completed equals current distance divided by total distance.
+                    float fractionOfJourney = distCovered / journeyLength;
+
+
+
+                    // Set our position as a fraction of the distance between the markers.
+                    transform.localPosition = Vector3.Lerp(startMarker, endPoint.end, fractionOfJourney);
+                    if (transform.localPosition == endPoint.end)
+                    {
+                        WallDir walls = AmountOfWalls(transform.localPosition.x, transform.localPosition.y);
+                        if (walls.amount == 2 && !board.GetTile(transform.localPosition.x, transform.localPosition.y).isIce() && !goal)
                         {
-                            if (walls.North) dirY = -1;
-                            else dirY = 1;
+                            int dirX = 0, dirY = 0;
+                            if (endPoint.dirX != 0)
+                            {
+                                if (walls.North) dirY = -1;
+                                else dirY = 1;
+                            }
+                            else
+                            {
+                                if (walls.East) dirX = -1;
+                                else dirX = 1;
+                            }
+                            startTime = Time.time;
+                            startMarker = transform.localPosition;
+                            endPoint = searchLinePath(dirX, dirY);
+                            journeyLength = endPoint.lenght;
                         }
                         else
                         {
-                            if (walls.East) dirX = -1;
-                            else dirX = 1;
+                            moving = false;
+                            endPoint.dirX = 0;
+                            endPoint.dirY = 0;
                         }
-                        startTime = Time.time;
-                        startMarker = transform.localPosition;
-                        endPoint = searchLinePath(dirX, dirY);
-                        journeyLength = endPoint.lenght;
-                    }
-                    else
-                    {
-                        moving = false;
-                        endPoint.dirX = 0;
-                        endPoint.dirY = 0;
                     }
                 }
-            }
+                else if (showArrow)
+                {
+                    ShowArrows(showArrow);
+                    showArrow = false;
 
+                }
+            }
         }
 
+        private void ShowArrows(bool show)
+        {
+            if (!onPause)
+            {
+                WallDir walls = AmountOfWalls(transform.localPosition.x, transform.localPosition.y);
+                if (!show)
+                {
+                    NArrowSprite.enabled = false;
+                    DArrowSprite.enabled = false;
+                    RArrowSprite.enabled = false;
+                    LArrowSprite.enabled = false;
+                }
+                else
+                {
+                    NArrowSprite.enabled = !walls.North;
+                    DArrowSprite.enabled = !walls.South;
+                    RArrowSprite.enabled = !walls.East;
+                    LArrowSprite.enabled = !walls.West;
+                }
+            }
+        }
         // Desplaza al jugador hasta la siguiente intersección a la IZQUIERDA si es posible
         public void MoveLeft()
         {
-
-            if (!board.GetTile(transform.localPosition.x - 1, transform.localPosition.y).isWallRight() && !moving)
+            if (!onPause)
             {
-                startTime = Time.time;
-                startMarker = transform.localPosition;
-                endPoint = searchLinePath(-1, 0);
+                if (!board.GetTile(transform.localPosition.x - 1, transform.localPosition.y).isWallRight() && !moving)
+                {
+                    startTime = Time.time;
+                    startMarker = transform.localPosition;
+                    endPoint = searchLinePath(-1, 0);
 
-                journeyLength = endPoint.lenght;
-                moving = true;
+                    journeyLength = endPoint.lenght;
+                    moving = true;
+                }
             }
-
         }
 
         // Desplaza al jugador hasta la siguiente intersección a la DERECHA si es posible
         public void MoveRight()
         {
-            
-            if (!board.GetTile(transform.localPosition.x, transform.localPosition.y).isWallRight() && !moving)
+            if (!onPause)
             {
+                if (!board.GetTile(transform.localPosition.x, transform.localPosition.y).isWallRight() && !moving)
+                {
 
-                startTime = Time.time;
-                startMarker = transform.localPosition;
+                    startTime = Time.time;
+                    startMarker = transform.localPosition;
 
-                endPoint = searchLinePath(1, 0);
+                    endPoint = searchLinePath(1, 0);
 
-                journeyLength = endPoint.lenght;
-                moving = true;
+                    journeyLength = endPoint.lenght;
+                    moving = true;
+                }
             }
-
         }
 
         // Desplaza al jugador hasta la siguiente intersección hacia ARRIBA si es posible
         public void MoveUp()
         {
-            if (!board.GetTile(transform.localPosition.x, transform.localPosition.y).isWallTop() && !moving)
+            if (!onPause)
             {
-                startTime = Time.time;
-                startMarker = transform.localPosition;
-                endPoint = searchLinePath(0, 1);
+                if (!board.GetTile(transform.localPosition.x, transform.localPosition.y).isWallTop() && !moving)
+                {
+                    startTime = Time.time;
+                    startMarker = transform.localPosition;
+                    endPoint = searchLinePath(0, 1);
 
-                journeyLength = endPoint.lenght;
-                moving = true;
+                    journeyLength = endPoint.lenght;
+                    moving = true;
+                }
             }
         }
 
         // Desplaza al jugador hasta la siguiente intersección hacia ABAJO si es posible
         public void MoveDown()
         {
-            if (!board.GetTile(transform.localPosition.x, transform.localPosition.y - 1).isWallTop() && !moving)
+            if (!onPause)
             {
-                startTime = Time.time;
-                startMarker = transform.localPosition;
-                endPoint = searchLinePath(0, -1);
+                if (!board.GetTile(transform.localPosition.x, transform.localPosition.y - 1).isWallTop() && !moving)
+                {
+                    startTime = Time.time;
+                    startMarker = transform.localPosition;
+                    endPoint = searchLinePath(0, -1);
 
-                journeyLength = endPoint.lenght;
-                moving = true;
+                    journeyLength = endPoint.lenght;
+                    moving = true;
+                }
             }
         }
 
@@ -194,6 +281,7 @@ namespace MazesAndMore
         }
         private PathPoint searchLinePath(int dirX, int dirY)
         {
+
             PathPoint path = new PathPoint();
             Vector3 initial = transform.localPosition;
             initial.x = initial.x + dirX;
@@ -235,6 +323,8 @@ namespace MazesAndMore
                             found = true;
                         }
                     }
+                    if (board.GetTile(initial.x, initial.y).isGoal())
+                        found = true;
                 }
                 else
                 {
@@ -248,6 +338,8 @@ namespace MazesAndMore
                     if (!board.GetTile(initial.x, initial.y).isWallTop())
                         amountY++;
                     if ((amountX != 2 && dirX != 0 || amountX > 0 && dirX == 0) || (amountY != 2 && dirY != 0 || amountY > 0 && dirY == 0))
+                        found = true;
+                    if (board.GetTile(initial.x, initial.y).isGoal())
                         found = true;
                 }
 

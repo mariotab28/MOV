@@ -13,6 +13,7 @@ namespace MazesAndMore
         public SpriteRenderer northWall;
         public SpriteRenderer eastWall;
         public TraceController traces;
+        public TraceController hintTraces;
 
         private Color color;
 
@@ -62,6 +63,34 @@ namespace MazesAndMore
             traces.makeTrace(info, color, secondsUntil);   
         }
 
+        public void hintTrace(TraceInfo info)
+        {
+            hintTraces.makeTrace(info, Color.yellow, 0);
+        }
+
+        public void Pause()
+        {
+            traces.Pause();
+            hintTraces.Pause();
+        }
+        public void Resume()
+        {
+            traces.Resume();
+            hintTraces.Resume();
+        }
+
+        public bool isTraceDone(Direction info)
+        {
+            return (traces.isTraceDone(info));
+        }
+        public bool isHintTraceDone(Direction info)
+        {
+            return (hintTraces.isTraceDone(info));
+        }
+        public void reset()
+        {
+            traces.reset();
+        }
         public bool isWallRight()
         {
             return eastWall.enabled;

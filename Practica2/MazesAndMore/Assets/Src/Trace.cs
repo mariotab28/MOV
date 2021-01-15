@@ -28,7 +28,7 @@ namespace MazesAndMore
         public SpriteRenderer spRender;
         public int Xdir;
         public int Ydir;
-
+        private bool onPause;
 
 
         // Update is called once per frame
@@ -36,39 +36,54 @@ namespace MazesAndMore
         private void Start()
         {
             Vector2 size = spRender.size;
-
+            onPause = false;
 
         }
         void Update()
         {
-            if (start&&actualTime <= startTime+maxTime)
+            if (!onPause)
             {
-                actualTime = Time.time;
-                if (enable)
+                if (start && actualTime <= startTime + maxTime)
                 {
-                    spRender.color = color;
-                    EnableDraw();
+                    actualTime = Time.time;
+                    if (enable)
+                    {
+                        spRender.color = color;
+                        EnableDraw();
+                    }
+                    else
+                    {
+                        spRender.color = color;
+                        DisableDraw();
+
+                    }
+
+
                 }
-                else
+                else if (start && actualTime >= startTime + maxTime)
                 {
-                    spRender.color = color;
-                    DisableDraw();
-                    
+
+                    if (enable)
+                        EnableDraw();
+                    else
+                        DisableDraw();
+                    visible = enable;
+                    spRender.enabled = visible;
+                    start = false;
                 }
-
-
             }
-            else if (start && actualTime >= startTime + maxTime)
-            {
+        }
 
-                if (enable)
-                    EnableDraw();
-                else
-                    DisableDraw();
-                visible = enable;
-                spRender.enabled = visible;
-                start = false;
-            }
+        public void Pause()
+        {
+            onPause = true;
+        }
+        public void Resume()
+        {
+            onPause = false;
+            float diff = Time.time - actualTime;
+           
+            startTime += diff;
         }
 
         public void DrawTrace(float time, bool fromCenter, int enable, Color colorTrace)
@@ -85,6 +100,7 @@ namespace MazesAndMore
             {
                 this.enable = true;
             }
+            if(colorTrace!= Color.clear)
             color = colorTrace;
 
             Vector2 size = spRender.size;
@@ -118,7 +134,8 @@ namespace MazesAndMore
             {
                 this.enable = true;
             }
-            color = colorTrace;
+            if (colorTrace != Color.clear)
+                color = colorTrace;
             start = true;
             Vector2 size = spRender.size;
             initialSize = size;
@@ -137,8 +154,10 @@ namespace MazesAndMore
             }
         }
 
-
-      
+        public bool isEnable()
+        {
+            return enable;
+        }
 
         private void EnableDraw()
         {   

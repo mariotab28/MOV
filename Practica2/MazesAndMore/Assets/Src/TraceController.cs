@@ -35,6 +35,92 @@ namespace MazesAndMore
             nueva.to = infoStart.from;
             makeTrace(nueva, Color.red);
         }*/
+        public void reset()
+        {
+            TraceInfo help = new TraceInfo();
+
+            if(counterNorth>0)
+            {
+                counterNorth = 1;
+                help.from = Direction.Center;
+                help.to = Direction.North;
+                help.time = 0;
+                makeTrace(help,Color.clear,0);
+            }
+            else if(counterNorth<0)
+            {
+                counterNorth = -1;
+                help.from = Direction.North;
+                help.to = Direction.Center;
+                help.time = 0;
+                makeTrace(help, Color.clear, 0);
+            }
+            if (counterSouth > 0)
+            {
+                counterSouth = 1;
+                help.from = Direction.Center;
+                help.to = Direction.South;
+                help.time = 0;
+                makeTrace(help, Color.clear, 0);
+            }
+            else if (counterSouth < 0)
+            {
+                counterSouth = -1;
+                help.from = Direction.South;
+                help.to = Direction.Center;
+                help.time = 0;
+                makeTrace(help, Color.clear, 0);
+            }
+            if (counterEast > 0)
+            {
+                counterEast = 1;
+                help.from = Direction.Center;
+                help.to = Direction.East;
+                help.time = 0;
+                makeTrace(help, Color.clear, 0);
+            }
+            else if (counterEast < 0)
+            {
+                counterEast = -1;
+                help.from = Direction.East;
+                help.to = Direction.Center;
+                help.time = 0;
+                makeTrace(help, Color.clear, 0);
+            }
+            if (counterWest > 0)
+            {
+                counterWest = 1;
+                help.from = Direction.Center;
+                help.to = Direction.West;
+                help.time = 0;
+                makeTrace(help, Color.clear, 0);
+            }
+            else if (counterWest < 0)
+            {
+                counterWest = -1;
+                help.from = Direction.West;
+                help.to = Direction.Center;
+                help.time = 0;
+                makeTrace(help, Color.clear, 0);
+            }
+
+        }
+
+        public void Pause()
+        {
+            north.Pause();
+            south.Pause();
+            east.Pause();
+            west.Pause();
+        }
+    
+        public void Resume()
+        {
+            north.Resume();
+            south.Resume();
+            east.Resume();
+            west.Resume();
+        }
         public void makeTrace(TraceInfo info,Color colorTrace, float secondsUntil)
         {
             
@@ -47,11 +133,13 @@ namespace MazesAndMore
                 case Direction.North:
                     counterNorth++;
                     if (info.to == Direction.Center)
+                    {
                         north.DrawTraceLater(info.time, fromCenter, counterNorth, colorTrace, secondsUntil);
+                    }
                     else
                     {
                         //Debug.Log("hola");
-                        north.DrawTraceLater(info.time/2, fromCenter, counterNorth, colorTrace, secondsUntil);
+                        north.DrawTraceLater(info.time / 2, fromCenter, counterNorth, colorTrace, secondsUntil);
                         fromCenterSwitch(info, colorTrace, secondsUntil);
                     }
                     break;
@@ -117,9 +205,33 @@ namespace MazesAndMore
             
         }
 
+        public bool isTraceDone(Direction info)
+        {
+            switch (info)
+            {
+                case Direction.North:
+                    return north.isEnable();
+                    break;
+                case Direction.South:
+                    return south.isEnable();
+                    break;
+                case Direction.East:
+                    return east.isEnable();
+                    break;
+                case Direction.West:
+                    return west.isEnable();
+                    break;
+                case Direction.Center:
+                    return false;
+                    break;
+            }
+            return false;
+            
+        }
+
         private void fromCenterSwitch(TraceInfo info, Color colorTrace, float secondsUntil)
         {
-            Debug.Log("hola");
+
             switch (info.to)
             {
                 case Direction.North:
