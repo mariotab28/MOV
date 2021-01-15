@@ -58,4 +58,7 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 8e28070f5601a4d4482e8fe022a81f92, type: 3}
   - {fileID: 4900000, guid: 820e8297a63e5c24bbdf127f5c8bb078, type: 3}
   - {fileID: 4900000, guid: 9b376d8af999e8d45b173ce2d81b89c6, type: 3}
-  color: {r: 0, g: 0.694993, b: 0.8207547, a: 1}
+  color: {r: 0, g: 0.6627451, b: 0.95294124, a: 1}
+  buttonImage: {fileID: 1775592702960557364, guid: 7db7a6232d4925941a3e7ddf3389cbf6, type: 3}
+  buttonPressedImage: {fileID: 8300999423182613312, guid: 7db7a6232d4925941a3e7ddf3389cbf6, type: 3}
+  groupName: PISO DE HIELO

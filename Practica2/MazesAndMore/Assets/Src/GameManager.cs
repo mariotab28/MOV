@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace MazesAndMore
 {
@@ -11,23 +12,36 @@ namespace MazesAndMore
 #if UNITY_EDITOR
         public int debugLevel;
 #endif
+        int groupToLoadIndex;
+        int levelToLoadIndex;
 
-        static GameManager instance;
+        public static GameManager instance;
 
         void Start()
         {
-            StartNewScene(); //temp
+            //StartNewScene(); //temp
             if (instance != null)
             {
                 instance.levelManager = levelManager;
+                instance.LoadLevel();
                 DestroyImmediate(gameObject);
                 return;
+            }
+            else
+            {
+                instance = this;
+                DontDestroyOnLoad(gameObject);
             }
         }
 
         void Update()
         {
 
+        }
+
+        public LevelPackage[] GetLevelPackages()
+        {
+            return levelPackages;
         }
 
         private void StartNewScene()
@@ -44,6 +58,20 @@ namespace MazesAndMore
             }
         }
 
+        public void LoadLevel(int groupIndex, int levelIndex)
+        {
+            SceneManager.LoadScene(1);
+            groupToLoadIndex = groupIndex;
+            levelToLoadIndex = levelIndex;
+        }
 
+        private void LoadLevel()
+        {
+            //Debug.Log("GROUP: " + groupToLoadIndex + " - LEVEL: " + levelToLoadIndex);
+            if (levelManager)
+                levelManager.LoadLevel(levelPackages[groupToLoadIndex].levels[levelToLoadIndex]);
+            else
+                Debug.LogError("Error: Level Manager not found!");
+        }
     }
 }
