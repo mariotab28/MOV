@@ -84,12 +84,9 @@ namespace MazesAndMore
             instance.adSuccess = success;
             instance.adSkipped = skipped;
             instance.adFailed = failed;
-            if (Advertisement.IsReady(rewardedID) && !noMoreAds)
+            if (Advertisement.IsReady(rewardedID))
                 Advertisement.Show(rewardedID);
-            else if(noMoreAds)
-            {
-                instance.adSuccess();
-            }
+           
         }
 
         public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
