@@ -24,9 +24,7 @@ namespace MazesAndMore
         public Trace west;
  
         public void reset()
-        {
-            TraceInfo help = new TraceInfo();
-
+        { 
             north.reset();
             south.reset();
             west.reset();
@@ -35,8 +33,6 @@ namespace MazesAndMore
             counterEast = 0;
             counterSouth = 0;
             counterWest = 0;
-           
-
         }
 
         public void Pause()
