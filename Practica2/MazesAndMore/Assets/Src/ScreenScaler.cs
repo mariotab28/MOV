@@ -11,11 +11,11 @@ public class ScreenScaler : MonoBehaviour
         Resolution WorkingRes = new Resolution();
         WorkingRes.height = 1920;
         WorkingRes.width = 1080;
-
+       
         
-        float Multiplier = ((float)WorkingRes.width / (float)WorkingRes.height) / ((float)Display.main.renderingWidth / (float)Display.main.renderingHeight);
+        float Multiplier = ((float)WorkingRes.width / (float)WorkingRes.height) / ((float)Screen.width / (float)Screen.height);
 
-        float Multiplier2 = ((float)WorkingRes.height / (float)WorkingRes.width)/((float)Display.main.renderingHeight / (float)Display.main.renderingWidth);
+        float Multiplier2 = ((float)WorkingRes.height / (float)WorkingRes.width)/((float)Screen.height / (float)Screen.width);
         float mult = 0;
         if (!bg)
         {
