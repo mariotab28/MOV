@@ -16,7 +16,9 @@ namespace MazesAndMore
         int levelToLoadIndex;
 
         public int amountOfHints;
-       // int playerLevel;
+        // int playerLevel;
+        public bool noMoreAds;
+
 
         public static GameManager instance;
 
@@ -76,7 +78,7 @@ namespace MazesAndMore
             //Debug.Log("GROUP: " + groupToLoadIndex + " - LEVEL: " + levelToLoadIndex);
             if (levelManager)
             {
-                levelManager.Init(this, groupToLoadIndex,amountOfHints/*, playerLevel*/);
+                levelManager.Init(groupToLoadIndex,amountOfHints/*, playerLevel*/);
                 levelManager.SetLevelColor(levelPackages[groupToLoadIndex].color);
                 levelManager.setLevelName(levelPackages[groupToLoadIndex].groupName, levelToLoadIndex);
                 levelManager.LoadLevel(levelPackages[groupToLoadIndex].levels[levelToLoadIndex]);
@@ -87,6 +89,11 @@ namespace MazesAndMore
         public void setAmmountOfHints(int hints)
         {
             amountOfHints = hints;
+        }
+
+        public void NoMoreAds()
+        {
+            noMoreAds = true;
         }
     }
 }

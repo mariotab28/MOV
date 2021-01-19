@@ -347,7 +347,7 @@ namespace MazesAndMore
 
                 if (!found)
                 {
-                    DoublePathCall(dirX, dirY, initial.x, initial.y, dist / 4.0f);
+                    DoublePathCall(dirX, dirY, initial.x, initial.y, dist / speed);
                     initial.x = initial.x + dirX;
                     initial.y = initial.y + dirY;
                     dist++;
@@ -357,7 +357,7 @@ namespace MazesAndMore
                 }
 
             }
-            SingularPathCall(dirX, dirY, initial.x, initial.y, dist/4.0f,true);
+            SingularPathCall(dirX, dirY, initial.x, initial.y, dist/ speed, true);
 
 
             path.end = initial;
@@ -394,7 +394,7 @@ namespace MazesAndMore
                 else if (dirY > 0)
                     info.from = Direction.South;
             }
-            info.time = 0.125f;
+            info.time = 1/(speed*2);
 
             
             board.GetTile(posX, posY).trace(info,secondsUntil);
@@ -412,7 +412,7 @@ namespace MazesAndMore
             { info.to = Direction.North; info.from = Direction.South; }
             else if (dirY < 0)
             {  info.to = Direction.South; info.from = Direction.North; }
-            info.time = 0.15f;
+            info.time = 1/(speed);
 
 
             board.GetTile(posX, posY).trace(info, secondsUntil);

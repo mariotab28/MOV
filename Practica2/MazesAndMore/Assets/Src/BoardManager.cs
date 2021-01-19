@@ -183,17 +183,26 @@ namespace MazesAndMore
                     ifo = Direction.North;
                 else if (hints[iter].y > hints[iter+1].y)
                     ifo = Direction.South;
-               
-                if ( !GetTile(hints[iter].x + xOffset + 1, hints[iter].y + yOffset + 1).isHintTraceDone(ifo))
+                if (!(hints[iter].x > map.GetWidth() || hints[iter + 1].x > map.GetWidth() || hints[iter].y > map.GetHeight() || hints[iter + 1].y > map.GetHeight()))
                 {
-                    reached = true;
+                    if (!(hints[iter].x < 0 || hints[iter + 1].x < 0 || hints[iter].y < 0 || hints[iter + 1].y < 0))
+                    {
+                        if (!GetTile(hints[iter].x + xOffset + 1, hints[iter].y + yOffset + 1).isHintTraceDone(ifo))
+                        {
+                            reached = true;
+                        }
+                        else
+                        {
+                            if (!GetTile(hints[iter].x + xOffset + 1, hints[iter].y + yOffset + 1).isHintTraceDone(ifo))
+                                makeHintTrace(hints[iter], hints[iter + 1]);
+                            iter++;
+                        }
+                    }
+                    else
+                        iter++;
                 }
                 else
-                {
-                    if(!GetTile(hints[iter].x + xOffset + 1, hints[iter].y + yOffset + 1).isHintTraceDone(ifo))
-                        makeHintTrace(hints[iter], hints[iter+1]);
-                    iter++;
-                }
+                iter++;
             }
             int maxIter = iter + count;
             if(iter== hints.Count - 1&& !reached)

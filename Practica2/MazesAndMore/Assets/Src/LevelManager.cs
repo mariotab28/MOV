@@ -12,7 +12,6 @@ namespace MazesAndMore
         public BoardManager boardManager;
         public PlayerMovement player;
         private Color levelColor;
-        private GameManager gameManager;
         private bool onPause=false;
         public Text text;
         public Text hints;
@@ -21,9 +20,8 @@ namespace MazesAndMore
         private int group;
         private int amountOfHints;
 
-        public void Init(GameManager gameManager,int group,int amountOfHints/*,int playerLevel*/)
+        public void Init(int group,int amountOfHints/*,int playerLevel*/)
         {
-            this.gameManager = gameManager;
             levelColor = Color.white;
             if (boardManager != null)
                 boardManager.Init(this);
@@ -49,7 +47,7 @@ namespace MazesAndMore
             {
                 amountOfHints -= 1;
                 hints.text = amountOfHints.ToString();
-                gameManager.setAmmountOfHints(amountOfHints);
+                GameManager.instance.setAmmountOfHints(amountOfHints);
             }
         }
 
@@ -97,11 +95,11 @@ namespace MazesAndMore
 
         public void NextLevel()
         {
-            gameManager.LoadLevel(group, levelNumber+1);
+            GameManager.instance.LoadLevel(group, levelNumber+1);
         }
         public void BackToMenu()
         {
-            gameManager.LoadMainMenu();
+            GameManager.instance.LoadMainMenu();
         }
     }
 }
