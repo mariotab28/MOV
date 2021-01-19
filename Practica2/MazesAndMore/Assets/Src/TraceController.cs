@@ -22,20 +22,7 @@ namespace MazesAndMore
         public Trace south;
         public Trace east;
         public Trace west;
-       // public TraceInfo infoStart;
-      /*  private void Start()
-        {
-            makeTrace(infoStart, Color.red);
-
-            Invoke("help", infoStart.time+0.1f);
-        }
-        private void help()
-        {
-            TraceInfo nueva = infoStart;
-            nueva.from = infoStart.to;
-            nueva.to = infoStart.from;
-            makeTrace(nueva, Color.red);
-        }*/
+ 
         public void reset()
         {
             TraceInfo help = new TraceInfo();
@@ -48,78 +35,7 @@ namespace MazesAndMore
             counterEast = 0;
             counterSouth = 0;
             counterWest = 0;
-            //if(counterNorth>0)
-            //{
-            //    counterNorth = 1;
-            //    help.from = Direction.Center;
-            //    help.to = Direction.North;
-            //    help.time = 0;
-            //    help.goingBack = true;
-            //    makeTrace(help,Color.clear,0);
-            //}
-            //else if(counterNorth<0)
-            //{
-            //    counterNorth = -1;
-            //    help.from = Direction.North;
-            //    help.to = Direction.Center;
-            //    help.time = 0;
-            //    help.goingBack = true;
-            //    makeTrace(help, Color.clear, 0);
-            //}
-            //if (counterSouth > 0)
-            //{
-            //    counterSouth = 1;
-            //    help.from = Direction.Center;
-            //    help.to = Direction.South;
-            //    help.time = 0;
-            //    help.goingBack = true;
-            //    makeTrace(help, Color.clear, 0);
-            //}
-            //else if (counterSouth < 0)
-            //{
-            //    counterSouth = -1;
-            //    help.from = Direction.South;
-            //    help.to = Direction.Center;
-            //    help.time = 0;
-            //    help.goingBack = true;
-            //    makeTrace(help, Color.clear, 0);
-            //}
-            //if (counterEast > 0)
-            //{
-            //    counterEast = 1;
-            //    help.from = Direction.Center;
-            //    help.to = Direction.East;
-            //    help.time = 0;
-            //    help.goingBack = true;
-            //    makeTrace(help, Color.clear, 0);
-            //}
-            //else if (counterEast < 0)
-            //{
-            //    counterEast = -1;
-            //    help.from = Direction.East;
-            //    help.to = Direction.Center;
-            //    help.time = 0;
-            //    help.goingBack = true;
-            //    makeTrace(help, Color.clear, 0);
-            //}
-            //if (counterWest > 0)
-            //{
-            //    counterWest = 1;
-            //    help.from = Direction.Center;
-            //    help.to = Direction.West;
-            //    help.time = 0;
-            //    help.goingBack = true;
-            //    makeTrace(help, Color.clear, 0);
-            //}
-            //else if (counterWest < 0)
-            //{
-            //    counterWest = -1;
-            //    help.from = Direction.West;
-            //    help.to = Direction.Center;
-            //    help.time = 0;
-            //    help.goingBack = true;
-            //    makeTrace(help, Color.clear, 0);
-            //}
+           
 
         }
 
