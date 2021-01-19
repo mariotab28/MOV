@@ -18,6 +18,25 @@ namespace MazesAndMore
 
         void Update()
         {
+#if !UNITY_ANDROID || UNITY_EDITOR
+            if(Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                movement.MoveDown();
+            }
+            else if(Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                movement.MoveUp();
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                movement.MoveLeft();
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                movement.MoveRight();
+            }
+#endif
+#if UNITY_ANDROID
             if (Input.touchCount > 0)
             {
                 touch = Input.GetTouch(0);
@@ -35,6 +54,7 @@ namespace MazesAndMore
                         break;
                 }
             }
+#endif
         }
 
         // Gestiona el evento de swipe
