@@ -53,6 +53,8 @@ namespace MazesAndMore
         // Total distance between the markers.
         private float journeyLength;
 
+        private Stack<TraceInfo> Movements;
+
         public void init(BoardManager _board, float x, float y)
         {
             board = _board;
@@ -67,6 +69,7 @@ namespace MazesAndMore
             LArrowSprite.color = c;
             goal = false;
             onPause = false;
+            Movements = new Stack<TraceInfo>();
         }
         public void setLevelManager(LevelManager levelManager)
         {
@@ -396,6 +399,16 @@ namespace MazesAndMore
             }
             info.time = 1/(speed*2);
 
+            if(Movements.Count>0 && Movements.Peek().from==info.to && Movements.Peek().to == info.from)
+            {
+                Movements.Pop();
+                info.goingBack = true;
+            }
+            else
+            {
+                info.goingBack = false;
+                Movements.Push(info);
+            }
             
             board.GetTile(posX, posY).trace(info,secondsUntil);
 
@@ -413,6 +426,17 @@ namespace MazesAndMore
             else if (dirY < 0)
             {  info.to = Direction.South; info.from = Direction.North; }
             info.time = 1/(speed);
+
+            if (Movements.Count > 0 && Movements.Peek().from == info.to && Movements.Peek().to == info.from)
+            {
+                Movements.Pop();
+                info.goingBack = true;
+            }
+            else
+            {
+                info.goingBack = false;
+                Movements.Push(info);
+            }
 
 
             board.GetTile(posX, posY).trace(info, secondsUntil);

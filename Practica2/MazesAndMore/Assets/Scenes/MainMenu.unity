@@ -1489,7 +1489,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: d3be408f0a5da7b4f968e47990c3ecc3, type: 2}
     - target: {fileID: 2969538860218178668, guid: d4e7f16e1ba184f40b89f22064bcea49, type: 3}
       propertyPath: amountOfHints
-      value: 60
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5127094892343565715, guid: d4e7f16e1ba184f40b89f22064bcea49, type: 3}
       propertyPath: m_Name

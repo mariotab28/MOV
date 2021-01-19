@@ -39,6 +39,15 @@ namespace MazesAndMore
             onPause = false;
 
         }
+        public void reset()
+        {
+            this.enable = false;
+            this.visible = false;
+            spRender.size = spRender.size = new Vector2(0.25f, 0.25f);
+            spRender.enabled = visible;
+            start = false;
+
+        }
         void Update()
         {
             if (!onPause)
@@ -66,7 +75,7 @@ namespace MazesAndMore
                     if (enable)
                         EnableDraw();
                     else
-                        DisableDraw();
+                       spRender.size= spRender.size = new Vector2(0.25f, 0.25f);
                     visible = enable;
                     spRender.enabled = visible;
                     start = false;
@@ -86,12 +95,12 @@ namespace MazesAndMore
             startTime += diff;
         }
 
-        public void DrawTrace(float time, bool fromCenter, int enable, Color colorTrace)
+        public void DrawTrace(float time, bool fromCenter, int enable, Color colorTrace, bool back)
         {
             timer = 0;
             maxTime = time;
             this.fromCenter = fromCenter;
-            if (enable == 0)
+            if (enable == 0 && back)
             {
                 startTime = Time.time;
                 this.enable = false;
@@ -107,7 +116,7 @@ namespace MazesAndMore
 
             speed = 1 / time;
             start = true;
-            if (enable==1||enable==-1)
+            if ((enable == 1 || enable == -1) && !back)
             {
                 startTime = Time.time;
                 if ((Xdir > 0 && !fromCenter) || (Xdir < 0 && fromCenter))
@@ -120,12 +129,12 @@ namespace MazesAndMore
 
         }
 
-        public void DrawTraceLater(float time, bool fromCenter, int enable, Color colorTrace,float secondsUntil)
+        public void DrawTraceLater(float time, bool fromCenter, int enable, Color colorTrace,float secondsUntil,bool back)
         {
             timer = 0;
             maxTime = time;
             this.fromCenter = fromCenter;
-            if (enable == 0)
+            if (enable == 0 && back)
             {
                 startTime = Time.time+secondsUntil-time/2;
                 this.enable = false;
@@ -142,7 +151,7 @@ namespace MazesAndMore
             speed = 1 / time;
 
             
-            if (enable == 1 || enable == -1)
+            if ((enable == 1 || enable == -1) && !back)
             {
                 startTime = Time.time + secondsUntil;
                 if ((Xdir > 0 && !fromCenter) || (Xdir < 0 && fromCenter))
@@ -164,7 +173,7 @@ namespace MazesAndMore
             if(actualTime>startTime)
             spRender.enabled = true;
            
-            if (fromCenter)
+            if (fromCenter && !visible)
             {
                 Vector2 v=new Vector2(Xdir, Ydir);
                 v.x = -v.x * 0.125f + Mathf.Abs(v.x * 0.125f);
@@ -189,7 +198,7 @@ namespace MazesAndMore
                
                 wasCenter = true;
             }
-            else
+            else if (!visible)
             {
                 
                 Vector2 v = new Vector2(Xdir, Ydir);
@@ -223,8 +232,9 @@ namespace MazesAndMore
             if(actualTime >= startTime + maxTime)
             {
                 spRender.enabled = false;
+                
             }
-            if (fromCenter)
+            if (fromCenter&& visible)
             {
                 int multiplier = -1;
                 if (wasCenter)
@@ -258,7 +268,7 @@ namespace MazesAndMore
 
                 spRender.size = size;
             }
-            else
+            else if( visible)
             {
                 int multiplier = 1;
                 if (!wasCenter)

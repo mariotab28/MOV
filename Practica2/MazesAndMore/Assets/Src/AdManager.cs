@@ -113,7 +113,7 @@ namespace MazesAndMore
 
         public static void DeactivateAds()
         {
-            noMoreAds = true;
+            noMoreAds = !noMoreAds;
         }
         public void OnUnityAdsDidError(string message) { }
         public void OnUnityAdsDidStart(string placementId) { }

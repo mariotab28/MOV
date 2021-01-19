@@ -93,7 +93,7 @@ namespace MazesAndMore
 
         public void NoMoreAds()
         {
-            noMoreAds = true;
+            noMoreAds = !noMoreAds;
         }
     }
 }
