@@ -3417,31 +3417,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 851439404}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 83619869}
-        m_TargetAssemblyTypeName: MazesAndMore.Ad, Assembly-CSharp
-        m_MethodName: NoMoreAds
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 83619869}
-        m_TargetAssemblyTypeName: MazesAndMore.Ad, Assembly-CSharp
-        m_MethodName: HideBanner
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &902239749
 GameObject:
   m_ObjectHideFlags: 0
@@ -5929,6 +5905,7 @@ GameObject:
   - component: {fileID: 1762422638}
   - component: {fileID: 1762422637}
   - component: {fileID: 1762422641}
+  - component: {fileID: 1762422642}
   m_Layer: 5
   m_Name: Canvas_Shop
   m_TagString: Untagged
@@ -6030,6 +6007,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backObj: {fileID: 83619863}
   thisObj: {fileID: 1762422636}
+--- !u!114 &1762422642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762422636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7417bb28cf8190e42a4ac54ab8a2f8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1799670869
 GameObject:
   m_ObjectHideFlags: 0
@@ -6265,7 +6254,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1939178968}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1762422642}
+        m_TargetAssemblyTypeName: MazesAndMore.Ad, Assembly-CSharp
+        m_MethodName: HideBanner
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1762422642}
+        m_TargetAssemblyTypeName: MazesAndMore.Ad, Assembly-CSharp
+        m_MethodName: NoMoreAds
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1939178968
 MonoBehaviour:
   m_ObjectHideFlags: 0

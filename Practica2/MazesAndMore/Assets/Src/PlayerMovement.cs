@@ -36,7 +36,7 @@ namespace MazesAndMore
         private BoardManager board;
         private bool moving = false;
         private bool showArrow = true;
-        private int dirX = 0, dirY = 0;
+//        private int dirX = 0, dirY = 0;
 
         // Transforms to act as start and end markers for the journey.
         private Vector3 startMarker;

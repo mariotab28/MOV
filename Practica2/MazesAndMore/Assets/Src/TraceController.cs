@@ -140,19 +140,14 @@ namespace MazesAndMore
             {
                 case Direction.North:
                     return north.isEnable();
-                    break;
                 case Direction.South:
-                    return south.isEnable();
-                    break;
+                    return south.isEnable();                    
                 case Direction.East:
-                    return east.isEnable();
-                    break;
+                    return east.isEnable();             
                 case Direction.West:
-                    return west.isEnable();
-                    break;
+                    return west.isEnable();                   
                 case Direction.Center:
-                    return false;
-                    break;
+                    return false;                
             }
             return false;
             

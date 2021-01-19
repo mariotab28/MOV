@@ -7,9 +7,7 @@ namespace MazesAndMore
 {
     public class Trace : MonoBehaviour
     {
-        private float timer=0;
         private float maxTime=0;
-        private float deltaTime = 0;
         private bool fromCenter;
         private bool wasCenter;
         private bool enable=false;
@@ -97,7 +95,6 @@ namespace MazesAndMore
 
         public void DrawTrace(float time, bool fromCenter, int enable, Color colorTrace, bool back)
         {
-            timer = 0;
             maxTime = time;
             this.fromCenter = fromCenter;
             if (enable == 0 && back)
@@ -131,7 +128,6 @@ namespace MazesAndMore
 
         public void DrawTraceLater(float time, bool fromCenter, int enable, Color colorTrace,float secondsUntil,bool back)
         {
-            timer = 0;
             maxTime = time;
             this.fromCenter = fromCenter;
             if (enable == 0 && back)
