@@ -42,12 +42,14 @@ namespace MazesAndMore
 
         public void UseHint()
         {
-           
-            if (boardManager.HintUsed())
+            if (amountOfHints > 0)
             {
-                amountOfHints -= 1;
-                hints.text = amountOfHints.ToString();
-                GameManager.instance.setAmmountOfHints(amountOfHints);
+                if (boardManager.HintUsed())
+                {
+                    amountOfHints -= 1;
+                    hints.text = amountOfHints.ToString();
+                    GameManager.instance.setAmmountOfHints(amountOfHints);
+                }
             }
         }
 
