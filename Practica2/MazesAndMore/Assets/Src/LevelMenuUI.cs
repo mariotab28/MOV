@@ -23,6 +23,7 @@ namespace MazesAndMore
         void Start()
         {
             // Pide los grupos de niveles al GameManager
+           
             levelPackages = GameManager.instance.GetLevelPackages();
             groupButtons = new ButtonConfiguration[levelPackages.Length];
             // Crea los elementos de la interfaz del selector de grupos de niveles

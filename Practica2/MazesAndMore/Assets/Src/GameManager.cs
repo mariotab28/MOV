@@ -22,7 +22,7 @@ namespace MazesAndMore
 
         public static GameManager instance;
 
-        void Start()
+        void Awake()
         {
             //StartNewScene(); //temp
             if (instance != null)

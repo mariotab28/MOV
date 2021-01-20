@@ -40,11 +40,13 @@ namespace MazesAndMore
 
         public void UseHint()
         {
-           
-            if (boardManager.HintUsed())
+            if (amountOfHints > 0)
             {
-                GameManager.instance.RemoveHints(1);
-                hints.text = GameManager.instance.GetNumberOfHints().ToString();
+                if (boardManager.HintUsed())
+                {
+                    GameManager.instance.RemoveHints(1);
+                    hints.text = GameManager.instance.GetNumberOfHints().ToString();
+                }
             }
         }
 
