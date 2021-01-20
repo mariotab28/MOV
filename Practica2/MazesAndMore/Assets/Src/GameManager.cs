@@ -211,7 +211,7 @@ namespace MazesAndMore
             JSONSaveData data = ToJSONSaveData();
             string json = JsonUtility.ToJson(data);
             PlayerPrefs.SetString("progress", json);
-            print(json);
+            //print(json);
         }
 
         // Carga el progreso del jugador, si no hay progreso guardado guarda el estado inicial del juego

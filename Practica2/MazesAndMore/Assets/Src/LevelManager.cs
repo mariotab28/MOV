@@ -40,7 +40,7 @@ namespace MazesAndMore
 
         public void UseHint()
         {
-            if (amountOfHints > 0)
+            if (GameManager.instance.GetNumberOfHints() > 0)
             {
                 if (boardManager.HintUsed())
                 {
@@ -94,8 +94,7 @@ namespace MazesAndMore
         {
             if (VictoryPanel)
                 VictoryPanel.SetActive(true);
-
-            print("FINISHED LEVEL:" + group + "->" + levelNumber);
+            
             GameManager.instance.LevelCompleted(group, levelNumber);
         }
 
