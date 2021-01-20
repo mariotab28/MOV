@@ -18,9 +18,8 @@ namespace MazesAndMore
         public GameObject VictoryPanel;
         private int levelNumber;
         private int group;
-        private int amountOfHints;
 
-        public void Init(int group,int amountOfHints/*,int playerLevel*/)
+        public void Init(int group/*,int playerLevel*/)
         {
             levelColor = Color.white;
             if (boardManager != null)
@@ -28,8 +27,7 @@ namespace MazesAndMore
             if (player != null)
                 player.setLevelManager(this);
             this.group = group;
-            this.amountOfHints = amountOfHints;
-            hints.text = amountOfHints.ToString();
+            hints.text = GameManager.instance.GetNumberOfHints().ToString();
         }
 
         public void ResetLevel()
@@ -42,13 +40,12 @@ namespace MazesAndMore
 
         public void UseHint()
         {
-            if (amountOfHints > 0)
+            if (GameManager.instance.GetNumberOfHints() > 0)
             {
                 if (boardManager.HintUsed())
                 {
-                    amountOfHints -= 1;
-                    hints.text = amountOfHints.ToString();
-                    GameManager.instance.setAmmountOfHints(amountOfHints);
+                    GameManager.instance.RemoveHints(1);
+                    hints.text = GameManager.instance.GetNumberOfHints().ToString();
                 }
             }
         }
@@ -58,20 +55,24 @@ namespace MazesAndMore
             levelNumber = lvl;
             text.text = name + " - " + (lvl+1).ToString();
         }
+
         public void LoadLevel(TextAsset levelFile)
         {
             Map map = Map.GetMapFromJson(levelFile);
             boardManager.SetMap(map);
 
         }
+
         public void SetLevelColor(Color color)
         {
             levelColor = color;
         }
+
         public Color GetLevelColor()
         {
             return levelColor;
         }
+
         public void Pause()
         {
             if (!onPause)
@@ -88,17 +89,20 @@ namespace MazesAndMore
             }
 
         }
+
         public void LevelComplete()
         {
             if (VictoryPanel)
                 VictoryPanel.SetActive(true);
-
+            
+            GameManager.instance.LevelCompleted(group, levelNumber);
         }
 
         public void NextLevel()
         {
             GameManager.instance.LoadLevel(group, levelNumber+1);
         }
+
         public void BackToMenu()
         {
             GameManager.instance.LoadMainMenu();

@@ -8,7 +8,7 @@ namespace MazesAndMore
     using Wall = Map.MapWall;
     public class BoardManager : MonoBehaviour
     {
-        public GameObject tilePF;
+        public Tile tilePF;
         public PlayerMovement player;
         private Tile[,] tiles; // tiles [fila, columna]
         //private Wall[] walls;
@@ -249,10 +249,10 @@ namespace MazesAndMore
         
         Tile CreateTile(float x, float y)
         {
-            GameObject tileGO = Instantiate(tilePF, transform);
+            Tile tile = Instantiate(tilePF, transform);
+            GameObject tileGO = tile.gameObject;
             tileGO.name = "Tile_" + x + "_" + y;
             tileGO.transform.localPosition = new Vector3(x, y, 0);
-            Tile tile = tileGO.GetComponent<Tile>();
             return tile;
         }
 

@@ -30,6 +30,7 @@ namespace MazesAndMore
             SetUpLevelGroupsUI();
         }
 
+        // Añade un botón a la escena por cada paquete de niveles
         void SetUpLevelGroupsUI()
         {
             if (!groupSelectUI)
@@ -44,6 +45,7 @@ namespace MazesAndMore
             }
         }
 
+        // Instancia un botón para acceder a los niveles de un determinado paquete de niveles
         ButtonConfiguration AddGroupButton(LevelPackage group, int index)
         {
             ButtonConfiguration button = Instantiate(groupButtonPrefab, groupContainer.transform);
@@ -52,6 +54,7 @@ namespace MazesAndMore
             return button;
         }
 
+        // Pasa al menú de selección de nivel de un determinado grupo de niveles
         public void ShowLevelsFromGroup(int index)
         {
             groupSelectUI.SetActive(false); // Desactiva la interfaz de selección de grupo
@@ -68,10 +71,11 @@ namespace MazesAndMore
             levelSelectUI.SetActive(true);
         }
 
+        // Añade un botón por cada nivel y lo configura en función del paquete del nivel y del progreso del jugador
         LevelButtonConfiguration AddLevelButton(int number, Color groupColor, int groupIndex)
         {
             LevelButtonConfiguration button = Instantiate(levelButtonPrefab, levelContainer.transform);
-            button.Configure(number, false, true, groupColor, groupIndex); //TODO: en función del progreso
+            button.Configure(number, !GameManager.instance.IsLevelUnlocked(groupIndex, number - 1), GameManager.instance.IsLevelCompleted(groupIndex, number - 1), groupColor, groupIndex);
 
             return button;
         }
