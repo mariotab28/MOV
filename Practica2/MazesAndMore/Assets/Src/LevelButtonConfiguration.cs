@@ -31,18 +31,20 @@ namespace MazesAndMore
         {
             levelIndex = number;
             groupIndex = group;
-            if (locked)
-            {
-                lockImage.gameObject.SetActive(true);
-                imageComponent.color = lockedColor;
-                lockImage.color = lockedLockImageColor;
-            }
-            else if (finished)
+            
+            if (finished)
             {
                 numberText.gameObject.SetActive(true);
                 numberText.text = number.ToString();
                 numberText.color = finishedTextColor;
                 imageComponent.color = groupColor;
+
+            }
+            else if (locked)
+            {
+                lockImage.gameObject.SetActive(true);
+                imageComponent.color = lockedColor;
+                lockImage.color = lockedLockImageColor;
             }
             else // unfinished
             {

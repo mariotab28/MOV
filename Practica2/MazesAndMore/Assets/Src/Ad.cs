@@ -9,14 +9,17 @@ namespace MazesAndMore {
         {
             AdManager.ShowRewardedAd(SuccessHint, Skip, Failed);
         }
+
         public void StandardAd()
         {
             AdManager.ShowStandardAd();
         }
+
         public void ShowBanner()
         {
             AdManager.ShowBanner();
         }
+
         public void HideBanner()
         {
             AdManager.HideBanner();
@@ -30,9 +33,10 @@ namespace MazesAndMore {
 
         }
 
+        // Incrementa el nº de pistas del jugador y guarda la partida para recordar el nuevo número
         void SuccessHint()
         {
-            GameManager.instance.amountOfHints += 1;
+            GameManager.instance.AddHints(1);
         }
 
         void Skip()
