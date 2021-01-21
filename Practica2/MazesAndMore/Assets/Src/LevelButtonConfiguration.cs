@@ -57,7 +57,8 @@ namespace MazesAndMore
 
         public void Clicked()
         {
-            GameManager.instance.LoadLevel(groupIndex, levelIndex-1);
+            if(GameManager.instance.IsLevelUnlocked(groupIndex, levelIndex - 1) || GameManager.instance.IsLevelCompleted(groupIndex, levelIndex - 1))
+                GameManager.instance.LoadLevel(groupIndex, levelIndex-1);
         }
     }
 }
