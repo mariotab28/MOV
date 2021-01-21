@@ -22,14 +22,14 @@ namespace MazesAndMore
                 Debug.LogError("Error: Missing components for button configuration!");
         }
 
-        public void Configure(Sprite image, Sprite pressedImage, string text, LevelMenuUI menuController, int index)
+        public void Configure(Sprite image, Sprite pressedImage, string text, int progress, LevelMenuUI menuController, int index)
         {
             imageComponent.sprite = image; // Imagen de fondo del botón
             SpriteState spriteState = new SpriteState();
             spriteState.pressedSprite = pressedImage;
             buttonComponent.spriteState = spriteState; // Imagen de fondo al pulsar el botón
             buttonText.text = text; // Texto del botón 
-                                    // TODO: Progress text
+            progressText.text = progress.ToString() + "%"; // Progress text
 
             menu = menuController;
             groupIndex = index;

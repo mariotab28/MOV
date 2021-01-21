@@ -1732,6 +1732,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backObj: {fileID: 464640530}
   thisObj: {fileID: 421203395}
+  lvlManager: {fileID: 0}
 --- !u!224 &421203397
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2002,6 +2003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backObj: {fileID: 421203395}
   thisObj: {fileID: 464640530}
+  lvlManager: {fileID: 0}
 --- !u!114 &464640533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2075,7 +2077,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0.0007324219}
-  m_SizeDelta: {x: -42, y: -1692.4078}
+  m_SizeDelta: {x: -42, y: -1808.8755}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &467086713
 MonoBehaviour:
@@ -2819,6 +2821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backObj: {fileID: 128163886}
   thisObj: {fileID: 659774649}
+  lvlManager: {fileID: 0}
 --- !u!1 &705932408
 GameObject:
   m_ObjectHideFlags: 0
@@ -3251,14 +3254,14 @@ RectTransform:
   m_GameObject: {fileID: 834862000}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2092444, y: 1.2092444, z: 1.2092444}
+  m_LocalScale: {x: 1.45, y: 1.45, z: 1.45}
   m_Children: []
   m_Father: {fileID: 659774650}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 523}
+  m_AnchoredPosition: {x: 0, y: 546}
   m_SizeDelta: {x: 542.14124, y: 69.56287}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &834862002
@@ -3282,7 +3285,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: d54a785abb3d98c4c959768787237c59, type: 3}
     m_FontSize: 15
     m_FontStyle: 1
     m_BestFit: 1
@@ -3612,6 +3615,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backObj: {fileID: 83619863}
   thisObj: {fileID: 992017030}
+  lvlManager: {fileID: 0}
 --- !u!1 &1049754511
 GameObject:
   m_ObjectHideFlags: 0
@@ -3759,14 +3763,14 @@ RectTransform:
   m_GameObject: {fileID: 1074098069}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 89.99972}
-  m_LocalScale: {x: 1.209244, y: 1.209244, z: 1.209244}
+  m_LocalScale: {x: 1.45, y: 1.45, z: 1.45}
   m_Children: []
   m_Father: {fileID: 1429503818}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 520}
+  m_AnchoredPosition: {x: 0, y: 546}
   m_SizeDelta: {x: 542.14124, y: 69.56287}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1074098071
@@ -3790,7 +3794,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: d54a785abb3d98c4c959768787237c59, type: 3}
     m_FontSize: 15
     m_FontStyle: 1
     m_BestFit: 1
@@ -4641,6 +4645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backObj: {fileID: 659774649}
   thisObj: {fileID: 1429503817}
+  lvlManager: {fileID: 0}
 --- !u!1 &1450598500
 GameObject:
   m_ObjectHideFlags: 0
@@ -5694,7 +5699,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -116.20001}
-  m_SizeDelta: {x: 1244.4375, y: 866.02405}
+  m_SizeDelta: {x: 1314.9731, y: 866.02405}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1719020493
 MonoBehaviour:
@@ -6011,6 +6016,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backObj: {fileID: 83619863}
   thisObj: {fileID: 1762422636}
+  lvlManager: {fileID: 0}
 --- !u!114 &1762422642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6436,8 +6442,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -26.400024, y: 0}
-  m_SizeDelta: {x: 0.43859863, y: -1446.024}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -1562.4917}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &2041954440
 GameObject:

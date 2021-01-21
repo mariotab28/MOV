@@ -49,7 +49,6 @@ namespace MazesAndMore
             jsonData.saveId = hashCode; // Añade el hash a jsonData
             string json = JsonUtility.ToJson(jsonData);
             PlayerPrefs.SetString("progress", json);
-            Debug.Log("Guardado:\n" + json);
         }
 
         // Carga el progreso del jugador, si no hay progreso guardado guarda el estado inicial del juego

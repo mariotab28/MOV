@@ -16,19 +16,20 @@ namespace MazesAndMore
         int levelToLoadIndex;
 
         public int numOfHints;
-        // int playerLevel;
         public bool noMoreAds;
-
+        public bool isLevelScene = false;
 
         public static GameManager instance;
 
         void Awake()
         {
-            //StartNewScene(); //temp
             if (instance != null)
             {
-                instance.levelManager = levelManager;
-                instance.LoadLevel(); //TODO: revisar esto
+                if (isLevelScene) // Si es la escena del nivel, carga el nivel
+                {
+                    instance.levelManager = levelManager;
+                    instance.LoadLevel();
+                }
                 DestroyImmediate(gameObject);
                 return;
             }
@@ -76,7 +77,7 @@ namespace MazesAndMore
             //Debug.Log("GROUP: " + groupToLoadIndex + " - LEVEL: " + levelToLoadIndex);
             if (levelManager)
             {
-                levelManager.Init(groupToLoadIndex/*, playerLevel*/);
+                levelManager.Init(groupToLoadIndex);
                 levelManager.SetLevelColor(levelPackages[groupToLoadIndex].color);
                 levelManager.setLevelName(levelPackages[groupToLoadIndex].groupName, levelToLoadIndex);
                 levelManager.LoadLevel(levelPackages[groupToLoadIndex].levels[levelToLoadIndex]);
@@ -118,7 +119,7 @@ namespace MazesAndMore
         public void LevelCompleted(int group, int level)
         {
             levelProgress[group][level] = LevelState.COMPLETED; // Nivel completado
-            if (level < levelProgress[group].Length)
+            if (level < levelProgress[group].Length && levelProgress[group][level + 1] == LevelState.LOCKED)
                 levelProgress[group][level + 1] = LevelState.UNLOCKED; // Nivel desbloqueado (el siguiente)
             SaveGameData(); // Guarda el progreso
         }
@@ -147,6 +148,17 @@ namespace MazesAndMore
         public bool IsLevelUnlocked(int groupIndex, int levelIndex)
         {
             return levelProgress[groupIndex][levelIndex] == LevelState.UNLOCKED;
+        }
+
+        // Devuelve el porcentaje de progreso en un grupo de niveles
+        public int GetGroupProgress(int groupIndex)
+        {
+            float total = levelPackages[groupIndex].levels.Length;
+            float completed = 0;
+            foreach (LevelState state in levelProgress[groupIndex])
+                if (state == LevelState.COMPLETED) completed+=1.000000f;
+
+            return Mathf.RoundToInt((completed / total) * 100);
         }
         
         // Serializa el progreso del jugador y el nº de pistas desbloqueadas

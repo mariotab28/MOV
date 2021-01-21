@@ -49,7 +49,7 @@ namespace MazesAndMore
         ButtonConfiguration AddGroupButton(LevelPackage group, int index)
         {
             ButtonConfiguration button = Instantiate(groupButtonPrefab, groupContainer.transform);
-            button.Configure(group.buttonImage, group.buttonPressedImage, group.groupName, this, index);
+            button.Configure(group.buttonImage, group.buttonPressedImage, group.groupName, GameManager.instance.GetGroupProgress(index), this, index);
             
             return button;
         }
