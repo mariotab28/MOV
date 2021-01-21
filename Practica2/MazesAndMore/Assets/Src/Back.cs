@@ -8,7 +8,7 @@ namespace MazesAndMore
     {
         public GameObject backObj;
         public GameObject thisObj;
-
+        public LevelManager lvlManager = null;
 
         // Update is called once per frame
         void Update()
@@ -20,6 +20,10 @@ namespace MazesAndMore
                     backObj.SetActive(true);
                 if (thisObj != null)
                     thisObj.SetActive(false);
+                if(lvlManager!=null)
+                {
+                    lvlManager.Pause();
+                }
             }
         }
     }
