@@ -32,8 +32,7 @@ namespace MazesAndMore {
             GameManager.instance.NoMoreAds();
 
         }
-
-        // Incrementa el nº de pistas del jugador y guarda la partida para recordar el nuevo número
+        
         void SuccessHint()
         {
             GameManager.instance.AddHints(1);

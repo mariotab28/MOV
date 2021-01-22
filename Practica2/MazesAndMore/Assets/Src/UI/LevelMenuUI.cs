@@ -14,10 +14,10 @@ namespace MazesAndMore
         public GameObject groupContainer;
         public GameObject levelContainer;
         public Text levelsTitleText;
-        public ButtonConfiguration groupButtonPrefab;
+        public GroupButtonConfiguration groupButtonPrefab;
         public LevelButtonConfiguration levelButtonPrefab;
 
-        ButtonConfiguration[] groupButtons;
+        GroupButtonConfiguration[] groupButtons;
         LevelButtonConfiguration[] levelButtons;
 
         void Start()
@@ -25,7 +25,7 @@ namespace MazesAndMore
             // Pide los grupos de niveles al GameManager
            
             levelPackages = GameManager.instance.GetLevelPackages();
-            groupButtons = new ButtonConfiguration[levelPackages.Length];
+            groupButtons = new GroupButtonConfiguration[levelPackages.Length];
             // Crea los elementos de la interfaz del selector de grupos de niveles
             SetUpLevelGroupsUI();
         }
@@ -46,9 +46,9 @@ namespace MazesAndMore
         }
 
         // Instancia un botón para acceder a los niveles de un determinado paquete de niveles
-        ButtonConfiguration AddGroupButton(LevelPackage group, int index)
+        GroupButtonConfiguration AddGroupButton(LevelPackage group, int index)
         {
-            ButtonConfiguration button = Instantiate(groupButtonPrefab, groupContainer.transform);
+            GroupButtonConfiguration button = Instantiate(groupButtonPrefab, groupContainer.transform);
             button.Configure(group.buttonImage, group.buttonPressedImage, group.groupName, GameManager.instance.GetGroupProgress(index), this, index);
             
             return button;

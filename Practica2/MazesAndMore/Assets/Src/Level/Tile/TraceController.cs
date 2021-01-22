@@ -17,7 +17,6 @@ namespace MazesAndMore
     public class TraceController : MonoBehaviour
     {
         private int counterNorth=0, counterSouth=0, counterEast=0, counterWest=0;
-        // Start is called before the first frame update
         public Trace north;
         public Trace south;
         public Trace east;
@@ -54,8 +53,7 @@ namespace MazesAndMore
         {
             
             bool fromCenter = false;
-           // Debug.Log(info.from);
-            //Debug.Log(info.to+" To");
+
             switch (info.from)
             {
                 
@@ -67,7 +65,6 @@ namespace MazesAndMore
                     }
                     else
                     {
-                        //Debug.Log("hola");
                         north.DrawTraceLater(info.time / 2, fromCenter, counterNorth, colorTrace, secondsUntil, info.goingBack);
                         fromCenterSwitch(info, colorTrace, secondsUntil);
                     }
@@ -79,7 +76,6 @@ namespace MazesAndMore
                         south.DrawTraceLater(info.time, fromCenter, counterSouth, colorTrace, secondsUntil, info.goingBack);
                     else
                     {
-                        //Debug.Log("hola");
                         south.DrawTraceLater(info.time/2, fromCenter, counterSouth, colorTrace, secondsUntil, info.goingBack);
                         fromCenterSwitch(info, colorTrace, secondsUntil);
                     }

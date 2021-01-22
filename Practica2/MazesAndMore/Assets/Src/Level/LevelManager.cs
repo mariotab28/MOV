@@ -19,7 +19,7 @@ namespace MazesAndMore
         private int levelNumber;
         private int group;
 
-        public void Init(int group/*,int playerLevel*/)
+        public void Init(int group)
         {
             levelColor = Color.white;
             if (boardManager != null)

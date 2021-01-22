@@ -33,7 +33,6 @@ namespace MazesAndMore
 
         void Awake()
         {
-            //StartNewScene(); //temp
             if (instance != null)
             {
                 DestroyImmediate(gameObject);

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace MazesAndMore
 {
-    public class ButtonConfiguration : MonoBehaviour
+    public class GroupButtonConfiguration : MonoBehaviour
     {
         LevelMenuUI menu; // Controlador del menú de selección de niveles
         int groupIndex; // Índice del grupo de niveles del botón

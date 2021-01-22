@@ -5,7 +5,7 @@ using UnityEngine;
 public class ScreenScaler : MonoBehaviour
 {
     public bool bg;
-    // Start is called before the first frame update
+
     void Start()
     {
         Resolution WorkingRes = new Resolution();
@@ -32,11 +32,5 @@ public class ScreenScaler : MonoBehaviour
 
         
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

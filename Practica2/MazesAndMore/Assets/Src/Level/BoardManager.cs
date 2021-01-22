@@ -49,10 +49,10 @@ namespace MazesAndMore
         }
         public void SetMap(Map map)
         {
-         
             if (levelManager!=null)
-            color = levelManager.GetLevelColor();
-            else color = Color.white;
+                color = levelManager.GetLevelColor();
+            else
+                color = Color.white;
             this.map = map;
             tiles = new Tile[map.GetHeight()+1, map.GetWidth()+1];
             List<Point> mapIce;
@@ -116,8 +116,6 @@ namespace MazesAndMore
             }
             Point playerStart=map.GetStart();
             player.init(this,playerStart.x+xOffset+1,playerStart.y + yOffset+1);
-            
-            // Instancia los muros del nivel
 
         }
 
