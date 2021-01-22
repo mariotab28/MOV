@@ -11,7 +11,7 @@ namespace MazesAndMore
 #if UNITY_ANDROID
         private static readonly string storeID = "3979827";
 #elif UNITY_IOS
-    private static readonly string storeID = "3979826";
+        private static readonly string storeID = "3979826";
 #endif
         private static readonly string videoID = "video";
         private static readonly string rewardedID = "rewardedVideo";
@@ -41,10 +41,15 @@ namespace MazesAndMore
             {
                 instance = this;
                 DontDestroyOnLoad(gameObject);
+#if UNITY_ANDROID || UNITY_IOS
                 Advertisement.AddListener(this);
                 Advertisement.Initialize(storeID, testMode);
+#else
+                Debug.LogError("Error: Prueba a ejecutar con plataforma móvil (Android o IOS)");
+#endif
             }
         }
+
         public static void ShowStandardAd()
         {
             if (Advertisement.IsReady(videoID) && !noMoreAds)
